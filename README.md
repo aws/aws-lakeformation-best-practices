@@ -1,15 +1,8 @@
-## My Project
+## AWS Lake Formation Best Practices
 
-TODO: Fill this README out!
+A best practices guide for using Lake Formation.
 
-Be sure to:
-
-* Change the title in this README
-* Edit your repository description on GitHub
-
-## Security
-
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+Return to [Live Docs](https://aws.github.io/aws-lakeformation-best-practices/).
 
 ## License Summary
 
