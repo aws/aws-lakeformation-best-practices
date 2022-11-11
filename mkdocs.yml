@@ -1,6 +1,6 @@
 site_name: "AWS Lake Formation Best Practices Guides"
-repo_name: "aws/aws-lake-formation-best-practices"
-repo_url: "https://github.com/aws/aws-lake-formation-best-practices"
+repo_name: "aws/aws-lakeformation-best-practices"
+repo_url: "https://github.com/aws/aws-lakeformation-best-practices"
 docs_dir: "content"
 theme:
   name: material

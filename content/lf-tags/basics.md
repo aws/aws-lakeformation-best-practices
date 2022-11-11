@@ -2,18 +2,18 @@
 
 ## Named Resource policies vs LF-tag policies
 
-When creating an access policy within Lake Formation, there are 3 parts to it. You have:
+When creating an access policy within Lake Formation, there are 3 parts:
 1) the principals (eg. IAM users, IAM roles, external accounts, SAML users/groups, etc) that you want to create permissions to. 
 2) the resources you want to provide access to (eg. database db1, table tableA, etc)
 3) the permissions you want to grant (eg. SELECT, DESCRIBE, ALTER, etc on a table)
 
 The difference between Named Resource policies and LF-Tag policies is #2, the resources you want to provide permissions on. 
 
-With Named Resources policies, you specify a principal, a specific resource (database, table, column, etc) and permissions. With LF-Tags, you provide a prinicpal, and a LF-Tag expression which is used to match to resources for permissions, and a list of permissions. 
+With Named Resources policies, you specify a specific resource (database, table, column, etc). With LF-Tags, you provide an LF-Tag expression which is used to match to resources for permissions. This makes LF-Tags much more scalable as you can grant permissions on many resources at once and permissions are updated accordingly as tags on resources are added, changed or removed. 
 
 ## Why use LF-Tags?
 
-LF-Tags is a mechanism that can be used to group similar resources together, and permission those resources. For example, if you have multiple databases and tables that are used by a wide variety of different groups of users, you can tag databases and tables that own those resources, and grant full read-write permissions to those resources using a single grant. 
+LF-Tags is a mechanism that can be used to group similar resources together, and permission on the group of resources. For example, if you have multiple databases and tables that are used by a wide variety of different groups of users, you can tag databases and tables that own those resources, and grant full read-write permissions to those resources using a single grant. 
 
 ![image](images/lf-tags-grouping.png)
 
@@ -28,7 +28,6 @@ LF-Tags also hierarchical. If you tag a database, all tables and columns within 
 ## How LF-Tag expressions work
 
 When granting permissions using LF-Tags, you need to provide a LF-Tag expression. This expression, if it evaluates to true, will grant a principal to the resource. LF-Tag expressions contain one or more LF-Tag names, and for each LF-Tag, one or more values. Each tag name is AND'ed in the expression and each lf-tag value is OR'ed. For example, LF-Tag1 = 'abc' AND LF-Tag2 = ('edf' OR 'ghi'). LF-Tags cannot be OR'ed.
-
 
 Let's look an example: 
 

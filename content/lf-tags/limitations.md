@@ -2,15 +2,15 @@
 
 Please see Lake Formations public documentation for the current limitations as they may change. Many of the limits associated with LF-Tags are soft limits so if you need to increase size limits, please ensure a support case.
 
-## Limitation #1 - LF-Tags can only be applied a single tag value from an LF-Tag
+## Limitation #1 - You can only attach a single value of an LF-Tag tag to a resource
 
-Suppose you want to create an LF-Tag, *AccessibleRoles* that contains a list of roles, *Engineering, Sales, Marketing* that can access a resource. If you need multiple roles to access a single resource, then its not possible with a single tag. 
+Suppose you want to create an LF-Tag, *AccessibleRoles* that contains a list of roles, *Engineering, Sales, Marketing* that can access a resource. If you need multiple roles to access a single resource, then you would need to specify multiple values to the resource. This is currently not supported today.
 
 The solution here is to create multiple LF-Tags that represents each value. From the above example, we can create LF-Tags *AccessibleRoles:Engineering*, *AccessibleRoles:Sales*, and *AccessibleRoles:Marketing* with each with a single value of *true*. You can then tag a resource with appropriate LF-Tags.
 
-## Limitation #2 - No OR expression in grant expression
+## Limitation #2 - No OR expression in grant expression for multiple LF-Tags
 
-Suppose from the example in limitation #1, where we have LF-Tags *AccessibleRoles:Engineering*, *AccessibleRoles:Sales*, and *AccessibleRoles:Marketing*, and you want to grant a principal all resources that are tagged with *AccessibleRoles:Sales*, and *AccessibleRoles:Marketing*. LF-Tag expressions do not support OR operators between LF-Tags.
+Suppose we take the example in limitation #1, where we have LF-Tags *AccessibleRoles:Engineering*, *AccessibleRoles:Sales*, and *AccessibleRoles:Marketing*, and you want to grant a principal all resources that are tagged with *AccessibleRoles:Sales*, and *AccessibleRoles:Marketing*. LF-Tag expressions do not support OR operators between LF-Tags, ie grant user User1 to all resources tagged with *AccessibleRoles:Engineering = true OR AccessibleRoles:Sales = true". This is currently not supported with LF-Tags.
 
 The solution here is to perform multiple grant operations, one for each LF-Tag. For example, we can have one grant expression to be *AccessibleRoles:Sales = true* , and another being *AccessibleRoles:Marketing = true*.
 
