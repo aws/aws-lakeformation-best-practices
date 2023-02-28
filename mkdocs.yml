@@ -8,10 +8,11 @@ theme:
     - tabs
 nav:
   - Introduction: 'index.md'
-  - 1. LF-Tags:
+  - 1. LF-Tags: 'lf-tags/index.md'
       - LF-Tag Basics: 'lf-tags/basics.md'
       - Common Ontologies: 'lf-tags/common-ontologies.md'
       - Best Practices: 'lf-tags/best-practices.md'
+      - Example Usecase: 'lf-tags/example-usecase.md'
       - Limitations: 'lf-tags/limitations.md'
 markdown_extensions:
   - toc:
