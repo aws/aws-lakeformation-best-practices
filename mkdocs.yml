@@ -1,0 +1,21 @@
+site_name: "AWS Lake Formation Best Practices Guides"
+repo_name: "aws/aws-lakeformation-best-practices"
+repo_url: "https://github.com/aws/aws-lakeformation-best-practices"
+docs_dir: "content"
+theme:
+  name: material
+  features:
+    - tabs
+nav:
+  - Introduction: 'index.md'
+  - 1. LF-Tags: 'lf-tags/index.md'
+      - LF-Tag Basics: 'lf-tags/basics.md'
+      - Common Ontologies: 'lf-tags/common-ontologies.md'
+      - Best Practices: 'lf-tags/best-practices.md'
+      - Example Usecase: 'lf-tags/example-usecase.md'
+      - Limitations: 'lf-tags/limitations.md'
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - codehilite
