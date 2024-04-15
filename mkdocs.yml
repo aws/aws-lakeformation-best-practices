@@ -6,16 +6,17 @@ theme:
   name: material
   features:
     - tabs
-nav:
-  - Introduction: 'index.md'
-  - 1. LF-Tags: 'lf-tags/index.md'
-      - LF-Tag Basics: 'lf-tags/basics.md'
-      - Common Ontologies: 'lf-tags/common-ontologies.md'
-      - Best Practices: 'lf-tags/best-practices.md'
-      - Example Usecase: 'lf-tags/example-usecase.md'
-      - Limitations: 'lf-tags/limitations.md'
+    - content.code.copy
+    - content.code.select
 markdown_extensions:
   - toc:
       permalink: true
   - admonition
   - codehilite
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
