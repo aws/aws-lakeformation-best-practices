@@ -32,7 +32,7 @@ This version includes the benefits of V3. Additionally, it enables resources to 
 
 We have summarized the recommended cross account sharing versions for a source and target account combination. 
 
-                             | Target account(receiver) V1 | Target account(receiver) V2 | Target account(receiver) V3 | Target account(receiver) - V4 
+Source account\Target account| Target account(receiver) V1 | Target account(receiver) V2 | Target account(receiver) V3 | Target account(receiver) - V4 
 -----------------------------| ----------------------------|-----------------------------|-----------------------------|-------------------------------                           
 Source Account(grantor) - V1 |	yes                        | yes 	                     | not possible                | not possible
 Source Account(grantor) - V2 |	yes                        | yes                         | not possible                | not possible
@@ -109,7 +109,7 @@ Example output of list-permissions for a cross account share.
 ```
 2. Revoke the permission granted on resources to cross account principal: This removes the V1 RAM share corresponding to the resources.
 
-3. Re-Grant the permission on resources: This establishes V4 RAM share for the resources shared. 
+3. Re-Grant the permission on resources: This establishes V4 RAM share for the resources shared.
 
 4. Optionally you can validate the resources that are shared using RAM invites by invoking [RAM API](https://docs.aws.amazon.com/cli/latest/reference/ram/) for named resource sharing.
 
