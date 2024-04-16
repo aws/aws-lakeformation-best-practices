@@ -1,45 +1,128 @@
-# Lake Formation Tags (LF-Tags) Basics
+# Upgrade Cross Account Version 
+Below table provides summarize of various combinations for source and target account's cross account versions that is supported.
 
-## Named Resource policies vs LF-tag policies
+|     | Target account(receiver) - V1 | Target account(receiver) - V2| Target account(receiver) - V3| Target account(receiver) - V4|
+| -------- | ------- | -------- | -------- | -------- |
+| Source Account(grantor) - V1  | supported    | supported    | not supported    | not supported    |
+| Source Account(grantor) - V2  | supported   | supported    | not supported    | not supported    |
+| Source Account(grantor) - V3  | supported    | supported    | supported    | supported   |
+| Source Account(grantor) - V4  | supported    | supported    | supported    | supported   |
 
-When creating an access policy within Lake Formation, there are 3 parts:
-1) the principals (eg. IAM users, IAM roles, external accounts, SAML users/groups, etc) that you want to create permissions to. 
-2) the resources you want to provide access to (eg. database db1, table tableA, etc)
-3) the permissions you want to grant (eg. SELECT, DESCRIBE, ALTER, etc on a table)
 
-The difference between Named Resource policies and LF-Tag policies is #2, the resources you want to provide permissions on. 
+###  Note:
+Modifying the grantor account's cross-account version settings does not change existing permissions the receiver account has on shared resources. However, if you are using V1 sharing and hitting your RAM resource share limit, consider revoking and re-granting cross-account permissions in the source account. Doing so will consolidate multiple RAM resource shares into fewer shares, allowing you to share more resources.
 
-With Named Resources policies, you specify a specific resource (database, table, column, etc). With LF-Tags, you provide an LF-Tag expression which is used to match to resources for permissions. This makes LF-Tags much more scalable as you can grant permissions on many resources at once and permissions are updated accordingly as tags on resources are added, changed or removed. 
+## Steps to be taken in Source Account:
 
-## Why use LF-Tags?
+1. The IAM role or IAM user granting the permission (that is, the grantor)must have the policies mentioned in the AWS managed policy arn:aws:iam::aws:policy/AWSLakeFormationCrossAccountManager for granting the cross-account permissions. You can also attach the managed policy to your role. 
+2. If you currently use Glue catalog resource policy,  add the following permission as well to the resource policy.  Replace <grantor_account_id> with the AWS account ID of the grantor account, and <region> with the AWS region where your resources are located. If you do not have an existing Glue catalog resource policy, no additional steps are required.
 
-LF-Tags is a mechanism that can be used to group similar resources together, and permission on the group of resources. For example, if you have multiple databases and tables that are used by a wide variety of different groups of users, you can tag databases and tables that own those resources, and grant full read-write permissions to those resources using a single grant. 
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+           "Effect": "Allow",
+            "Action": [
+                "glue:ShareResource"
+            ],
+            "Principal": {"Service": [
+                "ram.amazonaws.com"
+            ]},
+            "Resource": [
+                "arn:aws:glue:<region>:<grantor_account_id>:catalog",
+                "arn:aws:glue:<region>:<grantor_account_id>:database/*",
+                "arn:aws:glue:<region>:<grantor_account_id>:table/*"
+            ]
+        }
+    ]
+}
 
-![image](images/lf-tags-grouping.png)
 
-Using LF-Tags can greatly simplify the number of grants over using Named Resource policies. See below as an example:
 
-![image](images/lf-tags-vs-named-resources-example.png)
+1. Update the cross account version of the source or grantor account to V4.
 
-In the above example with 4 users and 5 tables, if you were use Named Resources policies, you would need to issue 20 grants. However, if you use LF-tags, and tagged all the tables with the same LF-Tag, you would need only one grant for each user to the tag for a total of 4 grants. If there were 100's of users and 1000's of resources, you would need 100*1000=100000 grants using named resources, but 100 grants for each user, and 1000 tagging operations for each resource.
+Once you choose  Version 4, all new named resource grants will go through the new cross-account grant mode when using Lake Formation sharing. 
 
-LF-Tags also hierarchical. If you tag a database, all tables and columns within the database would inherit the LF-Tag. If you tag a table, then all columns would inherit the tags. You can also override inherited tags, so if you tag a database with tag AccessLevel = 'public', but want to change the tag value for a table to AccessLevel = 'private', then the table and all columns would override that value. 
+Optionally to optimize AWS RAM usage for your existing cross-account shares, you can follow the below steps:
 
-## How LF-Tag expressions work
+1. Get the list of permissions defined in the account using list-permissions API, and filter out the cross-account permissions on resources owned by the account. In case of named resource sharing you can filter the permissions that have ResourceShare listed under AdditionalDetails. For more details refer to https://docs.aws.amazon.com/cli/latest/reference/lakeformation/list-permissions.html
 
-When granting permissions using LF-Tags, you need to provide a LF-Tag expression. This expression, if it evaluates to true, will grant a principal to the resource. LF-Tag expressions contain one or more LF-Tag names, and for each LF-Tag, one or more values. Each tag name is AND'ed in the expression and each lf-tag value is OR'ed. For example, LF-Tag1 = 'abc' AND LF-Tag2 = ('edf' OR 'ghi'). LF-Tags cannot be OR'ed.
+Example output of list-permissions for a cross account share.
 
-Let's look an example: 
+````
 
-![image](images/lf-tags-example.png)
+{
+    "Principal": {
+        "DataLakePrincipalIdentifier": "987654321012"
+    },
+    "Resource": {
+        "Database": {
+            "CatalogId": "123456789012",
+            "Name": "salesdb"
+        }
+    },
+    "Permissions": [
+        "DESCRIBE"
+    ],
+    "PermissionsWithGrantOption": [
+        "DESCRIBE"
+    ],
+    "AdditionalDetails": {
+        "ResourceShare": [
+            "arn:aws:ram:us-east-1:123456789012:resource-share/15bc4e61-1423-4c44-9452-c23fda161f3f"
+        ]
+    },
+    "LastUpdated": "2024-03-14T19:07:25.687000+00:00",
+    "LastUpdatedBy": "arn:aws:iam::123456789012:role/LFAdmin"
+}
+````
 
-With the above example, we have three tables (although they can be columns or databases as well).
+1. Revoke the permission granted on resources to cross account principal: This removes the V1 RAM share corresponding to the resources. 
+    Caution: Once access is revoked for the external account from source account, any principals in the target account who have cascaded access will lose their access to the resource. 
+    
+2. Re-Grant the permission on resources: This establishes V4 RAM share for the resources shared. 
 
-If you were to create a grant with the LF-Tag expression of Sensitivity = "Public", then this expression would be true for the Customer table, and Sales Table. Notice that not all tags need to evaluate to true for the resource to be granted.
+Note: You can also revoke or grant permissions using batch APIs for each database and its tables that are shared across accounts incrementally, and validate if the shared resource is accessible in the target account. For more information refer to https://docs.aws.amazon.com/lake-formation/latest/dg/cross-account-notes.html
 
-If you were to create a grant with the LF-Tag expression Audit = "true", then only the Sales table would evaluate true. 
+1. Optionally you can validate the resources that are shared using RAM invites by invoking RAM API for named resource sharing. https://docs.aws.amazon.com/cli/latest/reference/ram/
 
-If you were to create a grant with the LF-Tag expression of Owner = 'Aarthi' and Audit = 'true', then again, only the Sales table would evaluate to true.
+Note: Permissions granted on the LF-Tags to cross account will stay in tact.
 
-## Limitations
-Before using LF-Tags, please see Lake Formation documentation for current limitations located at https://docs.aws.amazon.com/lake-formation/latest/dg/TBAC-notes.html
+## Step to be taken in Target Account:
+
+1. To receive and accept resource shares using AWS RAM, data lake administrators in target accounts must have an additional policy that grants permission to accept AWS RAM resource share invitations and enable resource sharing with organizations. For information on how to enable sharing with organizations, see Enable sharing with AWS organizations in the AWS RAM User Guide.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ram:AcceptResourceShareInvitation",
+                "ram:RejectResourceShareInvitation",
+                "ec2:DescribeAvailabilityZones",
+                "ram:EnableSharingWithAwsOrganization"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+````
+
+1. If the source and target accounts are part of an AWS Organization and if resource sharing is enabled, then the accounts within that Organization will automatically have access to the shared resources without needing RAM invitations. 
+2. When resource sharing is  not enabled, for resources shared with target account, target account should see the new RAM invitations. Data lake admin needs to accept these RAM invites. This establishes Glue catalog resource policies for target account to access the shared resource.
+3. In case of re-grant of existing shared resource from source account(grantor) with new cross account version, existing resource links and permissions on those resource links should be intact for account admin and other principals in the target account(receiver).
+4. Validate access to the shared resource in the target account.
+
+
+### Note:
+In order to query a shared database or table using Amazon Athena in the recipient account,  you need a resource link.  In the case where the database or table is shared to a direct IAM principal in the recipient account, the principal needs Lake Formation CREATE_TABLE or CREATE_DATABASE permission to create the resource link. They also need  the glue:CreateTable or glue:CreateDatabase IAM permission in their IAM policy (based on resource type that is shared). 
+For more information on this topic, refer to the blog: https://aws.amazon.com/blogs/big-data/introducing-hybrid-access-mode-for-aws-glue-data-catalog-to-secure-access-using-aws-lake-formation-and-iam-and-amazon-s3-policies/
+
+
+## Other References:
+
+https://docs.aws.amazon.com/lake-formation/latest/dg/cross-account-permissions.html
+
+
