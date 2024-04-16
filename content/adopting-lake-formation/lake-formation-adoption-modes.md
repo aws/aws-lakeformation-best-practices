@@ -1,6 +1,6 @@
 # Lake Formation adoption modes
 
-Before Lake Formation was available, users of Glue Data Catalog would can use a combination of Data Catalog resource policies and IAM permissions (that is, S3 bucket policies and IAM principal policies) to manage access to both the metadata in the catalog and the data in S3 that the metadata points to. The combination of S3 bucket policies, IAM principal policies and Glue catalog policies can be referred to as resource based policies. 
+Before Lake Formation was available, users of Glue Data Catalog can use a combination of Data Catalog resource policies and IAM permissions (that is, S3 bucket policies and IAM principal policies) to manage access to both the metadata in the catalog and the data in S3 that the metadata points to. The combination of S3 bucket policies, IAM principal policies and Glue catalog policies can be referred to as resource based policies. 
 
 However, you do not have to adopt Lake Formation completely in order to use it. You can mix and match permission models between Lake Formation and resource based policies for your catalog resources. We will go through some of the best practices and reasons to choose one over the other.
 

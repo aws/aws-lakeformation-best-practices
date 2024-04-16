@@ -72,9 +72,9 @@ Yes, updating the cross account version settings in your source account does not
     ]
 }
 ```
-3. Update the cross account version of the source or grantor account to V4.
+3. Update the cross account version of the source or grantor account to V3 or V4.
 
-Once you choose  Version 4, all new named resource grants will go through the new cross-account grant mode when using Lake Formation sharing. 
+Once you choose  Version 3 or 4, all new named resource grants will go through the new cross-account grant mode when using Lake Formation sharing. 
 
 To optimally use AWS RAM capacity for your existing cross-account shares, you can follow the below steps:
 
@@ -117,7 +117,7 @@ CAUTION in step 2: Once access is revoked for the external account from source a
 
 NOTE in step 3: You can also revoke or grant permissions using batch APIs for each database and its tables that are shared across accounts incrementally, and validate if the shared resource is accessible in the target account. For more information refer to [documentation](https://docs.aws.amazon.com/lake-formation/latest/dg/cross-account-notes.html)
 
-NOTE: Permissions granted on the LF-Tags to cross account will stay in tact.
+NOTE: Permissions granted on the LF-Tags to cross account will stay intact.
 
 
 ## Steps to be taken in target account

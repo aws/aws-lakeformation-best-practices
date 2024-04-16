@@ -2,7 +2,7 @@
 
 ## Lake Formation Service Linked Role vs Customer Managed Roles
 
-We do not recommend using Lake Formation’s Service Linked Role (SLR) in production environments. Although using SLR is provided for convenience, there are few points to consider if you choose it.  You cannot edit the SLR’s policy if needed; encrypted catalogs are not supported with it in cross account sharing; significantly large number of S3 locations registered with Lake Formation may cause IAM policy limits to be breached, and lastly, EMR on EC2 does not support SLR registered locations for data access. Hence, we recommend creating a custom IAM role to always register your data locations with Lake Formation. 
+We do not recommend using Lake Formation’s Service Linked Role (SLR) in production environments. Although using SLR is provided for convenience, there are few points to consider if you choose it.  You cannot edit the SLR’s policy if needed. Encrypted catalogs are not supported with SLR for cross account sharing. Significantly large number of S3 locations registered with Lake Formation may cause IAM policy limits to be breached. EMR on EC2 does not support SLR registered locations for data access. Lastly, SLR's do not adhere to [AWS Service Control Policies](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html). Hence, we recommend creating a custom IAM role to always register your data locations with Lake Formation. 
 
 ## Using Lake Formation Administrator Role
 
@@ -15,9 +15,11 @@ Below are examples of when not to use Lake Formation administrator:
 
 ## When to use Data Filters versus Glue Views ?
 
-A data filter can be created only on individual/specific table while View can be created across multiple tables. A data filter could be used when you have simple and specific row and column filtering needs on a table. 
+A data filter can be created only on individual/specific table while a Glue View can be created across multiple tables. A data filter could be used when you have simple and specific row and column filtering needs on a table. 
 
-You can share the Views without sharing the underlying tables. The recipient can query only the View and not access the tables.  You can share a Glue View from one account to another but cannot create a new Glue View that contains tables shared from other accounts. 
+The [Glue Views](https://docs.aws.amazon.com/athena/latest/ug/views-glue.html) are different from that of the standard table views that you create in [Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/create-view.html), [Apache Hive](https://docs.aws.amazon.com/athena/latest/ug/hive-views.html), Apache Spark, Presto, Trino, etc. The Glue Views is a feature of Data Catalog in Preview and are based on definer semantics, where access to the Glue Views are defined by the user who creates the view. 
 
-Glue Views is currently in [Preview](https://docs.aws.amazon.com/lake-formation/latest/dg/working-with-views.html). we will add more best practices as the feature becomes generally available. 
+You can share a Glue View without sharing the underlying tables. The recipient can query only the Glue View and not access the tables.  You can share a Glue View from one account to another but cannot create a new Glue View that contains tables shared from other accounts. 
+
+Glue Views is currently in [Preview](https://docs.aws.amazon.com/lake-formation/latest/dg/working-with-views.html). We will add more best practices as the feature becomes generally available. 
 
