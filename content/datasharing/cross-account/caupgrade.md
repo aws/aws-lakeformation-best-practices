@@ -8,14 +8,13 @@ Below table provides summarize of various combinations for source and target acc
 | Source Account(grantor) - V3  | supported    | supported    | supported    | supported   |
 | Source Account(grantor) - V4  | supported    | supported    | supported    | supported   |
 
-
 ###  Note:
 Modifying the grantor account's cross-account version settings does not change existing permissions the receiver account has on shared resources. However, if you are using V1 sharing and hitting your RAM resource share limit, consider revoking and re-granting cross-account permissions in the source account. Doing so will consolidate multiple RAM resource shares into fewer shares, allowing you to share more resources.
 
 ## Steps to be taken in Source Account:
 
-1. The IAM role or IAM user granting the permission (that is, the grantor)must have the policies mentioned in the AWS managed policy arn:aws:iam::aws:policy/AWSLakeFormationCrossAccountManager for granting the cross-account permissions. You can also attach the managed policy to your role. 
-2. If you currently use Glue catalog resource policy,  add the following permission as well to the resource policy.  Replace <grantor_account_id> with the AWS account ID of the grantor account, and <region> with the AWS region where your resources are located. If you do not have an existing Glue catalog resource policy, no additional steps are required.
+1. The IAM role or IAM user granting the permission (that is, the grantor) must have the policies mentioned in the AWS managed policy arn:aws:iam::aws:policy/AWSLakeFormationCrossAccountManager for granting the cross-account permissions. You can also attach the managed policy to your role. 
+2. If you currently use Glue catalog resource policy, add the following permission as well to the resource policy.  Replace <grantor_account_id> with the AWS account ID of the grantor account, and <region> with the AWS region where your resources are located. If you do not have an existing Glue catalog resource policy, no additional steps are required.
 
 {
     "Version": "2012-10-17",
@@ -38,10 +37,9 @@ Modifying the grantor account's cross-account version settings does not change e
 }
 
 
+1. Update the cross-account version of the source or grantor account to V4.
 
-1. Update the cross account version of the source or grantor account to V4.
-
-Once you choose  Version 4, all new named resource grants will go through the new cross-account grant mode when using Lake Formation sharing. 
+Once you choose Version 4, all new named resource grants will go through the new cross-account grant mode when using Lake Formation sharing. 
 
 Optionally to optimize AWS RAM usage for your existing cross-account shares, you can follow the below steps:
 
@@ -111,18 +109,17 @@ Note: Permissions granted on the LF-Tags to cross account will stay in tact.
 ````
 
 1. If the source and target accounts are part of an AWS Organization and if resource sharing is enabled, then the accounts within that Organization will automatically have access to the shared resources without needing RAM invitations. 
-2. When resource sharing is  not enabled, for resources shared with target account, target account should see the new RAM invitations. Data lake admin needs to accept these RAM invites. This establishes Glue catalog resource policies for target account to access the shared resource.
+2. When resource sharing is not enabled, for resources shared with target account, target account should see the new RAM invitations. Data lake admin needs to accept these RAM invites. This establishes Glue catalog resource policies for target account to access the shared resource.
 3. In case of re-grant of existing shared resource from source account(grantor) with new cross account version, existing resource links and permissions on those resource links should be intact for account admin and other principals in the target account(receiver).
 4. Validate access to the shared resource in the target account.
 
-
 ### Note:
-In order to query a shared database or table using Amazon Athena in the recipient account,  you need a resource link.  In the case where the database or table is shared to a direct IAM principal in the recipient account, the principal needs Lake Formation CREATE_TABLE or CREATE_DATABASE permission to create the resource link. They also need  the glue:CreateTable or glue:CreateDatabase IAM permission in their IAM policy (based on resource type that is shared). 
+In order to query a shared database or table using Amazon Athena in the recipient account, you need a resource link.  In the case where the database or table is shared to a direct IAM principal in the recipient account, the principal needs Lake Formation CREATE_TABLE or CREATE_DATABASE permission to create the resource link. They also need the glue:CreateTable or glue:CreateDatabase IAM permission in their IAM policy (based on resource type that is shared). 
 For more information on this topic, refer to the blog: https://aws.amazon.com/blogs/big-data/introducing-hybrid-access-mode-for-aws-glue-data-catalog-to-secure-access-using-aws-lake-formation-and-iam-and-amazon-s3-policies/
-
 
 ## Other References:
 
 https://docs.aws.amazon.com/lake-formation/latest/dg/cross-account-permissions.html
+
 
 

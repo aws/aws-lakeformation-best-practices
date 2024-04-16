@@ -18,7 +18,7 @@ If your system utilizes LF-Tags for sharing data, it is strongly advised that yo
 
 ## Version 3:
 
-This version streamlines cross-account resource sharing by using AWS RAM to map multiple cross-account permissions to a single resource share. Optimization of AWS RAM resource shares reduces the number of shares needed for cross-account access.  Further, this version allows sharing resources directly to external account IAM principals as well as sharing at the account level. 
+This version streamlines cross-account resource sharing by using AWS RAM to map multiple cross-account permissions to a single resource share. Optimization of AWS RAM resource shares reduce the number of shares needed for cross-account access.  Further, this version allows sharing resources directly to external account IAM principals as well as sharing at the account level. 
 
 Additionally, LF-Tags based access control would use AWS RAM for sharing, eliminating the need to update Glue Data Catalog resource policies, hence streamlining sharing with named-resources. You can also establish Tag Based cross-account sharing to Organizations or Organizational units.
 
@@ -27,4 +27,5 @@ Additionally, LF-Tags based access control would use AWS RAM for sharing, elimin
 This version includes the benefits of V3. Additionally, it enables resources to be managed in Hybrid Access Mode and also allows sharing hybrid resources across accounts.
 
 For more details refer to documentation: https://docs.aws.amazon.com/lake-formation/latest/dg/hybrid-access-mode.html
+
 
