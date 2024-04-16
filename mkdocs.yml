@@ -6,21 +6,38 @@ theme:
   name: material
   features:
     - tabs
+    - content.code.copy
+    - content.code.select
 nav:
   - Introduction: 'index.md'
-  - 1. LF-Tags: 'lf-tags/index.md'
-      - LF-Tag Basics: 'lf-tags/basics.md'
-      - Common Ontologies: 'lf-tags/common-ontologies.md'
-      - Best Practices: 'lf-tags/best-practices.md'
-      - Example Usecase: 'lf-tags/example-usecase.md'
-      - Limitations: 'lf-tags/limitations.md'
-  - 2. Cross Account Data Sharing: 'datasharing/cross-account/index.md'
-      - Cross Account Versions: 'datasharing/cross-account/caverion.md'
-      - Upgrade Cross Account Version: 'datasharing/cross-account/caupgrade.md'
-      - Cross Account FAQS: 'datasharing/cross-account/cafaqs.md'
-
+  - 'Adopting Lake Formation':
+    - 'Considerations when adopting Lake Formation': 'adopting-lake-formation/considerations-when-adopting-lake-formation.md'
+    - Lake formation Adoption Modes': 'adopting-lake-formation/lake-formation-adoption-modes.md'
+    - 'General Best Practices': 'adopting-lake-formation/general-best-practices.md'
+  - 'Data Sharing':
+    - 'General Data Sharing': 'data-sharing/general-data-sharing.md'
+    - 'Cross Account Data Sharing': 'data-sharing/cross-account/index.md'
+      - 'Cross Account Versions': 'data-sharing/cross-account/caverion.md'
+      - 'Upgrade Cross Account Version': 'data-sharing/cross-account/caupgrade.md'
+      - 'Cross Account FAQS': 'data-sharing/cross-account/cafaqs.md'
+  - 'LF-Tags':
+    - 'LF-Tags Basics': 'lf-tags/basics.md'
+    - 'Common Ontologies': 'lf-tags/common-ontologies.md'
+    - 'Best Practices': 'lf-tags/best-practices.md'
+    - 'Example Usecase': 'lf-tags/example-usecase.md'
+    - 'Limitations': 'lf-tags/limitations.md'
 markdown_extensions:
   - toc:
       permalink: true
   - admonition
   - codehilite
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - attr_list
+  - sane_lists
+  - tables
