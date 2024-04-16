@@ -1,14 +1,14 @@
 # Cross Account FAQS
 
-### 1. What are the various cross account topologies ?
+### 1. What are the various cross account topologies customers can share resources?
 
 Lake formation cross account sharing feature is used for sharing catalog and underlying data lake access. Customer can share resource without duplicating data avoiding extensive pipelines to make the data available to other lines of business. These models enable various lines of business collaboration and require planning to standardize the enterprise level adaption.
 
-#### Hub and Spoke:
+#### Central governance model:
 
-Hub and Spoke model are chosen when customers want to centralizes metadata discovery and permission management in governance account across line of business. In this model domain accounts will share the data with central governance account that hosts the metadata for enterprises to discovery and request access for the resource without domain owners involved in the fulfilment process. Central governance account provides better audibility on resource access and scaling the permission across enterprise.  
+This specialized form of a hub and spoke model is chosen when customers want to centralizes metadata discovery and permission management in governance account and make the data available to other AWS accounts. In this model domain accounts will share the data with central governance account that hosts the metadata for enterprises to discovery and request access for the resource without domain owners involved in the fulfilment process. Central governance account provides better audibility on resource access and scaling the permission across enterprise.  
 
-For more details on the setup refer to blog: 
+For more details on the central governance model setup refer to blog: 
 https://aws.amazon.com/blogs/big-data/introducing-aws-glue-crawlers-using-aws-lake-formation-permission-management/
 
 #### Peer to Peer:
