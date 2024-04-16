@@ -16,7 +16,6 @@ nav:
     - 'General Best Practices': 'adopting-lake-formation/general-best-practices.md'
   - 'Data Sharing':
     - 'General Data Sharing': 'data-sharing/general-data-sharing.md'
-    - 'Updating Cross Account Sharing Version': 'data-sharing/updating-cross-account-sharing-versions.md'
   - 'LF-Tags':
     - 'LF-Tags Basics': 'lf-tags/basics.md'
     - 'Common Ontologies': 'lf-tags/common-ontologies.md'

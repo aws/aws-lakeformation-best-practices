@@ -6,7 +6,7 @@ However, you do not have to adopt Lake Formation completely in order to use it. 
 
 ## Hybrid access mode versus Lake Formation mode - what to choose?
 
-There are two modes in which you can register an S3 data location with Lake Formation - Lake Formation mode and Hybrid access mode. When you register a database or table location in Lake Formation mode, you are choosing Lake Formation as the only permissions model to manage all permissions to those catalog resources. In this case, after setting up permissions to users, you need to revoke resource based policies. 
+There are two modes in which you can register an S3 data location with Lake Formation - Lake Formation mode and [Hybrid access mode](https://docs.aws.amazon.com/lake-formation/latest/dg/hybrid-access-mode.html). When you register a database or table location in Lake Formation mode, you are choosing Lake Formation as the only permissions model to manage all permissions to those catalog resources. In this case, after setting up permissions to users, you need to revoke resource based policies. 
 
 ![Lake formation mode](images/lakeformationmode.png)
 
@@ -14,7 +14,6 @@ When you register a database or table location with Lake Formation in hybrid acc
 
 ![hybrid access mode](images/hybridaccessmode.png)
 
-For more information, refer to our [public documentation](https://docs.aws.amazon.com/lake-formation/latest/dg/hybrid-access-mode.html).
 
 ## Use-cases to adopt Hybrid access mode
 
