@@ -14,6 +14,11 @@ nav:
       - Best Practices: 'lf-tags/best-practices.md'
       - Example Usecase: 'lf-tags/example-usecase.md'
       - Limitations: 'lf-tags/limitations.md'
+  - 2. Cross Account Data Sharing: 'datasharing/cross-account/index.md'
+      - Cross Account Versions: 'datasharing/cross-account/caverion.md'
+      - Upgrade Cross Account Version: 'datasharing/cross-account/caupgrade.md'
+      - Cross Account FAQS: 'datasharing/cross-account/cafaqs.md'
+
 markdown_extensions:
   - toc:
       permalink: true
