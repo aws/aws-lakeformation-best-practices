@@ -1,45 +1,60 @@
-# Lake Formation Tags (LF-Tags) Basics
+# Cross Account FAQS
 
-## Named Resource policies vs LF-tag policies
+### 1. What are the various cross account topologies ?
 
-When creating an access policy within Lake Formation, there are 3 parts:
-1) the principals (eg. IAM users, IAM roles, external accounts, SAML users/groups, etc) that you want to create permissions to. 
-2) the resources you want to provide access to (eg. database db1, table tableA, etc)
-3) the permissions you want to grant (eg. SELECT, DESCRIBE, ALTER, etc on a table)
+Lake formation cross account sharing feature is used for sharing catalog and underlying data lake access. Customer can share resource without duplicating data avoiding extensive pipelines to make the data available to other lines of business. These models enable various lines of business collaboration and require planning to standardize the enterprise level adaption.
 
-The difference between Named Resource policies and LF-Tag policies is #2, the resources you want to provide permissions on. 
+#### Hub and Spoke:
 
-With Named Resources policies, you specify a specific resource (database, table, column, etc). With LF-Tags, you provide an LF-Tag expression which is used to match to resources for permissions. This makes LF-Tags much more scalable as you can grant permissions on many resources at once and permissions are updated accordingly as tags on resources are added, changed or removed. 
+Hub and Spoke model is chosen when customers wants to centralizes metadata discovery and permission management in governance account across line of business. In this model domain accounts will share the data with central governance account that hosts the metadata for enterprises to discovery and request access for the resource without domain owners involved in the fulfilment process. Central governance account provides better audibility on resource access and scaling the permission across enterprise.  
 
-## Why use LF-Tags?
+For more details on the setup refer to blog: 
+https://aws.amazon.com/blogs/big-data/introducing-aws-glue-crawlers-using-aws-lake-formation-permission-management/
 
-LF-Tags is a mechanism that can be used to group similar resources together, and permission on the group of resources. For example, if you have multiple databases and tables that are used by a wide variety of different groups of users, you can tag databases and tables that own those resources, and grant full read-write permissions to those resources using a single grant. 
+#### Peer to Peer:
 
-![image](images/lf-tags-grouping.png)
+Peer to Peer model is one of the data mesh patterns that is used by customers who have high degree of autonomy established within the domain and wants to operate in decentralized fashion.  In this model, domain accounts act as data producers and the data ownership remains with the domain generating them. Domain owners of the data will manage the lifecycle of the data and also control access to the data when sharing it with other domains. These domains operate independently and don’t depend on central governance platform/team for data distribution/fulfillment. 
 
-Using LF-Tags can greatly simplify the number of grants over using Named Resource policies. See below as an example:
+For more details on the setup refer to blog:
+https://aws.amazon.com/blogs/big-data/securely-share-your-data-across-aws-accounts-using-aws-lake-formation/
 
-![image](images/lf-tags-vs-named-resources-example.png)
+### 2. What are various cross account sharing versions available in Lake Formation?
 
-In the above example with 4 users and 5 tables, if you were use Named Resources policies, you would need to issue 20 grants. However, if you use LF-tags, and tagged all the tables with the same LF-Tag, you would need only one grant for each user to the tag for a total of 4 grants. If there were 100's of users and 1000's of resources, you would need 100*1000=100000 grants using named resources, but 100 grants for each user, and 1000 tagging operations for each resource.
+See [Cross Account versions](caversion.md) for various cross account versions available.
 
-LF-Tags also hierarchical. If you tag a database, all tables and columns within the database would inherit the LF-Tag. If you tag a table, then all columns would inherit the tags. You can also override inherited tags, so if you tag a database with tag AccessLevel = 'public', but want to change the tag value for a table to AccessLevel = 'private', then the table and all columns would override that value. 
+### 3. What are the factors to consider when choosing account level sharing vs direct sharing with principal?
 
-## How LF-Tag expressions work
+|     | Account to Account | Account to Principal| 
+| -------- | ------- | -------- | 
+|Control model  | When a source account (producer) wants to share a resource with a target account (consumer) but expects the consumer's data lake administrator to manage the resource permissions within their account, the source account can grant access at the account level rather than specifying individual users.    | When source account(producer) wants to have tighter control on resource permission and wants to completely control  who have access to the resource, customers can choose sharing the resource to direct principal in target account.    | 
+| Cross-Account version requirement | All Cross Account version supports this model   | Cross Account version V3 and above supports this model    | 
+| Receiver policies | Since the resource is shared at the account level, the administrator of the target account's data lake should have policies to create a resource link and delegate permissions. No additional policy requirements exist for other principals that are delegated permissions to the resource in the target account. For various personas and policies please refer to: https://docs.aws.amazon.com/lake-formation/latest/dg/permissions-reference.html#lf-permissions-tables    | Since the resource is shared cross account to principal, each receiver principal the needs Lake Formation CREATE_TABLE or CREATE_DATABASE permission to create the resource link. They also need the glue:CreateTable or glue:CreateDatabase IAM permission in their IAM policy (based on resource type that is shared).    | 
+| Auditability  | To understand who has access to a given dataset, you need to review the permissions defined in both the source account where the dataset originated and the target account with which the dataset has been shared.    | To understand who has access to a given dataset, you can determine this information entirely from the source account.    | 
 
-When granting permissions using LF-Tags, you need to provide a LF-Tag expression. This expression, if it evaluates to true, will grant a principal to the resource. LF-Tag expressions contain one or more LF-Tag names, and for each LF-Tag, one or more values. Each tag name is AND'ed in the expression and each lf-tag value is OR'ed. For example, LF-Tag1 = 'abc' AND LF-Tag2 = ('edf' OR 'ghi'). LF-Tags cannot be OR'ed.
+For more details on direct sharing with principal, refer to blog:
+ https://aws.amazon.com/blogs/big-data/enable-cross-account-sharing-with-direct-iam-principals-using-aws-lake-formation-tags/
 
-Let's look an example: 
+### 4. Can I share both my Glue Data catalog resources(catalog, database, table) and Redshift tables using Lake Formation cross account.
 
-![image](images/lf-tags-example.png)
+Yes, you can share both data lake resource cataloged in Glue Data Catalog with storage on S3 and Redshift tables shared with Glue Data catalog via data shares (https://docs.aws.amazon.com/redshift/latest/dg/lf_datashare_overview.html) using Lake Formation for cross account access.
 
-With the above example, we have three tables (although they can be columns or databases as well).
+ For more details refer to blog:
+https://aws.amazon.com/blogs/big-data/implement-tag-based-access-control-for-your-data-lake-and-amazon-redshift-data-sharing-with-aws-lake-formation/
 
-If you were to create a grant with the LF-Tag expression of Sensitivity = "Public", then this expression would be true for the Customer table, and Sales Table. Notice that not all tags need to evaluate to true for the resource to be granted.
 
-If you were to create a grant with the LF-Tag expression Audit = "true", then only the Sales table would evaluate true. 
+### 5. Can I share my resource cross account cross region?
 
-If you were to create a grant with the LF-Tag expression of Owner = 'Aarthi' and Audit = 'true', then again, only the Sales table would evaluate to true.
+yes, Lake Formation allows querying Data Catalog tables across regions using Athena, EMR, and Glue ETL. By creating resource links in other regions pointing to source databases and tables, you can access data across regions without copying the underlying data or metadata into the Data Catalog. Engines that queries the data needs network connectivity to endpoints within the region to access S3 buckets. For example, EMR clusters or Glue ETL jobs running in a private subnet within an AWS VPC may require a NAT gateway, VPC peering, or transit gateway to reach external resources. Any network traffic between source instance to any AWS endpoint stays within the AWS network and does not go over the internet. Refer  to https://aws.amazon.com/vpc/faqs/ for details on network traffic and communication path.
 
-## Limitations
-Before using LF-Tags, please see Lake Formation documentation for current limitations located at https://docs.aws.amazon.com/lake-formation/latest/dg/TBAC-notes.html
+ For more details on cross region setup refer to blog:
+https://aws.amazon.com/blogs/big-data/configure-cross-region-table-access-with-the-aws-glue-catalog-and-aws-lake-formation/
+
+### 6. Can I share resource cross account using Lake Formation when resource management within that account is not done using Lake Formation?
+
+Yes, you can use Hybrid access Mode to register the S3 bucket containing your data in Lake Formation in the source account(grantor) and opt-in cross account(target) principal for using Lake Formation mode for sharing. This enables target(receiver) account access to the shared resource using Lake Formation.
+
+For more details refer on how hybrid access mode works, refer to:
+https://aws.amazon.com/blogs/big-data/introducing-hybrid-access-mode-for-aws-glue-data-catalog-to-secure-access-using-aws-lake-formation-and-iam-and-amazon-s3-policies/
+
+
+
