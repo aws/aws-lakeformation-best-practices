@@ -1,5 +1,5 @@
 # Upgrade Cross Account Version 
-Below table provides summarize of various combinations for source and target account's cross account versions that is supported.
+Below table provides summary of various combinations for source and target account's cross account versions that is supported.
 
 | Source account\Target account    | Target account(receiver) - V1 | Target account(receiver) - V2| Target account(receiver) - V3| Target account(receiver) - V4|
 | -------- | ------- | -------- | -------- | -------- |

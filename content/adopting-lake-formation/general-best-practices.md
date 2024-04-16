@@ -13,7 +13,7 @@ Below are examples of when not to use Lake Formation administrator:
 * Glue crawler role’s - Do not make Glue crawler roles as Lake Formation administrator. Grant permissions to the crawler role to create tables in select databases in the catalog. Grant data location permission to the crawler role on specific S3 locations to which the databases point to. 
 * Data producer/owner/steward - Grant data location permission to create databases and tables in specific S3 locations. Provide Grantable permissions to these personas on the databases and tables that they manage.
 
-## When to use Data Filters versus Glue Views ?
+## When to use Data Filters versus a Glue View ?
 
 A data filter can be created only on individual/specific table while a Glue View can be created across multiple tables. A data filter could be used when you have simple and specific row and column filtering needs on a table. 
 

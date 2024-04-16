@@ -55,7 +55,8 @@ Data sharing through Lake Formation requires few actions to be performed on the 
 The steps for the recipient of a shared resource are as follows:
 
 1. Accept the RAM invite(s) if the account is not part of an AWS Organization or the if organization is not configured to automatically accept invites. 
-2. If you plan to have the shared resource accessible by Athena and/or Redshift Spectrum, create a resource link to the database or table that is shared using Lake Formtion administrator permissions. Grant DESCRIBE permission on the resource link to all the principals within the account that need access.In addition, grant permissions on the shared resource themselves to principals within the account that need access to the shared resource.
+2. If you plan to have the shared resource accessible by Athena and/or Redshift Spectrum, create a resource link to the database or table that is shared using Lake Formtion administrator permissions. Grant DESCRIBE permission on the resource link to all the principals within the account that need access.
+3. In addition, grant permissions on the shared resource themselves to principals within the account that need access to the shared resource.
 
 If the resources are shared with a new account first time, in Lake Formation cross account sharing Version 3 and higher, there will be two RAM invites sent from the owner to the consumer account - one for database level and one for table level. The consumer account has to accept both the RAM invites if AWS Organization is not set up as described earlier. 
 
