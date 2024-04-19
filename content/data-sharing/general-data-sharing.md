@@ -1,6 +1,6 @@
-# General best practices for data sharing
+# General best practices when using Lake Formation data sharing
 
-## Transitive Sharing
+## Transitive sharing
 
 Sharing of catalog objects across accounts using Lake Formation is not transitive. For example, if account A shares a database to account B, then account B cannot share it with account C. In this case, account A have to share the database with account B and account C individually. This is designed to maintain secure ownership of the data assets for the producer account. 
 

@@ -20,7 +20,7 @@ https://aws.amazon.com/blogs/big-data/securely-share-your-data-across-aws-accoun
 
 ### 2. What is various cross account sharing versions available in Lake Formation?
 
-See [Cross Account versions] (caversion.md) for various cross account versions available.
+See [Cross Account versions] (cross-account-versions.md) for various cross account versions available.
 
 ### 3. What are the factors to consider when choosing account level sharing vs direct sharing with principal?
 
@@ -56,5 +56,8 @@ For more details refer on how hybrid access mode works, refer to:
 https://aws.amazon.com/blogs/big-data/introducing-hybrid-access-mode-for-aws-glue-data-catalog-to-secure-access-using-aws-lake-formation-and-iam-and-amazon-s3-policies/
 
 
+## Other References
 
+For details on Lake Formation cross account sharing, refer [documentation](https://docs.aws.amazon.com/lake-formation/latest/dg/cross-account-permissions.html)
 
+For more details on cross account sharing versions, refer [documentation](https://docs.aws.amazon.com/lake-formation/latest/dg/optimize-ram.html). 

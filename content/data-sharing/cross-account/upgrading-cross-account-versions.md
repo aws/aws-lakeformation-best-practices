@@ -1,4 +1,15 @@
-# Upgrade Cross Account Version 
+# Upgrading Cross Account Versions 
+
+Lake Formation improves its sharing features over time, which sometimes requires changes that are not backwards compatible. To give customers flexibility in choosing when to upgrade, Lake Formation uses versioned sharing modes. Each new version retains the benefits of previous versions while adding enhancements.
+
+To maximize the benefits of cross-account sharing, it is recommended to use the newest version of cross-account sharing (currently Version 4) when first setting up Lake Formation permissions or when upgrading from older versions. 
+
+## Cross Account Versions
+
+See ![Cross account Versions](cross-account-versions.md) for a summary of cross account versions and ![Cross account public documentation](https://docs.aws.amazon.com/lake-formation/latest/dg/cross-account-permissions.html) for detailed information.
+
+## Cross Account Compatibility Table
+
 Below table provides summary of various combinations for source and target account's cross account versions that is supported.
 
 | Source account\Target account    | Target account(receiver) - V1 | Target account(receiver) - V2| Target account(receiver) - V3| Target account(receiver) - V4|
@@ -8,7 +19,7 @@ Below table provides summary of various combinations for source and target accou
 | Source Account(grantor) - V3  | supported    | supported    | supported    | supported   |
 | Source Account(grantor) - V4  | supported    | supported    | supported    | supported   |
 
-###  Note:
+**Note:**
 Modifying the grantor account's cross-account version settings does not change existing permissions the receiver account has on shared resources. However, if you are using V1 sharing and hitting your RAM resource share limit, consider revoking and re-granting cross-account permissions in the source account. Doing so will consolidate multiple RAM resource shares into fewer shares, allowing you to share more resources.
 
 ## Steps to be taken in Source Account:
