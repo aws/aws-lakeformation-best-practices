@@ -20,9 +20,9 @@ nav:
   - 'Data Sharing':
     - 'Overview': 'data-sharing/overview.md'
     - 'General Best Practices when using Lake Formation Data Sharing': 'data-sharing/general-data-sharing.md'
-    - 'Cross Account Versions': 'data-sharing/cross-account/cross-account-versions.md'
-    - 'Upgrading Cross Account Version': 'data-sharing/cross-account/upgrading-cross-account-versions.md'
-    - 'Cross Account FAQS': 'data-sharing/cross-account/cross-account-faq.md'
+    - 'Cross Account Versions': 'data-sharing/cross-account-versions.md'
+    - 'Upgrading Cross Account Version': 'data-sharing/upgrading-cross-account-versions.md'
+    - 'Cross Account FAQS': 'data-sharing/cross-account-faq.md'
   - 'LF-Tags':
     - 'Overview': 'lf-tags/overview.md'
     - 'LF-Tags Basics': 'lf-tags/basics.md'
