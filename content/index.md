@@ -4,6 +4,6 @@ AWS Lake Formation helps you centrally govern, secure, and globally share data f
 
 This guide is broken down in topics:
 
-- Best Practices when adopting Lake Formation
-- Best Practices when using Lake Formations data sharing feature
-- Best Practices when using LF-Tags
+- [Best Practices when adopting Lake Formation](adopting-lake-formation/overview.md)
+- [Best Practices when using Lake Formations data sharing feature](data-sharing/cross-account/overview.md)
+- [Best Practices when using LF-Tags](lf-tags/overview.md)
