@@ -24,5 +24,5 @@ This version streamlines cross-account resource sharing by using AWS RAM to map 
 
 This version includes the benefits of V3. Additionally, it enables resources to be managed in Hybrid Access Mode and also allows sharing hybrid resources across accounts.
 
-For more details refer to documentation: https://docs.aws.amazon.com/lake-formation/latest/dg/hybrid-access-mode.html
+For more details refer to [public documentation](https://docs.aws.amazon.com/lake-formation/latest/dg/hybrid-access-mode.html)
 

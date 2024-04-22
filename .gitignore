@@ -67,6 +67,8 @@ target/
 # virtualenv
 venv/
 ENV/
+.venv/
+pyvenv.cfg
 
 # MkDocs documentation
 site/

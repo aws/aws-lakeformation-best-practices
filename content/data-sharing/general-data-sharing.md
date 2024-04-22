@@ -1,6 +1,6 @@
-# General best practices for data sharing
+# General best practices when using Lake Formation data sharing
 
-## Transitive Sharing
+## Transitive sharing
 
 Sharing of catalog objects across accounts using Lake Formation is not transitive. For example, if account A shares a database to account B, then account B cannot share it with account C. In this case, account A have to share the database with account B and account C individually. This is designed to maintain secure ownership of the data assets for the producer account. 
 
@@ -38,7 +38,7 @@ SELECT column_name1,column_name2 FROM rl_database_name.table_name;
 
 In the below example, you directly point your query in the recipient account to the shared database name and table by providing the catalog_id of the sharing or source account. 
 
-```
+```python
 AWSGlueDataCatalog_node1709588807746 = glueContext.create_dynamic_frame_from_catalog(
     database="source_account_dbname",
     table_name="source_account_tablename",
