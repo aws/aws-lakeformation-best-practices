@@ -27,7 +27,7 @@ This a hybrid of both hub and spoke model and data mesh. Customers chose this to
 
 Like data meshes, this requires orgnaizations to use a different paradigm that some organizations may not be used to. However, if this model is attractive, AWS highly recommend that you take a look at [AWS Data Zone](https://aws.amazon.com/datazone/), which leverages Lake Formation for security management, Glue Data Catalog for techincal data management, while offering a business catalog, approval workflows, and Interoperability with third party vendors. 
 
-However, if you wish to implement this model without Data Zone, please refer to blog ![Design a data mesh architecture using AWS Lake Formation and AWS Glue](https://aws.amazon.com/blogs/big-data/design-a-data-mesh-architecture-using-aws-lake-formation-and-aws-glue/)
+However, if you wish to implement this model without Data Zone, please refer to blog [Design a data mesh architecture using AWS Lake Formation and AWS Glue](https://aws.amazon.com/blogs/big-data/design-a-data-mesh-architecture-using-aws-lake-formation-and-aws-glue/)
 
 ### 2. What is various cross account sharing versions available in Lake Formation?
 
