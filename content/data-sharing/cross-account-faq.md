@@ -29,11 +29,11 @@ Like data meshes, this requires orgnaizations to use a different paradigm that s
 
 However, if you wish to implement this model without Data Zone, please refer to blog [Design a data mesh architecture using AWS Lake Formation and AWS Glue](https://aws.amazon.com/blogs/big-data/design-a-data-mesh-architecture-using-aws-lake-formation-and-aws-glue/)
 
-### 2. What is various cross account sharing versions available in Lake Formation?
+## 2. What is various cross account sharing versions available in Lake Formation?
 
 See [Cross Account versions] (cross-account-versions.md) for various cross account versions available.
 
-### 3. What are the factors to consider when choosing account level sharing vs direct sharing with principal?
+## 3. What are the factors to consider when choosing account level sharing vs direct sharing with principal?
 
 |     | Account to Account | Account to Principal| 
 | -------- | ------- | -------- | 
@@ -44,19 +44,19 @@ See [Cross Account versions] (cross-account-versions.md) for various cross accou
 
 For more details on direct sharing with principal, refer to blog [Enable cross-account sharing with direct IAM principals using AWS Lake Formation Tags](https://aws.amazon.com/blogs/big-data/enable-cross-account-sharing-with-direct-iam-principals-using-aws-lake-formation-tags/)
 
-### 4. Can I share both my Glue Data catalog resources (catalog, database, table) and Redshift tables using Lake Formation cross account.
+## 4. Can I share both my Glue Data catalog resources (catalog, database, table) and Redshift tables using Lake Formation cross account.
 
 Yes, you can share both data lake resource cataloged in Glue Data Catalog with storage on S3 and Redshift tables shared with Glue Data catalog via data shares (https://docs.aws.amazon.com/redshift/latest/dg/lf_datashare_overview.html) using Lake Formation for cross account access.
 
  For more details refer to blog [Implement tag-based access control for your data lake and Amazon Redshift data sharing with AWS Lake Formation](https://aws.amazon.com/blogs/big-data/implement-tag-based-access-control-for-your-data-lake-and-amazon-redshift-data-sharing-with-aws-lake-formation/)
 
-### 5. Can I share my resource cross account cross region?
+## 5. Can I share my resource cross account cross region?
 
 yes, Lake Formation allows querying Data Catalog tables across regions using Athena, EMR, and Glue ETL. By creating resource links in other regions pointing to source databases and tables, you can access data across regions without copying the underlying data or metadata into the Data Catalog. Engines that query the data needs network connectivity to endpoints within the region to access S3 buckets. For example, EMR clusters or Glue ETL jobs running in a private subnet within an AWS VPC may require a NAT gateway, VPC peering, or transit gateway to reach external resources. Any network traffic between source instance to any AWS endpoint stays within the AWS network and does not go over the internet. Refer to (AWS VPC FAQs)[https://aws.amazon.com/vpc/faqs/] for details on network traffic and communication path.
 
  For more details on cross region setup refer to blog [Configure cross-Region table access with the AWS Glue Catalog and AWS Lake Formation](https://aws.amazon.com/blogs/big-data/configure-cross-region-table-access-with-the-aws-glue-catalog-and-aws-lake-formation/)
 
-### 6. Can I share resource cross account using Lake Formation when resource management within that account is not done using Lake Formation?
+## 6. Can I share resource cross account using Lake Formation when resource management within that account is not done using Lake Formation?
 
 Yes, you can use Hybrid access Mode to register the S3 bucket containing your data in Lake Formation in the source account(grantor) and opt-in cross account(target) principal for using Lake Formation mode for sharing. This enables target(receiver) account access to the shared resource using Lake Formation.
 
