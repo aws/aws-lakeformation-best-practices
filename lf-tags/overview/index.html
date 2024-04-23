@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../basics/">
+        <link rel="prev" href="../../data-sharing/cross-account-faq/">
       
       
-        <link rel="next" href="../best-practices/">
+        <link rel="next" href="../basics/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Common Ontologies - AWS Lake Formation Best Practices Guides</title>
+        <title>Overview - AWS Lake Formation Best Practices Guides</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#common-lf-tag-ontologies" class="md-skip">
+        <a href="#lake-formation-tags-lf-tags" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Common Ontologies
+              Overview
             
           </span>
         </div>
@@ -542,10 +542,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../overview/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -554,6 +563,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -584,19 +594,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../common-ontologies/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -605,7 +606,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -717,18 +717,15 @@
   
 
 
-<h1 id="common-lf-tag-ontologies">Common LF-Tag Ontologies<a class="headerlink" href="#common-lf-tag-ontologies" title="Permanent link">&para;</a></h1>
-<p>Here is a list of common LF-Tags that make up a tagging ontology that are commonly seen by customers:</p>
-<ol>
-<li>Environment (eg. dev, beta, gamma, prod) - LF-Tag that denotes which stage a particular resource exists and granting developers to resource in dev and beta, but only application access to gamma and prod.</li>
-<li>Departments (eg. sales, marketing, engineering, etc) - LF-Tag that groups department datasets using a single tag. This can be used for sharing purpose (ie departmentA shares with departmentB).</li>
-<li>Product (eg. dataproduct1, dataproduct2, etc) - LF-Tag that groups similar datasets under a data product that be used for permissioning and sharing.</li>
-<li>Owner (eg. GroupA, GroupB, GroupC) - LF-Tag that provides certain groups of principals the ability different set of permissions (like write/delete permissions) that is separate for sharing purposes. </li>
-<li>Roles (eg. data scientist, data engineer, application, etc) - LF-Tag that provides different levels of permissions based on role. For example, a data steward could have grantable full access to a dataset where as a data scientist could have read only permissions.</li>
-<li>Data Classification (eg. SSN, Address, PhoneNumber, etc ) - LF-Tag that allows to permission differently based on the classification of data. More sensitive classifications can be accessable by privileged consumers, etc.</li>
-<li>Data Sensitivity (eg. public, private, PII, etc) - LF-Tag that allows different groups of principals to accessible columns or tables based on their sensitivity of the column to meet compliance rules, like GDPR. </li>
-<li>Sharable (eg. sharable, notsharable) - LF-Tag that groups resources that can be shared with other departments.  </li>
-</ol>
+<h1 id="lake-formation-tags-lf-tags">Lake Formation Tags (LF-Tags)<a class="headerlink" href="#lake-formation-tags-lf-tags" title="Permanent link">&para;</a></h1>
+<p>Lake Formation Tags (LF-tags) were created to help customers scale their permissions by providing an alternative way of creating access policies than using named resources. </p>
+<ul>
+<li>See <a href="../basics/">LF-Tag Basics</a> for how LF-Tags work. </li>
+<li>See <a href="../common-ontologies/">Common LF-Tag Ontologies</a> for common tags customers tend to use. </li>
+<li>See <a href="../best-practices/">Best Practices</a> for best practices when using LF-Tags.</li>
+<li>See <a href="../example-usecase/">Example Usage</a> for an example usage of LF-Tags.</li>
+<li>See <a href="../limitations/">Limitations</a> for limitations to be aware of.</li>
+</ul>
 
 
 

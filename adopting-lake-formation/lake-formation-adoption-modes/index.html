@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../basics/">
+        <link rel="prev" href="../considerations-when-adopting-lake-formation/">
       
       
-        <link rel="next" href="../best-practices/">
+        <link rel="next" href="../general-best-practices/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Common Ontologies - AWS Lake Formation Best Practices Guides</title>
+        <title>Lake formation Adoption Modes - AWS Lake Formation Best Practices Guides</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#common-lf-tag-ontologies" class="md-skip">
+        <a href="#lake-formation-adoption-modes" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Common Ontologies
+              Lake formation Adoption Modes
             
           </span>
         </div>
@@ -232,17 +232,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -256,7 +258,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Adopting Lake Formation
@@ -270,7 +272,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/overview/" class="md-nav__link">
+      <a href="../overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -291,7 +293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/considerations-when-adopting-lake-formation/" class="md-nav__link">
+      <a href="../considerations-when-adopting-lake-formation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -309,10 +311,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/lake-formation-adoption-modes/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Lake formation Adoption Modes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -321,6 +343,71 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#hybrid-access-mode-versus-lake-formation-mode-what-to-choose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hybrid access mode versus Lake Formation mode - what to choose?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases-to-adopt-hybrid-access-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use-cases to adopt Hybrid access mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases-to-adopt-lake-formation-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use-cases to adopt Lake Formation mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-lf-tags-along-with-hybrid-access-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using LF-Tags along with hybrid access mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -333,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/general-best-practices/" class="md-nav__link">
+      <a href="../general-best-practices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -505,19 +592,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -531,7 +616,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             LF-Tags
@@ -545,7 +630,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../overview/" class="md-nav__link">
+      <a href="../../lf-tags/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -566,7 +651,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../basics/" class="md-nav__link">
+      <a href="../../lf-tags/basics/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -584,19 +669,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../lf-tags/common-ontologies/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -605,7 +681,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -618,7 +693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../best-practices/" class="md-nav__link">
+      <a href="../../lf-tags/best-practices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -639,7 +714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../example-usecase/" class="md-nav__link">
+      <a href="../../lf-tags/example-usecase/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -660,7 +735,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../limitations/" class="md-nav__link">
+      <a href="../../lf-tags/limitations/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -701,6 +776,59 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#hybrid-access-mode-versus-lake-formation-mode-what-to-choose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hybrid access mode versus Lake Formation mode - what to choose?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases-to-adopt-hybrid-access-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use-cases to adopt Hybrid access mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases-to-adopt-lake-formation-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use-cases to adopt Lake Formation mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-lf-tags-along-with-hybrid-access-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using LF-Tags along with hybrid access mode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -717,18 +845,37 @@
   
 
 
-<h1 id="common-lf-tag-ontologies">Common LF-Tag Ontologies<a class="headerlink" href="#common-lf-tag-ontologies" title="Permanent link">&para;</a></h1>
-<p>Here is a list of common LF-Tags that make up a tagging ontology that are commonly seen by customers:</p>
+<h1 id="lake-formation-adoption-modes">Lake Formation adoption modes<a class="headerlink" href="#lake-formation-adoption-modes" title="Permanent link">&para;</a></h1>
+<p>Before Lake Formation was available, users of Glue Data Catalog can use a combination of Data Catalog resource policies and IAM permissions (that is, S3 bucket policies and IAM principal policies) to manage access to both the metadata in the catalog and the data in S3 that the metadata points to. The combination of S3 bucket policies, IAM principal policies and Glue catalog policies can be referred to as resource based policies. </p>
+<p>However, you do not have to adopt Lake Formation completely in order to use it. You can mix and match permission models between Lake Formation and resource based policies for your catalog resources. We will go through some of the best practices and reasons to choose one over the other.</p>
+<h2 id="hybrid-access-mode-versus-lake-formation-mode-what-to-choose">Hybrid access mode versus Lake Formation mode - what to choose?<a class="headerlink" href="#hybrid-access-mode-versus-lake-formation-mode-what-to-choose" title="Permanent link">&para;</a></h2>
+<p>There are two modes in which you can register an S3 data location with Lake Formation - Lake Formation mode and <a href="https://docs.aws.amazon.com/lake-formation/latest/dg/hybrid-access-mode.html">Hybrid access mode</a>. When you register a database or table location in Lake Formation mode, you are choosing Lake Formation as the only permissions model to manage all permissions to those catalog resources. In this case, after setting up permissions to users, you need to revoke resource based policies. </p>
+<p><img alt="Lake formation mode" src="../images/lakeformationmode.png" /></p>
+<p>When you register a database or table location with Lake Formation in hybrid access mode, you can choose to provide Lake Formation permissions to some users and maintain the resource based policy permissions to others, without interruptions. One user gets access to the catalog resources through only one permissions model. </p>
+<p><img alt="hybrid access mode" src="../images/hybridaccessmode.png" /></p>
+<h2 id="use-cases-to-adopt-hybrid-access-mode">Use-cases to adopt Hybrid access mode<a class="headerlink" href="#use-cases-to-adopt-hybrid-access-mode" title="Permanent link">&para;</a></h2>
+<p>When you have existing users of Data Catalog with resource based policy permissions and you want to adopt Lake Formation, we recommend you to use hybrid access mode. You can select the databases and tables that you want to use Lake Formation permissions with, register them with Lake Formation as hybrid access mode resources ( RegisterResource() API ). Then, you can start adding Lake Formation permissions for new users on these resources. You can also gradually add Lake Formation permissions for your existing users and remove their resource based policy permissions. The hybrid access mode provides minimal operational changes as your existing access to users is not interrupted when you adopt Lake Formation.</p>
+<p>For example, if you have extract, transform and load (ETL) processes currently in production that use resource based policy permissions, enabling Lake Formation permissions to these jobs can impact them. You can onboard your new team members like data scientists and data analysts to these same databases and tables with Lake Formation permissions while continuing to use resource based policy permissions for your production workflows uninterruptedly. Some ETL workflows that require full table access could use the resource based policy permissions while you can add fine grained access for the same tables to your data scientists and analysts. You do not have to maintain two copies of the same tables, in order to share them with different users. </p>
+<p>The below picture illustrates hybrid access mode permissions on the same catalog resource within an account for a data-analyst role versus a data-engineer role. </p>
+<p><img alt="single account hybrid access mode" src="../images/oneaccount-hybridaccessmode.png" /></p>
+<p>The below picture illustrates hybrid access mode permissions on the same catalog resource shared cross account for a data-analyst role versus a data-engineer role. </p>
+<p><img alt="cross account hybrid access mode" src="../images/crossaccount-hybridaccessmode.png" /></p>
+<p>For setting up Lake Formation permissions in hybrid access mode, refer to <a href="https://docs.aws.amazon.com/lake-formation/latest/dg/hybrid-access-setup.html">documentation.</a></p>
+<h2 id="use-cases-to-adopt-lake-formation-mode">Use-cases to adopt Lake Formation mode<a class="headerlink" href="#use-cases-to-adopt-lake-formation-mode" title="Permanent link">&para;</a></h2>
+<p>If you are pretty new to Data Catalog, if your current users and ETL workloads do not heavily use Data Catalog with resource based policy permissions, and if you prefer to have only one permisisons model for ease of maintenance using Lake Formation, we recommend Lake Formation mode. You can crawl the new data sets in S3 using Glue Crawlers, create databases and tables in the Glue Data Catalog, set up Lake Formation permissions to your users and register them with Lake Formation in Lake Formation mode. Once the Lake Formation permissions are verified to work, you may clean up the IAM policy permissions, Data Catalog resource policies and S3 bucket policies. </p>
+<p>Large organizations that use the IAM based policy permission's for GDC and S3 access sharing may have come across S3 bucket policy limits and IAM policy limits. Lake Formation is designed to help avoid those limitations. </p>
+<p>We also recommend to continue using Lake Formation mode on a database once it is set up and not change it to hybrid access mode. We have provided <a href="https://docs.aws.amazon.com/lake-formation/latest/dg/hybrid-access-mode-update.html">step by step instructions</a> if you prefer to change a Glue resource to hybrid resource though. In order to avoid impacting the existing Lake Formation users, we recommend doing it during offline hours. </p>
+<p>For setting up Lake Formation permissions in Lake Formation mode, refer to <a href="https://docs.aws.amazon.com/lake-formation/latest/dg/initial-LF-setup.html">documentation</a>. </p>
+<h2 id="using-lf-tags-along-with-hybrid-access-mode">Using LF-Tags along with hybrid access mode<a class="headerlink" href="#using-lf-tags-along-with-hybrid-access-mode" title="Permanent link">&para;</a></h2>
+<p>You can grant permissions on a database or table using either named resource method or LF-tags. For a hybrid resource, you can not opt-in the principal, that is, <a href="https://docs.aws.amazon.com/lake-formation/latest/APIReference/API_CreateLakeFormationOptIn.html">CreateLakeFormationOptIn()</a> API to use Lake Formation permission by specifying the LF-Tags. You can only select the databases and tables by name and opt-in the principal to make Lake Formation permissions effective immediately. </p>
+<p>If you are using LF-Tags for granting permissions, then please follow the below steps to opt-in. </p>
 <ol>
-<li>Environment (eg. dev, beta, gamma, prod) - LF-Tag that denotes which stage a particular resource exists and granting developers to resource in dev and beta, but only application access to gamma and prod.</li>
-<li>Departments (eg. sales, marketing, engineering, etc) - LF-Tag that groups department datasets using a single tag. This can be used for sharing purpose (ie departmentA shares with departmentB).</li>
-<li>Product (eg. dataproduct1, dataproduct2, etc) - LF-Tag that groups similar datasets under a data product that be used for permissioning and sharing.</li>
-<li>Owner (eg. GroupA, GroupB, GroupC) - LF-Tag that provides certain groups of principals the ability different set of permissions (like write/delete permissions) that is separate for sharing purposes. </li>
-<li>Roles (eg. data scientist, data engineer, application, etc) - LF-Tag that provides different levels of permissions based on role. For example, a data steward could have grantable full access to a dataset where as a data scientist could have read only permissions.</li>
-<li>Data Classification (eg. SSN, Address, PhoneNumber, etc ) - LF-Tag that allows to permission differently based on the classification of data. More sensitive classifications can be accessable by privileged consumers, etc.</li>
-<li>Data Sensitivity (eg. public, private, PII, etc) - LF-Tag that allows different groups of principals to accessible columns or tables based on their sensitivity of the column to meet compliance rules, like GDPR. </li>
-<li>Sharable (eg. sharable, notsharable) - LF-Tag that groups resources that can be shared with other departments.  </li>
+<li>List out the catalog objects to which the LF-Tags are associated.</li>
+<li>List out the principals who were granted permissions on those resources.</li>
+<li>Opt-in the principals and resources as a separate step. For this, you can use the Hybrid access mode on the left navigation bar on the console or use SDK/API CreateLakeFormationOptIn().</li>
 </ol>
+<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h2>
+<p>Please refer to our public docs for current list of <a href="https://docs.aws.amazon.com/lake-formation/latest/dg/notes-hybrid.html">considerations and limitations</a>. </p>
 
 
 

@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../basics/">
+        <link rel="prev" href="../lake-formation-adoption-modes/">
       
       
-        <link rel="next" href="../best-practices/">
+        <link rel="next" href="../../data-sharing/overview/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Common Ontologies - AWS Lake Formation Best Practices Guides</title>
+        <title>General Best Practices - AWS Lake Formation Best Practices Guides</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#common-lf-tag-ontologies" class="md-skip">
+        <a href="#general-best-practices" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Common Ontologies
+              General Best Practices
             
           </span>
         </div>
@@ -232,17 +232,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -256,7 +258,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Adopting Lake Formation
@@ -270,7 +272,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/overview/" class="md-nav__link">
+      <a href="../overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -291,7 +293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/considerations-when-adopting-lake-formation/" class="md-nav__link">
+      <a href="../considerations-when-adopting-lake-formation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -312,7 +314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/lake-formation-adoption-modes/" class="md-nav__link">
+      <a href="../lake-formation-adoption-modes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -330,10 +332,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/general-best-practices/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    General Best Practices
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -342,6 +364,53 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lake-formation-service-linked-role-vs-customer-managed-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lake Formation Service Linked Role vs Customer Managed Roles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-lake-formation-administrator-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Lake Formation Administrator Role
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-data-filters-versus-a-glue-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to use Data Filters versus a Glue View ?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -505,19 +574,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -531,7 +598,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             LF-Tags
@@ -545,7 +612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../overview/" class="md-nav__link">
+      <a href="../../lf-tags/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -566,7 +633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../basics/" class="md-nav__link">
+      <a href="../../lf-tags/basics/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -584,19 +651,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../lf-tags/common-ontologies/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -605,7 +663,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -618,7 +675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../best-practices/" class="md-nav__link">
+      <a href="../../lf-tags/best-practices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -639,7 +696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../example-usecase/" class="md-nav__link">
+      <a href="../../lf-tags/example-usecase/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -660,7 +717,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../limitations/" class="md-nav__link">
+      <a href="../../lf-tags/limitations/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -701,6 +758,41 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lake-formation-service-linked-role-vs-customer-managed-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lake Formation Service Linked Role vs Customer Managed Roles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-lake-formation-administrator-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Lake Formation Administrator Role
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-data-filters-versus-a-glue-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to use Data Filters versus a Glue View ?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -717,18 +809,21 @@
   
 
 
-<h1 id="common-lf-tag-ontologies">Common LF-Tag Ontologies<a class="headerlink" href="#common-lf-tag-ontologies" title="Permanent link">&para;</a></h1>
-<p>Here is a list of common LF-Tags that make up a tagging ontology that are commonly seen by customers:</p>
-<ol>
-<li>Environment (eg. dev, beta, gamma, prod) - LF-Tag that denotes which stage a particular resource exists and granting developers to resource in dev and beta, but only application access to gamma and prod.</li>
-<li>Departments (eg. sales, marketing, engineering, etc) - LF-Tag that groups department datasets using a single tag. This can be used for sharing purpose (ie departmentA shares with departmentB).</li>
-<li>Product (eg. dataproduct1, dataproduct2, etc) - LF-Tag that groups similar datasets under a data product that be used for permissioning and sharing.</li>
-<li>Owner (eg. GroupA, GroupB, GroupC) - LF-Tag that provides certain groups of principals the ability different set of permissions (like write/delete permissions) that is separate for sharing purposes. </li>
-<li>Roles (eg. data scientist, data engineer, application, etc) - LF-Tag that provides different levels of permissions based on role. For example, a data steward could have grantable full access to a dataset where as a data scientist could have read only permissions.</li>
-<li>Data Classification (eg. SSN, Address, PhoneNumber, etc ) - LF-Tag that allows to permission differently based on the classification of data. More sensitive classifications can be accessable by privileged consumers, etc.</li>
-<li>Data Sensitivity (eg. public, private, PII, etc) - LF-Tag that allows different groups of principals to accessible columns or tables based on their sensitivity of the column to meet compliance rules, like GDPR. </li>
-<li>Sharable (eg. sharable, notsharable) - LF-Tag that groups resources that can be shared with other departments.  </li>
-</ol>
+<h1 id="general-best-practices">General Best Practices<a class="headerlink" href="#general-best-practices" title="Permanent link">&para;</a></h1>
+<h2 id="lake-formation-service-linked-role-vs-customer-managed-roles">Lake Formation Service Linked Role vs Customer Managed Roles<a class="headerlink" href="#lake-formation-service-linked-role-vs-customer-managed-roles" title="Permanent link">&para;</a></h2>
+<p>We do not recommend using Lake Formation’s Service Linked Role (SLR) in production environments. Although using SLR is provided for convenience, there are few points to consider if you choose it.  You cannot edit the SLR’s policy if needed. Encrypted catalogs are not supported with SLR for cross account sharing. Significantly large number of S3 locations registered with Lake Formation may cause IAM policy limits to be breached. EMR on EC2 does not support SLR registered locations for data access. Lastly, SLR's do not adhere to <a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html">AWS Service Control Policies</a>. Hence, we recommend creating a custom IAM role to always register your data locations with Lake Formation. </p>
+<h2 id="using-lake-formation-administrator-role">Using Lake Formation Administrator Role<a class="headerlink" href="#using-lake-formation-administrator-role" title="Permanent link">&para;</a></h2>
+<p>Lake Formation Administrator permissions could be over-permissive for specific operations on the data lake. There is also a limit of 30 on the number of administrators that can be registered. We recommend you to create roles with limited IAM and Lake Formation permissions for targeted operations. Limit who can be a Lake Formation administrator role to those that need to administer the AWS account and processes that must have full access to the Glue Data Catalog. For read-only access to the entire Glue Data Catalog, we recommend using Read-Only Lake Formation Administrator for operations such as auditing that do not require write access.  For use cases where a user needs to be able to grant access to other users within the account, provide them with Grantable permissions on resources that they manage. </p>
+<p>Below are examples of when not to use Lake Formation administrator:</p>
+<ul>
+<li>Glue crawler role’s - Do not make Glue crawler roles as Lake Formation administrator. Grant permissions to the crawler role to create tables in select databases in the catalog. Grant data location permission to the crawler role on specific S3 locations to which the databases point to. </li>
+<li>Data producer/owner/steward - Grant data location permission to create databases and tables in specific S3 locations. Provide Grantable permissions to these personas on the databases and tables that they manage.</li>
+</ul>
+<h2 id="when-to-use-data-filters-versus-a-glue-view">When to use Data Filters versus a Glue View ?<a class="headerlink" href="#when-to-use-data-filters-versus-a-glue-view" title="Permanent link">&para;</a></h2>
+<p>A data filter can be created only on individual/specific table while a Glue View can be created across multiple tables. A data filter could be used when you have simple and specific row and column filtering needs on a table. </p>
+<p>The <a href="https://docs.aws.amazon.com/athena/latest/ug/views-glue.html">Glue Views</a> are different from that of the standard table views that you create in <a href="https://docs.aws.amazon.com/athena/latest/ug/create-view.html">Amazon Athena</a>, <a href="https://docs.aws.amazon.com/athena/latest/ug/hive-views.html">Apache Hive</a>, Apache Spark, Presto, Trino, etc. The Glue Views is a feature of Data Catalog in Preview and are based on definer semantics, where access to the Glue Views are defined by the user who creates the view. </p>
+<p>You can share a Glue View without sharing the underlying tables. The recipient can query only the Glue View and not access the tables.  You can share a Glue View from one account to another but cannot create a new Glue View that contains tables shared from other accounts. </p>
+<p>Glue Views is currently in <a href="https://docs.aws.amazon.com/lake-formation/latest/dg/working-with-views.html">Preview</a>. We will add more best practices as the feature becomes generally available. </p>
 
 
 
