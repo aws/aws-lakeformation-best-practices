@@ -29,11 +29,25 @@ Like data meshes, this requires orgnaizations to use a different paradigm that s
 
 However, if you wish to implement this model without Data Zone, please refer to blog [Design a data mesh architecture using AWS Lake Formation and AWS Glue](https://aws.amazon.com/blogs/big-data/design-a-data-mesh-architecture-using-aws-lake-formation-and-aws-glue/)
 
-## 2. What is various cross account sharing versions available in Lake Formation?
+## 2. What are the various cross account sharing versions available in Lake Formation?
 
-See [Cross Account versions] (cross-account-versions.md) for various cross account versions available.
+See [Cross Account versions](cross-account-versions.md) for various cross account versions available.
 
-## 3. What are the factors to consider when choosing account level sharing vs direct sharing with principal?
+
+## 3. How does Lake Formation manage the AWS RAM resource shares across cross account sharing versions? 
+
+In version 1,  one RAM share is created for every catalog object shared between two accounts. For example, if account A shares database1 with DESCRIBE permission to account B, one RAM share is created. Next, if account A shares table1 from database1, a second RAM share is created. When table2 from database1 is shared, a third RAM share is created. If account A shares database1.ALL_Tables, then a 4th RAM share is created and so on. If account A shares a second database2 with account B, a new RAM share is created. As many Lake Formation cross account grants per account per Data Catalog object between two accounts, as many RAM shares are created. 
+
+In version 2, RAM shares are optimized and continues to be optimized in version 3 and version 4.  A set of RAM shares are created on the source account for every recipient account.  Between version 2 and version 3 (or version 4), the number of RAM shares created are the same when named resource method is used for cross account sharing and it differs slightly for LF-TBAC. 
+
+One RAM share is created in the source account for all databases shared with a recipient account. This database level RAM share gets reused by attaching all new databases shared to the same recipient account. One RAM share is created in the source account for all tables shared with a recipient account. This table level RAM share gets reused by attaching all new tables shared to the same recipient account.  If the source account chooses to share a database with the ALL_Tables option, then a new RAM share is created. So, using the named resource method for cross account grants, a total of up to 3 RAM shares can be created for every account pair. If the source account does not choose to grant cross account permissions using ALL_Tables, then only 2 RAM shares are created for every account pair.
+
+For LF-Tags based cross account sharing, two additional RAM shares are created - one for databases and one for tables. Any additional LF-Tag based grants between the same two accounts reuses these 2 RAM shares.
+
+So, if you are using a combination of LF-TBAC and named resource method for cross account sharing, version 3 and version 4 can create up to 5 RAM shares in the source account for any two source and recipient account pairs.
+
+
+## 4. What are the factors to consider when choosing account level sharing vs direct sharing with principal?
 
 |     | Account to Account | Account to Principal| 
 | -------- | ------- | -------- | 
@@ -44,19 +58,19 @@ See [Cross Account versions] (cross-account-versions.md) for various cross accou
 
 For more details on direct sharing with principal, refer to blog [Enable cross-account sharing with direct IAM principals using AWS Lake Formation Tags](https://aws.amazon.com/blogs/big-data/enable-cross-account-sharing-with-direct-iam-principals-using-aws-lake-formation-tags/)
 
-## 4. Can I share both my Glue Data catalog resources (catalog, database, table) and Redshift tables using Lake Formation cross account.
+## 5. Can I share both my Glue Data catalog resources (catalog, database, table) and Redshift tables using Lake Formation cross account.
 
 Yes, you can share both data lake resource cataloged in Glue Data Catalog with storage on S3 and Redshift tables shared with Glue Data catalog via data shares (https://docs.aws.amazon.com/redshift/latest/dg/lf_datashare_overview.html) using Lake Formation for cross account access.
 
  For more details refer to blog [Implement tag-based access control for your data lake and Amazon Redshift data sharing with AWS Lake Formation](https://aws.amazon.com/blogs/big-data/implement-tag-based-access-control-for-your-data-lake-and-amazon-redshift-data-sharing-with-aws-lake-formation/)
 
-## 5. Can I share my resource cross account cross region?
+## 6. Can I share my resource cross account cross region?
 
 yes, Lake Formation allows querying Data Catalog tables across regions using Athena, EMR, and Glue ETL. By creating resource links in other regions pointing to source databases and tables, you can access data across regions without copying the underlying data or metadata into the Data Catalog. Engines that query the data needs network connectivity to endpoints within the region to access S3 buckets. For example, EMR clusters or Glue ETL jobs running in a private subnet within an AWS VPC may require a NAT gateway, VPC peering, or transit gateway to reach external resources. Any network traffic between source instance to any AWS endpoint stays within the AWS network and does not go over the internet. Refer to (AWS VPC FAQs)[https://aws.amazon.com/vpc/faqs/] for details on network traffic and communication path.
 
  For more details on cross region setup refer to blog [Configure cross-Region table access with the AWS Glue Catalog and AWS Lake Formation](https://aws.amazon.com/blogs/big-data/configure-cross-region-table-access-with-the-aws-glue-catalog-and-aws-lake-formation/)
 
-## 6. Can I share resource cross account using Lake Formation when resource management within that account is not done using Lake Formation?
+## 7. Can I share resource cross account using Lake Formation when resource management within that account is not done using Lake Formation?
 
 Yes, you can use Hybrid access Mode to register the S3 bucket containing your data in Lake Formation in the source account(grantor) and opt-in cross account(target) principal for using Lake Formation mode for sharing. This enables target(receiver) account access to the shared resource using Lake Formation.
 
