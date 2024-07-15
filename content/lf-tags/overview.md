@@ -5,5 +5,6 @@ Lake Formation Tags (LF-tags) were created to help customers scale their permiss
 * See [LF-Tag Basics](basics.md) for how LF-Tags work. 
 * See [Common LF-Tag Ontologies](common-ontologies.md) for common tags customers tend to use. 
 * See [Best Practices](best-practices.md) for best practices when using LF-Tags.
+* See [Developing an LF-Tag Ontology](developing-an-lftag-ontology.md) for best practices when trying to develop an LF-Tag ontology.
 * See [Example Usage](example-usecase.md) for an example usage of LF-Tags.
 * See [Limitations](limitations.md) for limitations to be aware of.

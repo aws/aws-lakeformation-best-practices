@@ -4,6 +4,15 @@ A best practices guide for using Lake Formation.
 
 This guide is open for anyone to make changes and suggest new content. If there is new content that you would like to see or inaccurate information that needs to be fixed, please open an Issue or contribute it. 
 
+## Adding new content
+
+This repo uses mkdocs and is hosted on Github. To get started and creating content, the easiest way is to use [poetry](https://python-poetry.org/). The following commands should get you started:
+* You can install poetry using ```brew install poetry``` if you are running on MacOS. If you are using a different OS, please see the [installation instructions](https://python-poetry.org/docs/#installation) for your OS.
+* ```poetry install``` that will create a virtual python environment and install the necessary dependencies.
+* To run the local version of mkdocs and to preview changes in real-time, run ```poetry shell``` and once in the virtual environment, run ```mkdocs serve```. 
+* Make your changes, preferably on a branch for large updates.
+* Create a Github pull request with your changes to be reviewed and merged.
+
 ## Rules on contributions
 
 1. We will try to review and provide comment within 1 week. If we do not meet this timeline, or have an urgent request, please email us (see below).
