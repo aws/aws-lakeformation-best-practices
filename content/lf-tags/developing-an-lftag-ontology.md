@@ -33,9 +33,9 @@ The roles that we have that want to access these data sets are:
 * sales data analysts - has the ability to read only to any sales datasets
 * CFO office analysts - has the ability to read only to any marketing and sales datasets
 * HR engineers - has the ability to read/write only to any HR datasets.
-* HR analysts - has the ability to read only to any marketing datasets but only non-confidential information. Salaries are considered confidential. 
+* HR analysts - has the ability to read only to any HR datasets but only non-confidential information. Salaries are considered confidential. 
 * HR managers - has the ability to read only to HR datasets, both confidential and non-confidential data.
-* data platform engineers - has the ability to describe datasets, but not able to read/write to them. 
+* data platform engineers - has the ability to describe all datasets, but not able to read/write to them. 
 
 
 They are required to have the following access:
