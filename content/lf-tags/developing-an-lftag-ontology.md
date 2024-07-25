@@ -14,7 +14,7 @@ Using LF-Tags can make permissioning much easier and scalable than using named r
 
 #### Simple Example:
 
-I have Acme Corp and they have the following objects in their Catalog:
+I have AnyCompany and they have the following objects in their Catalog:
 
 | Database | Table |
 |:------|:---------|
@@ -29,8 +29,8 @@ The roles that we have that want to access these data sets are:
 
 * marketing data engineers - has ability to read/write to any marketing datasets
 * marketing data analysts - has the ability to read only to any marketing datasets
-* sales data engineers - has ability to read/write to any marketing datasets
-* sales data analysts - has the ability to read only to any marketing datasets
+* sales data engineers - has ability to read/write to any sales datasets
+* sales data analysts - has the ability to read only to any sales datasets
 * CFO office analysts - has the ability to read only to any marketing and sales datasets
 * HR engineers - has the ability to read/write only to any HR datasets.
 * HR analysts - has the ability to read only to any marketing datasets but only non-confidential information. Salaries are considered confidential. 
