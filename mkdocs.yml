@@ -27,6 +27,7 @@ nav:
     - 'Overview': 'lf-tags/overview.md'
     - 'LF-Tags Basics': 'lf-tags/basics.md'
     - 'Common Ontologies': 'lf-tags/common-ontologies.md'
+    - 'Developing an LF-Tag Ontology': 'lf-tags/developing-an-lftag-ontology.md'
     - 'Best Practices': 'lf-tags/best-practices.md'
     - 'Example Usecase': 'lf-tags/example-usecase.md'
     - 'Limitations': 'lf-tags/limitations.md'
