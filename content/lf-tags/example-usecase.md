@@ -1,5 +1,5 @@
 # Example Customer use case
-Customer X has marketing departing with following personas and requirements:
+Customer X has marketing department with following personas and requirements:
 
 - Executive : Should be able to access all the marketing datasets
 
@@ -7,14 +7,14 @@ Customer X has marketing departing with following personas and requirements:
 
 - Application Manager: Manages 2 teams - AppTeamA & AppTeamB and should have readwrite access to all the datasets they use.
 
-    - AppTeamA : 
+    - AppTeamA :
         Developers      : Needs readwrite access to dataset that is used by the project A.
         Data Scientists : Needs readwrite access to non-sensitive datasets that is used by the project A
 
     - AppTeamB :
         Developers      : Needs readwrite access to dataset that is used by the project B.
         Data Scientists : Needs readwrite access to non-sensitive datasets that is used by the project B
-    
+
 Marketing departments have following datasets to cater to the needs of the users in the MarketingDB database:
 
 | Table Name | Table Description |
@@ -65,16 +65,3 @@ Let us review the LF Tags expression permission granted to the personas and effe
 *Developer*           - gets read write access to tables that are tagged with AppTeam:TeamB - product, campaigns
 
 *Data Scientists*     - gets read write access to non-sensitive data in tables that are tagged with AppTeam:TeamB - product, campaigns.
-
-
-
-
-
-
-
-
-
-
-
-
-
