@@ -2,11 +2,19 @@
 
 ## Overview
 
-AWS Lake Formation can be used at any time to manage metadata (databases, tables, columns) without any impact to existing users. Granting Lake Formation permissions on catalog resources is a no-op until IAMAllowedPrincipals is removed and S3 locations are registered for credential vending. This means you can begin setting up Lake Formation permissions incrementally, well before "flipping the switch."
+Many organizations start their data lake journey with IAM policies and S3 bucket policies controlling access to data. As the environment grows — more tables, more consumers, more teams — managing access through IAM alone becomes increasingly complex and error-prone. AWS Lake Formation simplifies this by providing a centralized permissions model that sits on top of the AWS Glue Data Catalog: you grant access to databases, tables, and columns directly, and Lake Formation vends temporary credentials to authorized principals.
 
-For storage-level permissions, S3 bucket policies continue to apply regardless of Lake Formation configuration. Lake Formation credential vending controls access to data through temporary credentials — it does not modify or replace your S3 bucket policies.
+The challenge is not adopting Lake Formation — it's transitioning to it without disrupting existing workloads. A production environment with active consumers cannot simply "flip a switch." The transition needs to be incremental, reversible, and low-risk.
 
-This guide covers two approaches to transitioning a single AWS account to Lake Formation credential vending. Both are designed to be incremental and reversible.
+### What You Should Know Before Starting
+
+* Lake Formation metadata permissions are safe to set up at any time. Granting LF permissions on databases, tables, and columns is a no-op until IAMAllowedPrincipals is removed and S3 locations are registered for credential vending. You can begin layering in LF permissions well before "flipping the switch."
+* S3 bucket policies still apply. Lake Formation credential vending controls access to data through temporary credentials — it does not modify or replace your S3 bucket policies.
+* The transition is incremental. You do not need to migrate everything at once. Both plans in this guide are designed for step-by-step migration with validation at each stage.
+
+### What This Guide Covers
+
+This guide presents two approaches to transitioning a single AWS account to Lake Formation credential vending. Plan #1 (Per Resource) migrates table by table — all consumers of a resource move together. Plan #2 (Per User) migrates user by user — individual principals are opted in while others remain on IAM. Both approaches are reversible, and guidance is provided on when to use each.
 
 ---
 
@@ -80,6 +88,174 @@ For each table, extract:
 
 This tells you **who is actively accessing** each table.
 
+??? note "Click to expand sample Athena Query for Lake Formation permissions from CloudTrail"
+    ```sql
+        WITH cloudtrail as (
+            SELECT *,
+                CASE
+                    WHEN eventname in ('CreateDatabase', 'GetDatabases') THEN 'CATALOG'
+                    WHEN eventname in (
+                        'GetDatabase',
+                        'UpdateDatabase',
+                        'DeleteDatabase',
+                        'CreateTable',
+                        'GetTables'
+                    ) THEN 'DATABASE'
+                    WHEN eventname in (
+                        'GetTable',
+                        'GetTablesVersion',
+                        'GetTablesVersions',
+                        'GetPartition',
+                        'GetUnfilteredPartition',
+                        'GetInternalUnfilteredPartition',
+                        'GetInternalUnfilteredPartitions',
+                        'GetPartitions',
+                        'GetUnfilteredPartitions',
+                        'BatchGetPartition',
+                        'GetPartitionIndexes',
+                        'DESCRIBE',
+                        'UpdateTable',
+                        'DeleteTableVersion',
+                        'BatchDeleteTableVersion',
+                        'BatchCreatePartition',
+                        'CreatePartition',
+                        'DeletePartition',
+                        'BatchDeletePartition',
+                        'UpdatePartition',
+                        'BatchUpdatePartition',
+                        'CreatePartitionIndex',
+                        'DeletePartitionIndex',
+                        'DeleteTable'
+                    ) THEN 'TABLE'
+                END as resource_level
+            FROM <INSERT CLOUDTRAIL TABLE HERE>
+            WHERE eventsource = 'glue.amazonaws.com'
+                and eventname in (
+                    'GetDatabase',
+                    'GetDatabases',
+                    'UpdateDatabase',
+                    'DeleteDatabase',
+                    'CreateTable',
+                    'CreateDatabase',
+                    'GetTable',
+                    'GetTables',
+                    'GetTablesVersion',
+                    'GetTablesVersions',
+                    'GetPartition',
+                    'GetUnfilteredPartition',
+                    'GetInternalUnfilteredPartition',
+                    'GetInternalUnfilteredPartitions',
+                    'GetPartitions',
+                    'GetUnfilteredPartitions',
+                    'BatchGetPartition',
+                    'GetPartitionIndexes',
+                    'UpdateTable',
+                    'DeleteTableVersion',
+                    'BatchDeleteTableVersion',
+                    'BatchCreatePartition',
+                    'CreatePartition',
+                    'DeletePartition',
+                    'BatchDeletePartition',
+                    'UpdatePartition',
+                    'BatchUpdatePartition',
+                    'CreatePartitionIndex',
+                    'DeletePartitionIndex',
+                    'DeleteTable'
+                )
+                and errorcode IS NULL -- We only support these useridentity types for now
+                and useridentity.type in ('IAMUser', 'AssumedRole')
+        )
+        SELECT CASE
+                WHEN useridentity.type = 'IAMUser' THEN useridentity.arn
+                WHEN useridentity.type = 'AssumedRole' THEN useridentity.sessioncontext.sessionissuer.arn ELSE NULL
+            END as user_arn,
+            eventname,
+            -- the following translation is not used, rather we use GlueDataCatalogActionTranslator instead.
+            CASE
+                -- Database level permissions
+                WHEN eventname in ('GetDatabase') THEN 'DESCRIBE'
+                WHEN eventname in ('UpdateDatabase') THEN 'ALTER'
+                WHEN eventname in ('DeleteDatabase') THEN 'DROP'
+                WHEN eventname in ('CreateTable') THEN 'CREATE_TABLE'
+                WHEN eventname in ('CreateDatabase') THEN 'CREATE_DATABASE' -- These action have no permission requirements.
+                -- WHEN eventname in ('GetDatabases') THEN 'LIST_DBS'
+                WHEN eventname in ('GetTables') THEN 'DESCRIBE' -- Table Level permissions
+                WHEN eventname in (
+                    'GetTable',
+                    'GetTablesVersion',
+                    'GetTablesVersions',
+                    'GetPartition',
+                    'GetUnfilteredPartition',
+                    'GetInternalUnfilteredPartition',
+                    'GetInternalUnfilteredPartitions',
+                    'GetPartitions',
+                    'GetUnfilteredPartitions',
+                    'BatchGetPartition',
+                    'GetPartitionIndexes'
+                ) THEN 'DESCRIBE'
+                WHEN eventname in (
+                    'UpdateTable',
+                    'DeleteTableVersion',
+                    'BatchDeleteTableVersion',
+                    'BatchCreatePartition',
+                    'CreatePartition',
+                    'DeletePartition',
+                    'BatchDeletePartition',
+                    'UpdatePartition',
+                    'BatchUpdatePartition',
+                    'CreatePartitionIndex',
+                    'DeletePartitionIndex'
+                ) THEN 'ALTER'
+                WHEN eventname in ('DeleteTable') THEN 'DROP' ELSE 'UNKNOWN'
+            END as permission,
+            resource_level,
+            awsRegion,
+            CASE
+                WHEN json_extract_scalar(requestparameters, '$.catalogId') IS NOT NULL THEN json_extract_scalar(requestparameters, '$.catalogId') ELSE useridentity.accountid
+            END as aws_account_id,
+            CASE
+                WHEN resource_level = 'DATABASE' THEN CASE
+                    WHEN eventname in ('GetTables', 'CreateTable') THEN json_extract_scalar(requestparameters, '$.databaseName') ELSE json_extract_scalar(requestparameters, '$.name')
+                END
+                WHEN eventname = 'CreateDatabase' THEN json_extract_scalar(requestparameters, '$.databaseInput.name') ELSE json_extract_scalar(requestparameters, '$.databaseName')
+            END as database_name,
+            CASE
+                WHEN resource_level = 'TABLE' THEN CASE
+                    WHEN json_extract_scalar(requestparameters, '$.tableName') IS NULL THEN json_extract_scalar(requestparameters, '$.name') ELSE json_extract_scalar(requestparameters, '$.tableName')
+                END
+                WHEN eventname = 'CreateTable' THEN json_extract_scalar(requestparameters, '$.tableInput.name')
+            END as table_name,
+            SUM(1) as count
+        FROM cloudtrail
+        GROUP BY 1,2,3,4,5,6,7,8
+    ```
+
+
+??? note "Click to expand sample code to extract table locations"
+    ```python
+    import boto3
+    import csv
+    import sys
+
+    glue = boto3.client('glue')
+
+    writer = csv.writer(sys.stdout)
+    writer.writerow(['catalog_id', 'database_name', 'table_name', 's3_location'])
+
+    paginator = glue.get_paginator('get_databases')
+    for db_page in paginator.paginate():
+        for db in db_page['DatabaseList']:
+            db_name = db['Name']
+            catalog_id = db.get('CatalogId', '')
+
+            table_paginator = glue.get_paginator('get_tables')
+            for table_page in table_paginator.paginate(DatabaseName=db_name):
+                for table in table_page['TableList']:
+                    table_name = table['Name']
+                    location = table.get('StorageDescriptor', {}).get('Location', '')
+                    writer.writerow([catalog_id, db_name, table_name, location])
+    ```
+
 ### 2. Policy Analysis
 
 Parse existing IAM and resource policies:
@@ -89,7 +265,7 @@ Parse existing IAM and resource policies:
 
 This tells you **who *could* access** the data (may be broader than active users — includes dormant permissions).
 
-**Tool:** Use [policy-migrator-for-lake-formation](https://github.com/awslabs/policy-migrator-for-lake-formation) in **dry-run mode** to generate LF grants based on existing policies. This is complementary to CloudTrail analysis — it catches permissions that aren't actively exercised.
+**Tool:** Use [policy-migrator-for-lake-formation](https://github.com/awslabs/policy-migrator-for-lake-formation) in **dry-run mode** to generate LF grants based on existing policies. This is complementary to CloudTrail analysis — it catches permissions that aren't actively exercised. 
 
 ---
 
