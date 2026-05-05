@@ -1,6 +1,6 @@
 # Transition Plan #1 — Per Resource Transition
 
-In this approach, you migrate **table by table** (or location by location). For each resource, all consumers are migrated at once. This is a clean "all or nothing" approach per resource.
+In this approach, you migrate **table by table** (or location by location). For each resource, all consumers are migrated at once. This is a clean "all or nothing" approach **per resource**.
 
 ## Flow Diagram
 
@@ -11,9 +11,9 @@ In this approach, you migrate **table by table** (or location by location). For 
         A[Identify consumers per table via CloudTrail] --> B[Prioritize tables: fewest consumers first]
         B --> C[Select next table/location to migrate]
         
-        C --> D[Grant LF table/column permissions to all consumers]
+        C --> D[Grant LF table/column permissions to all consumers of selected tables]
         D --> E[Grant CREATE_TABLE + DESCRIBE on database if first table in DB]
-        E --> F[Grant Data Location Permissions to writers/creators]
+        E --> F[Grant Data Location Permissions to table creators]
         F --> G[Register S3 location full registration]
         G --> H{Validate: Can all consumers access data?}
         
@@ -23,7 +23,7 @@ In this approach, you migrate **table by table** (or location by location). For 
         R2 --> G
         
         I --> J{All tables in this database migrated?}
-        J -->|Yes| K[Remove IAMAllowedPrincipals from database]
+        J -->|Yes| K[Remove IAMAllowedPrincipals from database and uncheck auto-creation]
         J -->|No| C
         K --> L{All databases migrated?}
         L -->|No| C
@@ -57,13 +57,14 @@ Determine who is accessing each table and how frequently. See [How Do You Find O
 
 ### Step 4 — Database Cleanup
 
-Once all tables in a database have been migrated, remove IAMAllowedPrincipals from the database itself.
+Once all tables in a database have been migrated, remove IAMAllowedPrincipals from the database itself and uncheck "Use only IAM access control for new tables in this database" in database properties.
 
 ### Step 5 — Final Cleanup
 
 Once all databases are migrated:
 - Remove direct S3 data access (for Glue table paths) from consumer IAM policies
 - Remove any Glue Resource Policies that granted open catalog access
+- Uncheck "Use only IAM access control for new tables in new databases" and "Use only IAM access control for new databases" in Data Catalog settings in the Lake Formation console.
 
 ## Rollback — Plan #1
 
