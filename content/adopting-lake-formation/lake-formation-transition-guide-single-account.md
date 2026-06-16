@@ -103,8 +103,8 @@ This tells you **who is actively accessing** each table.
                     ) THEN 'DATABASE'
                     WHEN eventname in (
                         'GetTable',
-                        'GetTablesVersion',
-                        'GetTablesVersions',
+                        'GetTableVersion',
+                        'GetTableVersions',
                         'GetPartition',
                         'GetUnfilteredPartition',
                         'GetInternalUnfilteredPartition',
@@ -113,7 +113,6 @@ This tells you **who is actively accessing** each table.
                         'GetUnfilteredPartitions',
                         'BatchGetPartition',
                         'GetPartitionIndexes',
-                        'DESCRIBE',
                         'UpdateTable',
                         'DeleteTableVersion',
                         'BatchDeleteTableVersion',
@@ -139,8 +138,8 @@ This tells you **who is actively accessing** each table.
                     'CreateDatabase',
                     'GetTable',
                     'GetTables',
-                    'GetTablesVersion',
-                    'GetTablesVersions',
+                    'GetTableVersion',
+                    'GetTableVersions',
                     'GetPartition',
                     'GetUnfilteredPartition',
                     'GetInternalUnfilteredPartition',
@@ -182,8 +181,8 @@ This tells you **who is actively accessing** each table.
                 WHEN eventname in ('GetTables') THEN 'DESCRIBE' -- Table Level permissions
                 WHEN eventname in (
                     'GetTable',
-                    'GetTablesVersion',
-                    'GetTablesVersions',
+                    'GetTableVersion',
+                    'GetTableVersions',
                     'GetPartition',
                     'GetUnfilteredPartition',
                     'GetInternalUnfilteredPartition',

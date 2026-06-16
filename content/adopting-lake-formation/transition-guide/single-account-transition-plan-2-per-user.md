@@ -67,17 +67,17 @@ Choose a group of users to migrate. Good candidates for the first cohort:
 
 | Step | Action |
 |------|--------|
-| 3a | Grant **Data Location Permissions** for S3 paths where users write/create tables |
+| 3a | Grant **Data Location Permissions** for S3 paths where users write/create tables. If tables location is a prefix of the database's location, you can ignore this step as the permission is implicitly applied. |
 | 3b | Grant `CREATE_TABLE` permission in LF on relevant databases |
 | 3c | Grant LF **table/column permissions** to the cohort's users for all their tables |
 | 3d | Ensure `lakeformation:GetDataAccess` is in their IAM policies (should already be done in prerequisites) |
 
 ### Step 4 — Register and Opt-In
 
-- Register the tables' S3 locations as **Hybrid** locations (if not already registered)
-  - Hybrid mode means: non-opted-in users continue on IAM, opted-in users use LF credential vending
+- Register the tables' S3 locations as **Hybrid Access Mode** locations (if not already registered)
+  - Hybrid Access Mode means: non-opted-in users continue on IAM, opted-in users use LF credential vending
 - **Create LakeFormation Opt-In** (`CreateLakeFormationOptIn`) for each user + resource combination
-  - This is the step that "flips" the user to LF
+  - This is the step that "flips" the user to LF where IAMAllowedPrincipal permission is ignore, and credential vending is enabled (if data lake location is registered)
 - Keep IAMAllowedPrincipals **enabled** on databases — do not put databases in Hybrid mode (adds complexity with no value)
 
 > **Note:** Location registration is a one-time step. If a location was registered as Hybrid during a previous cohort's migration, you only need to grant LF permissions and create opt-ins for the new cohort.

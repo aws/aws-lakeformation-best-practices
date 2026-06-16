@@ -57,12 +57,12 @@ Determine who is accessing each table and how frequently. See [How Do You Find O
 
 ### Step 4 — Database Cleanup
 
-Once all tables in a database have been migrated, remove IAMAllowedPrincipals from the database itself and uncheck "Use only IAM access control for new tables in this database" in database properties.
+Once all tables in a database have been migrated, remove IAMAllowedPrincipals from the database itself and uncheck "Use only IAM access control for new tables in this database" in database properties. If any new tables were created, their IAMAllowedPrincipals would need to be revoked as well. 
 
 ### Step 5 — Final Cleanup
 
 Once all databases are migrated:
-- Remove direct S3 data access (for Glue table paths) from consumer IAM policies
+- Remove direct S3 data access (for Glue table paths) from consumer IAM policies or S3 Bucket policies. They are no longer needed.
 - Remove any Glue Resource Policies that granted open catalog access
 - Uncheck "Use only IAM access control for new tables in new databases" and "Use only IAM access control for new databases" in Data Catalog settings in the Lake Formation console.
 
