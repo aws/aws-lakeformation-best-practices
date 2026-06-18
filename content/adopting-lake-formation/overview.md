@@ -5,3 +5,4 @@ To successfuly adopt Lake Formation, there are many different considerations tha
 * See [Considerations when adopting Lake Formation](considerations-when-adopting-lake-formation.md) for a non-exhaustive list of areas that will need to be looked at the beginning of adopting Lake Formation. 
 * See [General best practices](general-best-practices.md) for high level best practices when configuring Lake Formation.
 * See [Lake Formation adoption modes](lake-formation-adoption-modes.md) for looking into Lake Formations Hybrid Access Mode.
+* See [Lake Formation Transition Guide - Single Account](lake-formation-transition-guide-single-account.md) for single account migration plans.
