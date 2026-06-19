@@ -9,7 +9,7 @@ This guide is open for anyone to make changes and suggest new content. If there 
 This repo uses mkdocs and is hosted on Github. To get started and creating content, the easiest way is to use [poetry](https://python-poetry.org/). The following commands should get you started:
 * You can install poetry using ```brew install poetry``` if you are running on MacOS. If you are using a different OS, please see the [installation instructions](https://python-poetry.org/docs/#installation) for your OS.
 * ```poetry install``` that will create a virtual python environment and install the necessary dependencies.
-* To run the local version of mkdocs and to preview changes in real-time, run ```poetry shell``` and once in the virtual environment, run ```mkdocs serve```. 
+* To run the local version of mkdocs and to preview changes in real-time, run ```poetry run mkdocs serve```. 
 * Make your changes, preferably on a branch for large updates.
 * Create a Github pull request with your changes to be reviewed and merged.
 
