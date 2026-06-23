@@ -61,19 +61,27 @@ This model lets administrators write broad allow rules and carve out specific ex
 
 **Lake Formation has no deny mechanism.** Grants are purely additive. The effective permissions for a principal are the union of all grants that reference that principal. There is no way to subtract a permission once granted.
 
-### Worked example
+### Worked examples
 
-**Ranger policy:** Allow group "analysts" SELECT on table `customers`, all columns. Exclude from allow: group "analysts" on column `customers.ssn`.
+#### Example 1 - exclude tables ####
 
-**Lake Formation equivalent:** Grant SELECT on table `customers`, listing every column *except* `ssn` explicitly to the IAM role or Identity Center group representing "analysts."
+**Ranger policy:** Allow group "analysts" SELECT on all tables in the `customers` database, with exclude table `customer_info`. 
 
-This works but introduces a maintenance cost: any new column added to `customers` must be explicitly added to the grant. In Ranger, the wildcard allow plus column-level exclude handled this automatically.
+**Lake Formation equivalent:** Grant SELECT on all tables within Glue Data Catalog in the `customers`, except on the `customer_info` table. 
+
+This works but introduces a maintenance cost: any new table added to the `customers` database must be explicitly added. 
+
+#### Example 2 - exclude columns ####
+
+**Ranger policy:** Allow group "analysts" SELECT on columns in the `customers_info` database, with exclude on column `ssn`. 
+
+**Lake Formation equivalent:** Grant SELECT for group "analysts" to the `customers_info` table, with the "exclude columns" of the `ssn` column.
 
 ### Workarounds by pattern
 
 | Ranger pattern | Lake Formation approach |
 |----------------|------------------------|
-| Allow all columns, deny specific columns | Grant SELECT on included columns only (explicit column list). Update grants when schema changes. |
+| Allow all columns, deny specific columns | Grant SELECT on excluded columns (explicit column list). |
 | Allow all users, deny specific users | Do not grant the excluded users. Since grants are additive, omission is the equivalent of denial. |
 | Allow a group, exclude a subgroup | Create separate IAM roles or Identity Center groups that reflect the split. Grant only to the permitted subset. |
 | Row-level deny (deny rows matching a filter) | Use data filters with `RowFilter` expressions that return only permitted rows. Invert the deny condition into an allow condition. |
