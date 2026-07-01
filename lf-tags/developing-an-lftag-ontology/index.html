@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../best-practices/">
+        <link rel="prev" href="../common-ontologies/">
       
       
-        <link rel="next" href="../limitations/">
+        <link rel="next" href="../best-practices/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Example Usecase - AWS Lake Formation Best Practices Guides</title>
+        <title>Developing an LF-Tag Ontology - AWS Lake Formation Best Practices Guides</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#example-customer-use-case" class="md-skip">
+        <a href="#developing-an-lf-tag-ontology" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Example Usecase
+              Developing an LF-Tag Ontology
             
           </span>
         </div>
@@ -775,10 +775,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../developing-an-lftag-ontology/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Developing an LF-Tag Ontology
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -787,6 +807,35 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#simple-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple Example:
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -817,19 +866,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../example-usecase/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -838,7 +878,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -892,6 +931,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#simple-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple Example:
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -908,122 +964,282 @@
   
 
 
-<h1 id="example-customer-use-case">Example Customer use case<a class="headerlink" href="#example-customer-use-case" title="Permanent link">&para;</a></h1>
-<p>Customer X has marketing department with following personas and requirements:</p>
+<h1 id="developing-an-lf-tag-ontology">Developing an LF-Tag Ontology<a class="headerlink" href="#developing-an-lf-tag-ontology" title="Permanent link">&para;</a></h1>
+<p>Using LF-Tags can make permissioning much easier and scalable than using named resource policies. However, it may be a little tricky to figure what your LF-Tag ontology should look like. Here are some approaches and best practices when trying to figure out a tag ontology.</p>
+<ol>
+<li>The best way to think of LF-Tags is that it's a mechanism to group resources together which then can be permissioned on. Permissions are granted based on the intersection of the tags on the group of  resources like the diagram below:</li>
+</ol>
+<p><img alt="image" src="../images/lf-tags-expression-grouping-example.png" /></p>
+<ol start="2">
+<li>There are two high level approaches you can take. Starting from scratch or trying to replicate the current permissions using LF-Tags. By starting from scratch, your design will tend to be simpler and more intuitive because the design is not constrained to fit an existing permissioning model. The draw back of this approach is that some users may get more permissions or less permissions than before. Some customers want this as this is an opportunity to simplify the permissions model. </li>
+<li>Start with the permissions requirements, document it and build on top of that. From your requirements, what categories can you create? For example, sensitivity of data and what levels exist? For example, PII/Confidential/Public level of data. What are the groups of users that need access to the same resources? For example, users within an department within my organization? What different roles are there and how different levels of access, eg. Data Stewards, Data Engineers, Data Scientists, etc. Do I need finer grained permissions such as users within projects need access to only project level resources?  See https://aws.github.io/aws-lakeformation-best-practices/lf-tags/common-ontologies/ for common tags that other users have created.</li>
+<li>Create a table in a spreadsheet with roles/users on one axis and resources (tables/databases) in another axis. Mark which resources should be accessible to which roles. This will help you visualize and identify patterns that could lead to additional categories or help simplify permissions.</li>
+<li>One important thing to remember is that LF-Tags can be used to define very broad range of resources or very fine range of resources. One LF-Tag can be used to group a very large group of resources, while additional tags can further split the large group into smaller groups. Having a balance to both will ensure that your ontology does not get too complex, and get too simple.</li>
+<li>Lastly, although it's impossible to predict the future, consider any additional requirements that may come in the future and how that may impact your ontology. </li>
+</ol>
+<h4 id="simple-example">Simple Example:<a class="headerlink" href="#simple-example" title="Permanent link">&para;</a></h4>
+<p>I have AnyCompany and they have the following objects in their Catalog:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Database</th>
+<th style="text-align: left;">Table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">marketing</td>
+<td style="text-align: left;">ads</td>
+</tr>
+<tr>
+<td style="text-align: left;">marketing</td>
+<td style="text-align: left;">ad_compaigns</td>
+</tr>
+<tr>
+<td style="text-align: left;">sales</td>
+<td style="text-align: left;">inventory</td>
+</tr>
+<tr>
+<td style="text-align: left;">sales</td>
+<td style="text-align: left;">customer_sales</td>
+</tr>
+<tr>
+<td style="text-align: left;">hr</td>
+<td style="text-align: left;">people</td>
+</tr>
+<tr>
+<td style="text-align: left;">hr</td>
+<td style="text-align: left;">salaries</td>
+</tr>
+</tbody>
+</table>
+<p>The roles that we have that want to access these data sets are:</p>
 <ul>
-<li>
-<p>Executive : Should be able to access all the marketing datasets</p>
-</li>
-<li>
-<p>Insight Analyst : Should have read access to all non-sensitive datasets that are shared with the department.</p>
-</li>
-<li>
-<p>Application Manager: Manages 2 teams - AppTeamA &amp; AppTeamB and should have readwrite access to all the datasets they use.</p>
+<li>marketing data engineers - has ability to read/write to any marketing datasets</li>
+<li>marketing data analysts - has the ability to read only to any marketing datasets</li>
+<li>sales data engineers - has ability to read/write to any sales datasets</li>
+<li>sales data analysts - has the ability to read only to any sales datasets</li>
+<li>CFO office analysts - has the ability to read only to any marketing and sales datasets</li>
+<li>HR engineers - has the ability to read/write only to any HR datasets.</li>
+<li>HR analysts - has the ability to read only to any HR datasets but only non-confidential information. Salaries are considered confidential. </li>
+<li>HR managers - has the ability to read only to HR datasets, both confidential and non-confidential data.</li>
+<li>data platform engineers - has the ability to describe all datasets, but not able to read/write to them. </li>
+</ul>
+<p>They are required to have the following access:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">marketing data engineers</th>
+<th style="text-align: left;">marketing data analysts</th>
+<th style="text-align: left;">sales data engineers</th>
+<th style="text-align: left;">sales data analysts</th>
+<th style="text-align: left;">CFO office analysts</th>
+<th style="text-align: left;">HR engineers</th>
+<th style="text-align: left;">HR analysts</th>
+<th style="text-align: left;">HR Managers</th>
+<th style="text-align: left;">data platform engineers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">marketing</td>
+<td style="text-align: left;">ads</td>
+<td style="text-align: left;">read/write</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">describe</td>
+</tr>
+<tr>
+<td style="text-align: left;">marketing</td>
+<td style="text-align: left;">ad_compaigns</td>
+<td style="text-align: left;">read/write</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">describe</td>
+</tr>
+<tr>
+<td style="text-align: left;">sales</td>
+<td style="text-align: left;">inventory</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">read/write</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">describe</td>
+</tr>
+<tr>
+<td style="text-align: left;">sales</td>
+<td style="text-align: left;">customer_sales</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">read/write</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">describe</td>
+</tr>
+<tr>
+<td style="text-align: left;">hr</td>
+<td style="text-align: left;">people</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">read/write</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;">describe</td>
+</tr>
+<tr>
+<td style="text-align: left;">hr</td>
+<td style="text-align: left;">salaries</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">read/write</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;">describe</td>
+</tr>
+</tbody>
+</table>
+<p>From this, we can group some of these accesses together:</p>
 <ul>
-<li>
-<p>AppTeamA :
-    Developers      : Needs readwrite access to dataset that is used by the project A.
-    Data Scientists : Needs readwrite access to non-sensitive datasets that is used by the project A</p>
-</li>
-<li>
-<p>AppTeamB :
-    Developers      : Needs readwrite access to dataset that is used by the project B.
-    Data Scientists : Needs readwrite access to non-sensitive datasets that is used by the project B</p>
-</li>
+<li>Department = Marketing, Sales, HR where Marketing is for the marketing database, Sales for the sales database, and HR for the hr databases.</li>
+<li>Roles = Engineers, Analyst, Platform where Engineers have read/write access, analysts have read access, and platform that has describe access</li>
+<li>Confidentiality = Public,  Confidential where public is anyone can read the data, Confidential is data restricted to only a subset of the columns in a table.</li>
 </ul>
-</li>
-</ul>
-<p>Marketing departments have following datasets to cater to the needs of the users in the MarketingDB database:</p>
+<p>From the information above, we tag the resources in the following way: </p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Table Name</th>
-<th style="text-align: left;">Table Description</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Tag 1</th>
+<th style="text-align: left;">Tag 2</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Customer</td>
-<td style="text-align: left;">Contains customer details including sensitive information</td>
+<td style="text-align: left;">marketing</td>
+<td style="text-align: left;">ads</td>
+<td style="text-align: left;">Department = Marketing</td>
+<td style="text-align: left;">Confidentiality=Public</td>
 </tr>
 <tr>
-<td style="text-align: left;">Product</td>
-<td style="text-align: left;">Contains product details that are maintained by the department.</td>
+<td style="text-align: left;">marketing</td>
+<td style="text-align: left;">ad_compaigns</td>
+<td style="text-align: left;">Department = Marketing</td>
+<td style="text-align: left;">Confidentiality=Public</td>
 </tr>
 <tr>
-<td style="text-align: left;">Campaigns</td>
-<td style="text-align: left;">Contains campaign information that are available for each of the product.</td>
+<td style="text-align: left;">sales</td>
+<td style="text-align: left;">inventory</td>
+<td style="text-align: left;">Department = Sales</td>
+<td style="text-align: left;">Confidentiality=Public</td>
 </tr>
 <tr>
-<td style="text-align: left;">Recommendation</td>
-<td style="text-align: left;">Contains customer preferences and recommendation based on user profile.</td>
+<td style="text-align: left;">sales</td>
+<td style="text-align: left;">customer_sales</td>
+<td style="text-align: left;">Department = Sales</td>
+<td style="text-align: left;">Confidentiality=Public</td>
 </tr>
 <tr>
-<td style="text-align: left;">ExecutiveDashboard</td>
-<td style="text-align: left;">Contains revenue reports for executive access.</td>
+<td style="text-align: left;">hr</td>
+<td style="text-align: left;">people</td>
+<td style="text-align: left;">Department = HR</td>
+<td style="text-align: left;">Confidentiality=Public</td>
+</tr>
+<tr>
+<td style="text-align: left;">hr</td>
+<td style="text-align: left;">salaries</td>
+<td style="text-align: left;">Department = HR</td>
+<td style="text-align: left;">Confidentiality=Confidential</td>
 </tr>
 </tbody>
 </table>
-<p>Following LF Tag Ontologies are defined for the datasets:</p>
+<p><strong>Note 1:</strong> if there are any confidential columns in these datasets, you can set the table as Confidentiality=Public and override the sensitive columns to Confidentiality=Confidential.
+<strong>Note 2:</strong> Tables inherit the Tags from their databases, and columns inherit their tags from their table. In this case, we would set the Department tag to only the respective database and the tables will inherit the values.</p>
+<p>And then we can grant permissions in the following way:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Tag Key</th>
-<th style="text-align: left;">Tag Values</th>
+<th style="text-align: left;">Principal:</th>
+<th style="text-align: left;">Actions</th>
+<th style="text-align: left;">LF Expression Grant</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Domain</td>
-<td style="text-align: left;"><ul><li>Marketing - the only allowed value for now</li></ul></td>
+<td style="text-align: left;">marketing data engineers</td>
+<td style="text-align: left;">read/write</td>
+<td style="text-align: left;">Department = Marketing</td>
 </tr>
 <tr>
-<td style="text-align: left;">level</td>
-<td style="text-align: left;"><ul><li>1 - Executive only</li><li>2 - Non-executive users in the department</li><li>3 - open to all users.</li></ul></td>
+<td style="text-align: left;">marketing data analysts</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;">Department = Marketing</td>
 </tr>
 <tr>
-<td style="text-align: left;">Dataset</td>
-<td style="text-align: left;"><ul><li>Shared - Common datasets that are shared with other department.</li><li>Non-Shared - Non-shared datasets that are specific to the department.</li></ul></td>
+<td style="text-align: left;">sales data engineers</td>
+<td style="text-align: left;">read/write</td>
+<td style="text-align: left;">Department = Sales</td>
 </tr>
 <tr>
-<td style="text-align: left;">Classification</td>
-<td style="text-align: left;"><ul><li>Restricted  - Contains sensitive data</li><li>Public      - Contains non-sensitive data</li></ul></td>
+<td style="text-align: left;">sales data analysts</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;">Department = Sales</td>
+</tr>
+<tr>
+<td style="text-align: left;">CFO office analysts</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;">Department = (Marketing OR Sales)</td>
+</tr>
+<tr>
+<td style="text-align: left;">HR engineers</td>
+<td style="text-align: left;">read/write</td>
+<td style="text-align: left;">Department = HR</td>
+</tr>
+<tr>
+<td style="text-align: left;">HR analysts</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;">Department = HR and Confidentiality = Public</td>
+</tr>
+<tr>
+<td style="text-align: left;">HR manager</td>
+<td style="text-align: left;">read</td>
+<td style="text-align: left;">Department = HR</td>
+</tr>
+<tr>
+<td style="text-align: left;">data platform engineers</td>
+<td style="text-align: left;">describe</td>
+<td style="text-align: left;">Department = (Sales OR Marketing OR HR)</td>
 </tr>
 </tbody>
 </table>
-<p>Project team A and team B might have overlapping dataset needs for their usage. Say for example: If we have Tag AppTeam with values as TeamA, TeamB and they need access to same table. The limitation that currently exist is that you can't associate/tag multiple values of the same tag key to given table. Workaround is to create Tag for each team as shown below:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Tag Key</th>
-<th style="text-align: left;">Tag Values</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">AppTeam:TeamA</td>
-<td style="text-align: left;">yes - For datasets used in Project A</td>
-</tr>
-<tr>
-<td style="text-align: left;">AppTeam:TeamB</td>
-<td style="text-align: left;">yes - For datasets used in Project B</td>
-</tr>
-</tbody>
-</table>
-<p>Tags are associated with resources as shown below:
-<img alt="image" src="../images/lf-tags-resource-mapping.png" /></p>
-<p>Resources access are granted to user using LF Tags expression as shown below:
-<img alt="image" src="../images/lf-tags-expression-principal-mapping.png" /></p>
-<p>Let us review the LF Tags expression permission granted to the personas and effective resource access available for them</p>
-<p><strong>Executive</strong>           - gets read write access to all tables under MarketingDB.</p>
-<p><strong>Insight Analyst</strong>     - gets read access to product and campaigns table which are shared dataset and are available to non-executive or all users.</p>
-<p><strong>Application Manager</strong> - has 2 sets of permissions granted to provide access to both AppteamA and AppteamB dataset. So the effective permission is union of all the resources granted to each team which includes readwrite access to customer,product,campaigns,recommendation tables.</p>
-<p><strong>AppTeamA:</strong></p>
-<p><em>Developer</em>           - gets read write access to tables that are tagged with AppTeam:TeamA - customer,product,recomendations.</p>
-<p><em>Data Scientists</em>     - gets read write access to non-sensitive data in tables that are tagged with AppTeam:TeamA - customer(all columns except SSN,EMAIL,NAME),product,recomendations.</p>
-<p><strong>AppTeamB:</strong>
-<em>Developer</em>           - gets read write access to tables that are tagged with AppTeam:TeamB - product, campaigns</p>
-<p><em>Data Scientists</em>     - gets read write access to non-sensitive data in tables that are tagged with AppTeam:TeamB - product, campaigns.</p>
+<p><strong>Note 1:</strong> you will notice that Confidentiality are not specified for many of the grants above. If Confidentiality is not specified, then permission is granted to the resource, regardless if the resource has the tag or not and its values. </p>
+<p><strong>Note 2:</strong> for some complex use cases, you can grant to multiple subsets of resources using multiple grants. For example, if the data platform engineers needed read/write access to the sales and marketing databases, but could only need describe permissions to the hr databases, this can be achieved by having one grant for the sales and marketing databases for read/write access, and a separate grant to the HR database for describe.</p>
+<p>For a more complex example, please see https://aws.github.io/aws-lakeformation-best-practices/lf-tags/example-usecase/ </p>
 
 
 

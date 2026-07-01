@@ -9,22 +9,22 @@
       
       
       
-        <link rel="prev" href="../best-practices/">
+        <link rel="prev" href="../lake-formation-transition-guide-single-account/">
       
       
-        <link rel="next" href="../limitations/">
+        <link rel="next" href="../single-account-transition-plan-2-per-user/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.29">
     
     
       
-        <title>Example Usecase - AWS Lake Formation Best Practices Guides</title>
+        <title>Plan #1 — Per Resource Transition - AWS Lake Formation Best Practices Guides</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.76a95c52.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.76a95c52.min.css">
       
       
 
@@ -43,7 +43,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#example-customer-use-case" class="md-skip">
+        <a href="#transition-plan-1-per-resource-transition" class="md-skip">
           Skip to content
         </a>
       
@@ -78,7 +78,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="AWS Lake Formation Best Practices Guides" class="md-header__button md-logo" aria-label="AWS Lake Formation Best Practices Guides" data-md-component="logo">
+    <a href="../../.." title="AWS Lake Formation Best Practices Guides" class="md-header__button md-logo" aria-label="AWS Lake Formation Best Practices Guides" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Example Usecase
+              Plan #1 — Per Resource Transition
             
           </span>
         </div>
@@ -185,7 +185,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="AWS Lake Formation Best Practices Guides" class="md-nav__button md-logo" aria-label="AWS Lake Formation Best Practices Guides" data-md-component="logo">
+    <a href="../../.." title="AWS Lake Formation Best Practices Guides" class="md-nav__button md-logo" aria-label="AWS Lake Formation Best Practices Guides" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -215,7 +215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -232,17 +232,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -256,7 +258,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Adopting Lake Formation
@@ -270,7 +272,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/overview/" class="md-nav__link">
+      <a href="../../overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -291,7 +293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/considerations-when-adopting-lake-formation/" class="md-nav__link">
+      <a href="../../considerations-when-adopting-lake-formation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -312,7 +314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/lake-formation-adoption-modes/" class="md-nav__link">
+      <a href="../../lake-formation-adoption-modes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -333,7 +335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/general-best-practices/" class="md-nav__link">
+      <a href="../../general-best-practices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -351,17 +353,19 @@
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
         
           
           <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
@@ -375,7 +379,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_5">
             <span class="md-nav__icon md-icon"></span>
             Migrating to Lake Formation
@@ -386,17 +390,19 @@
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_1" checked>
         
           
           <label class="md-nav__link" for="__nav_2_5_1" id="__nav_2_5_1_label" tabindex="0">
@@ -410,7 +416,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_5_1">
             <span class="md-nav__icon md-icon"></span>
             From IAM/S3 Policies — Single Account
@@ -424,7 +430,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/transition-guide/lake-formation-transition-guide-single-account/" class="md-nav__link">
+      <a href="../lake-formation-transition-guide-single-account/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -442,10 +448,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/transition-guide/single-account-transition-plan-1-per-resource/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Plan #1 — Per Resource Transition
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -454,6 +480,104 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#flow-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flow Diagram
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Steps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-identify-consumers-per-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1 — Identify Consumers Per Table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-prioritize-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2 — Prioritize Tables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-for-each-table-or-batch-of-tables-sharing-a-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3 — For Each Table (or batch of tables sharing a location):
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-database-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4 — Database Cleanup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-final-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5 — Final Cleanup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rollback-plan-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rollback — Plan #1
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -466,7 +590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/transition-guide/single-account-transition-plan-2-per-user/" class="md-nav__link">
+      <a href="../single-account-transition-plan-2-per-user/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -495,7 +619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adopting-lake-formation/transition-guide/apache-ranger-to-lake-formation/" class="md-nav__link">
+      <a href="../apache-ranger-to-lake-formation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -566,7 +690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-sharing/overview/" class="md-nav__link">
+      <a href="../../../data-sharing/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -587,7 +711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-sharing/general-data-sharing/" class="md-nav__link">
+      <a href="../../../data-sharing/general-data-sharing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -608,7 +732,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-sharing/cross-account-versions/" class="md-nav__link">
+      <a href="../../../data-sharing/cross-account-versions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -629,7 +753,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-sharing/upgrading-cross-account-versions/" class="md-nav__link">
+      <a href="../../../data-sharing/upgrading-cross-account-versions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -650,7 +774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data-sharing/cross-account-faq/" class="md-nav__link">
+      <a href="../../../data-sharing/cross-account-faq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -675,19 +799,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -701,7 +823,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             LF-Tags
@@ -715,7 +837,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../overview/" class="md-nav__link">
+      <a href="../../../lf-tags/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -736,7 +858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../basics/" class="md-nav__link">
+      <a href="../../../lf-tags/basics/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -757,7 +879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../common-ontologies/" class="md-nav__link">
+      <a href="../../../lf-tags/common-ontologies/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -778,7 +900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../developing-an-lftag-ontology/" class="md-nav__link">
+      <a href="../../../lf-tags/developing-an-lftag-ontology/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -799,7 +921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../best-practices/" class="md-nav__link">
+      <a href="../../../lf-tags/best-practices/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -817,19 +939,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../lf-tags/example-usecase/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -838,7 +951,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -851,7 +963,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../limitations/" class="md-nav__link">
+      <a href="../../../lf-tags/limitations/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -892,6 +1004,92 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#flow-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flow Diagram
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Steps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-identify-consumers-per-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1 — Identify Consumers Per Table
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-prioritize-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2 — Prioritize Tables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-for-each-table-or-batch-of-tables-sharing-a-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3 — For Each Table (or batch of tables sharing a location):
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-database-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4 — Database Cleanup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-final-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5 — Final Cleanup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rollback-plan-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rollback — Plan #1
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -908,122 +1106,103 @@
   
 
 
-<h1 id="example-customer-use-case">Example Customer use case<a class="headerlink" href="#example-customer-use-case" title="Permanent link">&para;</a></h1>
-<p>Customer X has marketing department with following personas and requirements:</p>
+<h1 id="transition-plan-1-per-resource-transition">Transition Plan #1 — Per Resource Transition<a class="headerlink" href="#transition-plan-1-per-resource-transition" title="Permanent link">&para;</a></h1>
+<p>In this approach, you migrate <strong>table by table</strong> (or location by location). For each resource, all consumers are migrated at once. This is a clean "all or nothing" approach <strong>per resource</strong>.</p>
+<h2 id="flow-diagram">Flow Diagram<a class="headerlink" href="#flow-diagram" title="Permanent link">&para;</a></h2>
+<details class="note">
+<summary>Click to expand flow diagram</summary>
+<pre class="mermaid"><code>flowchart TD
+    A[Identify consumers per table via CloudTrail] --&gt; B[Prioritize tables: fewest consumers first]
+    B --&gt; C[Select next table/location to migrate]
+
+    C --&gt; D[Grant LF table/column permissions to all consumers of selected tables]
+    D --&gt; E[Grant CREATE_TABLE + DESCRIBE on database if first table in DB]
+    E --&gt; F[Grant Data Location Permissions to table creators]
+    F --&gt; G[Register S3 location full registration]
+    G --&gt; H{Validate: Can all consumers access data?}
+
+    H --&gt;|Yes| I[Remove IAMAllowedPrincipals from table]
+    H --&gt;|No| R1[Rollback: Deregister location]
+    R1 --&gt; R2[Diagnose &amp; fix LF grants]
+    R2 --&gt; G
+
+    I --&gt; J{All tables in this database migrated?}
+    J --&gt;|Yes| K[Remove IAMAllowedPrincipals from database and uncheck auto-creation]
+    J --&gt;|No| C
+    K --&gt; L{All databases migrated?}
+    L --&gt;|No| C
+    L --&gt;|Yes| M[Remove direct S3 access for migrated paths from IAM policies]
+    M --&gt; N[Clean up Glue Resource Policies]
+    N --&gt; O[Migration Complete]</code></pre>
+</details>
+<h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-identify-consumers-per-table">Step 1 — Identify Consumers Per Table<a class="headerlink" href="#step-1-identify-consumers-per-table" title="Permanent link">&para;</a></h3>
+<p>Determine who is accessing each table and how frequently. See <a href="../lake-formation-transition-guide-single-account/#how-do-you-find-out-who-is-consuming-what">How Do You Find Out Who Is Consuming What?</a> in the overview.</p>
+<h3 id="step-2-prioritize-tables">Step 2 — Prioritize Tables<a class="headerlink" href="#step-2-prioritize-tables" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>Executive : Should be able to access all the marketing datasets</p>
-</li>
-<li>
-<p>Insight Analyst : Should have read access to all non-sensitive datasets that are shared with the department.</p>
-</li>
-<li>
-<p>Application Manager: Manages 2 teams - AppTeamA &amp; AppTeamB and should have readwrite access to all the datasets they use.</p>
-<ul>
-<li>
-<p>AppTeamA :
-    Developers      : Needs readwrite access to dataset that is used by the project A.
-    Data Scientists : Needs readwrite access to non-sensitive datasets that is used by the project A</p>
-</li>
-<li>
-<p>AppTeamB :
-    Developers      : Needs readwrite access to dataset that is used by the project B.
-    Data Scientists : Needs readwrite access to non-sensitive datasets that is used by the project B</p>
-</li>
+<li>Start with tables that have the <strong>fewest consumers</strong> — these have the smallest blast radius.</li>
+<li>Adjust for business priority: you may choose to migrate high-priority or high-risk tables with low usage early.</li>
+<li><strong>Important:</strong> Group tables by S3 location. When you register an S3 path, <em>all</em> tables under that path get credential vending simultaneously. Plan your batches around S3 prefixes to avoid accidentally migrating tables you're not ready for.</li>
 </ul>
-</li>
-</ul>
-<p>Marketing departments have following datasets to cater to the needs of the users in the MarketingDB database:</p>
+<h3 id="step-3-for-each-table-or-batch-of-tables-sharing-a-location">Step 3 — For Each Table (or batch of tables sharing a location):<a class="headerlink" href="#step-3-for-each-table-or-batch-of-tables-sharing-a-location" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Table Name</th>
-<th style="text-align: left;">Table Description</th>
+<th>Step</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">Customer</td>
-<td style="text-align: left;">Contains customer details including sensitive information</td>
+<td>3a</td>
+<td>Grant LF <strong>table/column permissions</strong> to all identified consumers</td>
 </tr>
 <tr>
-<td style="text-align: left;">Product</td>
-<td style="text-align: left;">Contains product details that are maintained by the department.</td>
+<td>3b</td>
+<td>Grant <code>CREATE_TABLE</code> + <code>DESCRIBE</code> on the <strong>database</strong> to principals who need it (if this is the first table in that database being migrated)</td>
 </tr>
 <tr>
-<td style="text-align: left;">Campaigns</td>
-<td style="text-align: left;">Contains campaign information that are available for each of the product.</td>
+<td>3c</td>
+<td>Grant <strong>Data Location Permissions</strong> to any users who write data or create tables at that S3 path</td>
 </tr>
 <tr>
-<td style="text-align: left;">Recommendation</td>
-<td style="text-align: left;">Contains customer preferences and recommendation based on user profile.</td>
+<td>3d</td>
+<td><strong>Register the S3 location</strong> (full registration). This activates credential vending for all tables under this path.</td>
 </tr>
 <tr>
-<td style="text-align: left;">ExecutiveDashboard</td>
-<td style="text-align: left;">Contains revenue reports for executive access.</td>
+<td>3e</td>
+<td><strong>Validate</strong> — confirm all consumers can read/write as expected</td>
+</tr>
+<tr>
+<td>3f</td>
+<td><strong>Remove IAMAllowedPrincipals</strong> from the table</td>
 </tr>
 </tbody>
 </table>
-<p>Following LF Tag Ontologies are defined for the datasets:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Tag Key</th>
-<th style="text-align: left;">Tag Values</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Domain</td>
-<td style="text-align: left;"><ul><li>Marketing - the only allowed value for now</li></ul></td>
-</tr>
-<tr>
-<td style="text-align: left;">level</td>
-<td style="text-align: left;"><ul><li>1 - Executive only</li><li>2 - Non-executive users in the department</li><li>3 - open to all users.</li></ul></td>
-</tr>
-<tr>
-<td style="text-align: left;">Dataset</td>
-<td style="text-align: left;"><ul><li>Shared - Common datasets that are shared with other department.</li><li>Non-Shared - Non-shared datasets that are specific to the department.</li></ul></td>
-</tr>
-<tr>
-<td style="text-align: left;">Classification</td>
-<td style="text-align: left;"><ul><li>Restricted  - Contains sensitive data</li><li>Public      - Contains non-sensitive data</li></ul></td>
-</tr>
-</tbody>
-</table>
-<p>Project team A and team B might have overlapping dataset needs for their usage. Say for example: If we have Tag AppTeam with values as TeamA, TeamB and they need access to same table. The limitation that currently exist is that you can't associate/tag multiple values of the same tag key to given table. Workaround is to create Tag for each team as shown below:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Tag Key</th>
-<th style="text-align: left;">Tag Values</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">AppTeam:TeamA</td>
-<td style="text-align: left;">yes - For datasets used in Project A</td>
-</tr>
-<tr>
-<td style="text-align: left;">AppTeam:TeamB</td>
-<td style="text-align: left;">yes - For datasets used in Project B</td>
-</tr>
-</tbody>
-</table>
-<p>Tags are associated with resources as shown below:
-<img alt="image" src="../images/lf-tags-resource-mapping.png" /></p>
-<p>Resources access are granted to user using LF Tags expression as shown below:
-<img alt="image" src="../images/lf-tags-expression-principal-mapping.png" /></p>
-<p>Let us review the LF Tags expression permission granted to the personas and effective resource access available for them</p>
-<p><strong>Executive</strong>           - gets read write access to all tables under MarketingDB.</p>
-<p><strong>Insight Analyst</strong>     - gets read access to product and campaigns table which are shared dataset and are available to non-executive or all users.</p>
-<p><strong>Application Manager</strong> - has 2 sets of permissions granted to provide access to both AppteamA and AppteamB dataset. So the effective permission is union of all the resources granted to each team which includes readwrite access to customer,product,campaigns,recommendation tables.</p>
-<p><strong>AppTeamA:</strong></p>
-<p><em>Developer</em>           - gets read write access to tables that are tagged with AppTeam:TeamA - customer,product,recomendations.</p>
-<p><em>Data Scientists</em>     - gets read write access to non-sensitive data in tables that are tagged with AppTeam:TeamA - customer(all columns except SSN,EMAIL,NAME),product,recomendations.</p>
-<p><strong>AppTeamB:</strong>
-<em>Developer</em>           - gets read write access to tables that are tagged with AppTeam:TeamB - product, campaigns</p>
-<p><em>Data Scientists</em>     - gets read write access to non-sensitive data in tables that are tagged with AppTeam:TeamB - product, campaigns.</p>
+<h3 id="step-4-database-cleanup">Step 4 — Database Cleanup<a class="headerlink" href="#step-4-database-cleanup" title="Permanent link">&para;</a></h3>
+<p>Once all tables in a database have been migrated, remove IAMAllowedPrincipals from the database itself and uncheck "Use only IAM access control for new tables in this database" in database properties. If any new tables were created, their IAMAllowedPrincipals would need to be revoked as well. </p>
+<h3 id="step-5-final-cleanup">Step 5 — Final Cleanup<a class="headerlink" href="#step-5-final-cleanup" title="Permanent link">&para;</a></h3>
+<p>Once all databases are migrated:
+- Remove direct S3 data access (for Glue table paths) from consumer IAM policies or S3 Bucket policies. They are no longer needed.
+- Remove any Glue Resource Policies that granted open catalog access
+- Uncheck "Use only IAM access control for new tables in new databases" and "Use only IAM access control for new databases" in Data Catalog settings in the Lake Formation console.</p>
+<h2 id="rollback-plan-1">Rollback — Plan #1<a class="headerlink" href="#rollback-plan-1" title="Permanent link">&para;</a></h2>
+<details class="note">
+<summary>Click to expand rollback diagram</summary>
+<pre class="mermaid"><code>flowchart TD
+    A[Consumer loses access after registration] --&gt; B{Has IAMAllowedPrincipals been removed?}
+    B --&gt;|No| C[Deregister the S3 location]
+    C --&gt; D[Access reverts to IAM-based]
+    D --&gt; E[Diagnose: missing LF grant? missing Data Location Permission?]
+    E --&gt; F[Fix LF grants]
+    F --&gt; G[Re-register location]
+    G --&gt; H[Re-validate]
+
+    B --&gt;|Yes| I[Re-add IAMAllowedPrincipals to table/database]
+    I --&gt; J[Deregister the S3 location]
+    J --&gt; D</code></pre>
+</details>
+<p><strong>Key principle:</strong> Do NOT remove IAMAllowedPrincipals until you have validated access post-registration. Registration + validation is your safety net — keep IAMAllowedPrincipals in place until you're confident.</p>
 
 
 
@@ -1070,10 +1249,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["tabs", "content.code.copy", "content.code.select", "content.code.copy", "content.code.select"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["tabs", "content.code.copy", "content.code.select", "content.code.copy", "content.code.select"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
       
     
   </body>

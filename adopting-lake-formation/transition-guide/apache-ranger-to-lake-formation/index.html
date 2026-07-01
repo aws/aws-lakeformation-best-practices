@@ -1,0 +1,1863 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../single-account-transition-plan-2-per-user/">
+      
+      
+        <link rel="next" href="../../../data-sharing/overview/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.29">
+    
+    
+      
+        <title>From Apache Ranger - AWS Lake Formation Best Practices Guides</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.76a95c52.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#migrating-from-apache-ranger-to-lake-formation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="AWS Lake Formation Best Practices Guides" class="md-header__button md-logo" aria-label="AWS Lake Formation Best Practices Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AWS Lake Formation Best Practices Guides
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              From Apache Ranger
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/aws/aws-lakeformation-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    aws/aws-lakeformation-best-practices
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="AWS Lake Formation Best Practices Guides" class="md-nav__button md-logo" aria-label="AWS Lake Formation Best Practices Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    AWS Lake Formation Best Practices Guides
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/aws/aws-lakeformation-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    aws/aws-lakeformation-best-practices
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Adopting Lake Formation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Adopting Lake Formation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../considerations-when-adopting-lake-formation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Considerations when adopting Lake Formation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lake-formation-adoption-modes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lake Formation Adoption Modes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../general-best-practices/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    General Best Practices
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Migrating to Lake Formation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Migrating to Lake Formation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5_1" id="__nav_2_5_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    From IAM/S3 Policies — Single Account
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            From IAM/S3 Policies — Single Account
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lake-formation-transition-guide-single-account/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../single-account-transition-plan-1-per-resource/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plan #1 — Per Resource Transition
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../single-account-transition-plan-2-per-user/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plan #2 — Per User Transition
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    From Apache Ranger
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    From Apache Ranger
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#differences-between-apache-ranger-and-lake-formation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Differences Between Apache Ranger and Lake Formation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hive-metastore-vs-glue-data-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hive Metastore vs. Glue Data Catalog
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hive Metastore vs. Glue Data Catalog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#migration-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deny-and-except-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deny and Except Policies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deny and Except Policies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worked examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-exclude-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 1 - exclude tables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-exclude-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 2 - exclude columns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workarounds-by-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workarounds by pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patterns-with-no-clean-equivalent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Patterns with no clean equivalent
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-action_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tag-based-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag-Based Access Control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tag-Based Access Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-differences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key differences
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-zones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Zones
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Zones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#achieving-similar-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Achieving similar isolation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-action_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identity-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identity Mapping
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Identity Mapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-differences_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key differences
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-action_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hdfs-to-s3" class="md-nav__link">
+    <span class="md-ellipsis">
+      HDFS to S3
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HDFS to S3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration guidance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-get-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Get Help
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Data Sharing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Data Sharing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../data-sharing/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../data-sharing/general-data-sharing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    General Best Practices when using Lake Formation Data Sharing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../data-sharing/cross-account-versions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross Account Versions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../data-sharing/upgrading-cross-account-versions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading Cross Account Version
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../data-sharing/cross-account-faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross Account FAQS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    LF-Tags
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            LF-Tags
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lf-tags/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lf-tags/basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LF-Tags Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lf-tags/common-ontologies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common Ontologies
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lf-tags/developing-an-lftag-ontology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developing an LF-Tag Ontology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lf-tags/best-practices/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Best Practices
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lf-tags/example-usecase/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Example Usecase
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../lf-tags/limitations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Limitations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#differences-between-apache-ranger-and-lake-formation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Differences Between Apache Ranger and Lake Formation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hive-metastore-vs-glue-data-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hive Metastore vs. Glue Data Catalog
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hive Metastore vs. Glue Data Catalog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#migration-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deny-and-except-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deny and Except Policies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deny and Except Policies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worked examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-exclude-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 1 - exclude tables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-exclude-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 2 - exclude columns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workarounds-by-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workarounds by pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patterns-with-no-clean-equivalent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Patterns with no clean equivalent
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-action_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tag-based-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tag-Based Access Control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tag-Based Access Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-differences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key differences
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-zones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Zones
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Zones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#achieving-similar-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Achieving similar isolation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-action_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identity-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identity Mapping
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Identity Mapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-differences_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key differences
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-action_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hdfs-to-s3" class="md-nav__link">
+    <span class="md-ellipsis">
+      HDFS to S3
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HDFS to S3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration guidance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-get-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Get Help
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="migrating-from-apache-ranger-to-lake-formation">Migrating from Apache Ranger to Lake Formation<a class="headerlink" href="#migrating-from-apache-ranger-to-lake-formation" title="Permanent link">&para;</a></h1>
+<p>Organizations running Apache Hadoop clusters often rely on Apache Ranger to manage fine-grained access control over data stored in HDFS, Hive Metastore, and related services. As these organizations migrate analytics workloads to AWS, they encounter AWS Lake Formation, which provides column-level and row-level permissions for data in Amazon S3 registered through the AWS Glue Data Catalog.</p>
+<p>Ranger and Lake Formation solve the same core problem — controlling who can read which tables, columns, and rows — but they differ in architecture, policy model, and identity integration. A Ranger policy cannot be copied into Lake Formation unchanged.</p>
+<p>This guide covers:</p>
+<ul>
+<li><a href="#differences-between-apache-ranger-and-lake-formation">The structural differences between Ranger and Lake Formation</a></li>
+<li><a href="#hive-metastore-vs-glue-data-catalog">Catalog migration (HMS to Glue Data Catalog)</a></li>
+<li><a href="#deny-and-except-policies">Handling deny and except policies</a></li>
+<li><a href="#tag-based-access-control">Tag-based access control translation</a></li>
+<li><a href="#security-zones">Security zones and multi-tenancy</a></li>
+<li><a href="#identity-mapping">Identity mapping from LDAP/AD to IAM</a></li>
+<li><a href="#hdfs-to-s3">HDFS to S3</a></li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> This guide covers the access-control layer only. It does not cover migrating data itself (ETL pipelines, schema conversion, S3 layout).</p>
+</blockquote>
+<hr />
+<h2 id="differences-between-apache-ranger-and-lake-formation">Differences Between Apache Ranger and Lake Formation<a class="headerlink" href="#differences-between-apache-ranger-and-lake-formation" title="Permanent link">&para;</a></h2>
+<p>Apache Ranger and AWS Lake Formation both govern access to analytical data, but they differ in where enforcement happens, how policies are expressed, and what identity systems they consume.</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Apache Ranger</th>
+<th>AWS Lake Formation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Policy model</strong></td>
+<td>Allow, deny, and exceptions. Deny takes precedence over allow.</td>
+<td>Grant-only. No deny grants exist. Permissions are additive; the union of all grants determines effective access.</td>
+</tr>
+<tr>
+<td><strong>Permission granularity</strong></td>
+<td>Database, table, column, row-level (row-filter policies), and cell-level (column masking + row filter).</td>
+<td>Database, table, column, row-level (data filters), and cell-level (column + row filter combined in a data filter).</td>
+</tr>
+<tr>
+<td><strong>Catalog system</strong></td>
+<td>Hive Metastore (HMS).</td>
+<td>AWS Glue Data Catalog (GDC). All governed resources must exist in GDC.</td>
+</tr>
+<tr>
+<td><strong>Identity integration</strong></td>
+<td>LDAP, Active Directory, Kerberos principals, OS users/groups.</td>
+<td>IAM principals (roles, users), IAM Identity Center users/groups, and AWS Organizations.</td>
+</tr>
+<tr>
+<td><strong>Tag-based access control</strong></td>
+<td>Atlas-sourced or Ranger-native tags. A single tag policy covers all resources sharing that tag across services.</td>
+<td>LF-Tags (key-value pairs) assigned to databases, tables, and columns in GDC. Boolean expressions over tag keys in a single grant.</td>
+</tr>
+<tr>
+<td><strong>Multi-tenancy / security zones</strong></td>
+<td>Security zones partition the resource namespace with delegated administrators per zone.</td>
+<td>No direct equivalent. Isolation is achieved through separate AWS accounts, IAM role delegation with grantable permissions, or distinct LF-Tag taxonomies.</td>
+</tr>
+<tr>
+<td><strong>Auditing</strong></td>
+<td>Ranger audit logs in Solr or HDFS. Each access decision recorded with user, resource, policy ID, and timestamp.</td>
+<td>AWS CloudTrail logs Lake Formation API calls and data access events for each vended credential.</td>
+</tr>
+<tr>
+<td><strong>Enforcement point</strong></td>
+<td>Plugin-per-service model. Each service (Hive, Spark, HBase, HDFS) loads a Ranger plugin that evaluates policies locally.</td>
+<td>Centralized. Lake Formation vends temporary credentials scoped to the granted permissions. S3 enforces access via those scoped credentials.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="hive-metastore-vs-glue-data-catalog">Hive Metastore vs. Glue Data Catalog<a class="headerlink" href="#hive-metastore-vs-glue-data-catalog" title="Permanent link">&para;</a></h2>
+<p>Apache Ranger can enforce policies against resources in either a Hive Metastore or the AWS Glue Data Catalog. Lake Formation operates exclusively against the Glue Data Catalog. Every database, table, and column that Lake Formation governs must exist in GDC.</p>
+<p>This creates a hard dependency in migration sequencing: <strong>catalog migration to GDC must complete before policy translation can begin.</strong> Ranger policies reference catalog resources by name (database, table, column). If those resources do not yet exist in GDC, there is nothing for a Lake Formation grant to bind to.</p>
+<p>For detailed steps on migrating Hive Metastore metadata into the Glue Data Catalog, refer to the <a href="https://aws.highspot.com/items/6a284d07987cca17721d8f59">HMS to Glue Data Catalog migration guide</a>.</p>
+<h3 id="migration-action">Migration action<a class="headerlink" href="#migration-action" title="Permanent link">&para;</a></h3>
+<p>Complete the Hive Metastore to Glue Data Catalog migration before beginning policy translation. Validate that all databases, tables, and partitions referenced by existing Ranger policies are present in GDC. Any resource missing from GDC will be an orphaned policy with no equivalent grant target in Lake Formation.</p>
+<hr />
+<h2 id="deny-and-except-policies">Deny and Except Policies<a class="headerlink" href="#deny-and-except-policies" title="Permanent link">&para;</a></h2>
+<p>Apache Ranger evaluates access decisions using a three-layer model: allow policies, deny policies, and exceptions to each. When a request arrives, Ranger checks:</p>
+<ol>
+<li>Is there a <strong>deny policy</strong> that matches this user and resource? If yes, deny — unless the user falls under an exception to that deny (an "exclude from deny" entry).</li>
+<li>Is there an <strong>allow policy</strong> that matches? If yes, allow — unless the user falls under an exception to that allow (an "exclude from allow" entry).</li>
+<li>If no policy matches, deny by default.</li>
+</ol>
+<p>This model lets administrators write broad allow rules and carve out specific exclusions without enumerating every permitted user. For example: "All analysts can query the <code>customers</code> table, except the <code>ssn</code> column" is a single allow policy on <code>customers.*</code> with an exclude-from-allow on <code>customers.ssn</code>.</p>
+<p><strong>Lake Formation has no deny mechanism.</strong> Grants are purely additive. The effective permissions for a principal are the union of all grants that reference that principal. There is no way to subtract a permission once granted.</p>
+<h3 id="worked-examples">Worked examples<a class="headerlink" href="#worked-examples" title="Permanent link">&para;</a></h3>
+<h4 id="example-1-exclude-tables">Example 1 - exclude tables<a class="headerlink" href="#example-1-exclude-tables" title="Permanent link">&para;</a></h4>
+<p><strong>Ranger policy:</strong> Allow group "analysts" SELECT on all tables in the <code>customers</code> database, with exclude table <code>customer_info</code>. </p>
+<p><strong>Lake Formation equivalent:</strong> Grant SELECT on all tables within Glue Data Catalog in the <code>customers</code>, except on the <code>customer_info</code> table. </p>
+<p>This works but introduces a maintenance cost: any new table added to the <code>customers</code> database must be explicitly added. </p>
+<h4 id="example-2-exclude-columns">Example 2 - exclude columns<a class="headerlink" href="#example-2-exclude-columns" title="Permanent link">&para;</a></h4>
+<p><strong>Ranger policy:</strong> Allow group "analysts" SELECT on columns in the <code>customers_info</code> database, with exclude on column <code>ssn</code>. </p>
+<p><strong>Lake Formation equivalent:</strong> Grant SELECT for group "analysts" to the <code>customers_info</code> table, with the "exclude columns" of the <code>ssn</code> column.</p>
+<h3 id="workarounds-by-pattern">Workarounds by pattern<a class="headerlink" href="#workarounds-by-pattern" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Ranger pattern</th>
+<th>Lake Formation approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Allow all columns, deny specific columns</td>
+<td>Grant SELECT on excluded columns (explicit column list).</td>
+</tr>
+<tr>
+<td>Allow all users, deny specific users</td>
+<td>Do not grant the excluded users. Since grants are additive, omission is the equivalent of denial.</td>
+</tr>
+<tr>
+<td>Allow a group, exclude a subgroup</td>
+<td>Create separate IAM roles or Identity Center groups that reflect the split. Grant only to the permitted subset.</td>
+</tr>
+<tr>
+<td>Row-level deny (deny rows matching a filter)</td>
+<td>Use data filters with <code>RowFilter</code> expressions that return only permitted rows. Invert the deny condition into an allow condition.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="patterns-with-no-clean-equivalent">Patterns with no clean equivalent<a class="headerlink" href="#patterns-with-no-clean-equivalent" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Priority-ordered deny:</strong> In Ranger, a deny policy with higher priority overrides a lower-priority allow. Lake Formation has no policy priority concept. The union of all grants determines access.</li>
+<li><strong>Dynamic exclusion:</strong> Ranger deny policies can use runtime attributes (request context, time-of-day via custom conditions) to deny access dynamically. Lake Formation grants are static.</li>
+<li><strong>Cross-table deny with wildcards:</strong> A single Ranger deny policy can reference multiple tables using wildcards (e.g., deny group "interns" access to all tables matching <code>*_pii</code>). Lake Formation grants are per-resource; use LF-Tags to approximate wildcard coverage across tables.</li>
+</ul>
+<h3 id="migration-action_1">Migration action<a class="headerlink" href="#migration-action_1" title="Permanent link">&para;</a></h3>
+<p>Inventory all Ranger deny and exclude-from-allow policies. For each one, determine whether the equivalent restriction can be achieved by narrowing the corresponding Lake Formation grant (granting only the permitted subset). Where the deny pattern relies on wildcards, priority ordering, or runtime conditions, the access model will need restructuring — typically by splitting principals into more granular groups or restructuring table layouts to separate sensitive columns into distinct tables.</p>
+<hr />
+<h2 id="tag-based-access-control">Tag-Based Access Control<a class="headerlink" href="#tag-based-access-control" title="Permanent link">&para;</a></h2>
+<p>Apache Ranger supports tag-based policies through integration with Apache Atlas (or Ranger's own tag service). Atlas classifies resources (tables, columns) with tags such as "PII", "CONFIDENTIAL", or "FINANCE". Ranger policies then reference these tags rather than specific resource names. A single tag policy controls access to every resource carrying a given tag, regardless of which database or table it belongs to. Ranger tag policies follow the same allow/deny/exception model as resource policies.</p>
+<p>AWS Lake Formation provides <strong>LF-Tags</strong>: key-value pairs assigned to databases, tables, and columns in the Glue Data Catalog. Permissions are granted using tag expressions (e.g., grant SELECT to a principal on all resources where <code>sensitivity=high</code> AND <code>domain=finance</code>). LF-Tags support inheritance: a tag assigned to a database propagates to all tables and columns within it unless overridden at a lower level.</p>
+<h3 id="key-differences">Key differences<a class="headerlink" href="#key-differences" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Ranger (Atlas tags)</th>
+<th>Lake Formation (LF-Tags)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tag source</strong></td>
+<td>Apache Atlas classification, or Ranger native tag service</td>
+<td>Assigned directly in Glue Data Catalog via LF API</td>
+</tr>
+<tr>
+<td><strong>Tag structure</strong></td>
+<td>Flat classification names (e.g., "PII"), optionally with attributes</td>
+<td>Key-value pairs (e.g., <code>sensitivity=high</code>) with enumerated allowed values per key</td>
+</tr>
+<tr>
+<td><strong>Policy model on tags</strong></td>
+<td>Allow, deny, and exceptions on tagged resources</td>
+<td>Grant-only on tag expressions (no deny)</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Cross-service (Hive, HBase, HDFS, Kafka; any Atlas-classified resource)</td>
+<td>Glue Data Catalog resources only (databases, tables, columns)</td>
+</tr>
+<tr>
+<td><strong>Inheritance</strong></td>
+<td>Determined by Atlas lineage and propagation rules</td>
+<td>Hierarchical: database → table → column, with override at each level</td>
+</tr>
+<tr>
+<td><strong>Compound expressions</strong></td>
+<td>One tag per policy; multiple policies combine via evaluation order</td>
+<td>Boolean AND expressions over multiple tag keys in a single grant</td>
+</tr>
+</tbody>
+</table>
+<h3 id="migration-steps">Migration steps<a class="headerlink" href="#migration-steps" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Inventory Atlas tags in use.</strong> Extract all tag classifications referenced by Ranger tag policies. Map each to an LF-Tag key-value pair. Flat classifications like "PII" become a key-value such as <code>sensitivity=PII</code> or <code>classification=PII</code>.</p>
+</li>
+<li>
+<p><strong>Define the LF-Tag taxonomy.</strong> LF-Tags require predefined keys and allowed values. Unlike Atlas, where any string can be a tag, LF-Tag values must be enumerated upfront. Plan the taxonomy before assigning tags.</p>
+</li>
+<li>
+<p><strong>Assign LF-Tags to catalog resources.</strong> For each resource that carried an Atlas tag, apply the corresponding LF-Tag in GDC. Use inheritance (tag the database) where the tag applies uniformly; override at the table or column level where exceptions exist.</p>
+</li>
+<li>
+<p><strong>Translate tag policies to LF-Tag grants.</strong> Each Ranger tag-allow policy becomes a Lake Formation tag-based grant. Where Ranger tag-deny policies exist, the same constraints from the <a href="#deny-and-except-policies">deny/except section</a> apply: denial must be restructured as omission from the grant or separation of principals.</p>
+</li>
+<li>
+<p><strong>Account for scope reduction.</strong> Ranger tag policies may cover non-catalog resources (HDFS paths, Kafka topics, HBase tables). These are outside Lake Formation's scope. Access control for those resources must be handled separately (S3 bucket policies, MSK IAM auth, or other AWS-native mechanisms).</p>
+</li>
+</ol>
+<hr />
+<h2 id="security-zones">Security Zones<a class="headerlink" href="#security-zones" title="Permanent link">&para;</a></h2>
+<p>Apache Ranger security zones partition the resource namespace into isolated administrative domains. Each zone defines a set of resources (specific databases, tables, or path prefixes) and assigns zone-level administrators who can create and manage policies only within their zone's boundary. A resource belongs to exactly one zone.</p>
+<p>This model supports multi-tenant Hadoop environments where separate teams manage their own access policies without interfering with each other.</p>
+<p><strong>Lake Formation has no direct equivalent to security zones.</strong> There is no built-in mechanism to partition the Glue Data Catalog into named administrative scopes within a single AWS account.</p>
+<h3 id="achieving-similar-isolation">Achieving similar isolation<a class="headerlink" href="#achieving-similar-isolation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Ranger security zone pattern</th>
+<th>Lake Formation approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zone per business unit with delegated admin</td>
+<td>Create an IAM role per zone. Grant that role grantable permissions (<code>GRANT OPTION</code>) on the specific databases and tables belonging to that zone. The role can administer access within its delegated resources without affecting resources outside its scope.</td>
+</tr>
+<tr>
+<td>Zone scoped to specific databases</td>
+<td>Grant grantable permissions on those databases and tables to the zone-admin role. That role can grant downstream access to other principals, but only on resources it holds grantable permissions for.</td>
+</tr>
+<tr>
+<td>Hard trust boundaries between zones</td>
+<td>Separate AWS accounts per boundary. Each account has its own Glue Data Catalog and Lake Formation administrators. Cross-account resource links provide controlled sharing where needed.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="migration-action_2">Migration action<a class="headerlink" href="#migration-action_2" title="Permanent link">&para;</a></h3>
+<p>Inventory all Ranger security zones and the resources assigned to each. For each zone, create a corresponding IAM role to serve as the zone administrator. Grant that role grantable permissions on the zone's resources in Lake Formation. Principals who previously administered policies within a Ranger zone now assume the corresponding IAM role to manage grants within their delegated scope.</p>
+<p>Where zones represent hard trust boundaries — teams that must not be able to affect each other's access under any circumstance — use separate AWS accounts rather than role-based delegation within a single account.</p>
+<hr />
+<h2 id="identity-mapping">Identity Mapping<a class="headerlink" href="#identity-mapping" title="Permanent link">&para;</a></h2>
+<p>Apache Ranger policies bind to identities sourced from external directory services. In a typical Hadoop deployment, Ranger resolves users and groups from LDAP, Active Directory, or Unix/OS-level user stores, with Kerberos providing authentication. A Ranger policy might grant access to <code>group:data-engineers</code> or <code>user:jsmith</code>, where those names correspond to entries in the connected directory.</p>
+<p>Lake Formation grants bind to AWS identity primitives:</p>
+<ul>
+<li><strong>IAM users and roles:</strong> grants reference ARNs (e.g., <code>arn:aws:iam::123456789012:role/analytics-role</code>)</li>
+<li><strong>IAM Identity Center users and groups:</strong> grants reference Identity Center ARNs</li>
+<li><strong>AWS Organizations:</strong> grants can target an entire organization or organizational unit for cross-account sharing</li>
+</ul>
+<p>The identity that Lake Formation evaluates depends on how the environment is configured. In the default model, Lake Formation authorizes based on the IAM principal (role or user) making the API call. When <strong>Trusted Identity Propagation (TIP)</strong> is enabled, Lake Formation authorizes based on the IAM Identity Center user identity instead — the actual end-user identity is passed through the query engine to Lake Formation, bypassing the IAM role as the authorization subject.</p>
+<h3 id="key-differences_1">Key differences<a class="headerlink" href="#key-differences_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Apache Ranger</th>
+<th>Lake Formation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Identity source</strong></td>
+<td>LDAP, Active Directory, Unix users, Kerberos principals</td>
+<td>IAM roles/users, IAM Identity Center</td>
+</tr>
+<tr>
+<td><strong>Group model</strong></td>
+<td>Directory groups (nested groups supported depending on directory)</td>
+<td>IAM Identity Center groups, or implicit grouping via shared IAM roles</td>
+</tr>
+<tr>
+<td><strong>Policy binding</strong></td>
+<td>Username or group name string match</td>
+<td>IAM principal ARN (default), or Identity Center user/group identity (with Trusted Identity Propagation)</td>
+</tr>
+<tr>
+<td><strong>Authentication</strong></td>
+<td>Kerberos (typically), or delegated to the service</td>
+<td>AWS SigV4 (IAM credentials or Identity Center session)</td>
+</tr>
+<tr>
+<td><strong>User-to-principal mapping</strong></td>
+<td>1:1 — user authenticates as themselves</td>
+<td>Many-to-one possible when using IAM roles; 1:1 when using TIP with Identity Center</td>
+</tr>
+</tbody>
+</table>
+<h3 id="migration-action_3">Migration action<a class="headerlink" href="#migration-action_3" title="Permanent link">&para;</a></h3>
+<p>Map every Ranger user and group referenced in existing policies to an AWS identity. The approach depends on the organization's identity strategy:</p>
+<ol>
+<li>
+<p><strong>Identity Center with Trusted Identity Propagation (recommended for named-user mapping):</strong> Sync the existing LDAP/AD directory to IAM Identity Center via SCIM or AD Connector. Users and groups retain their names in Identity Center. Enable Trusted Identity Propagation so Lake Formation authorizes based on the Identity Center identity directly. This preserves the per-user, per-group access model from Ranger most closely.</p>
+</li>
+<li>
+<p><strong>IAM roles per functional group:</strong> Where organizations use role-based access (all analysts assume an "analyst" role), create IAM roles corresponding to each Ranger group. Grant Lake Formation permissions to those roles. Users authenticate via Identity Center and assume the appropriate role.</p>
+</li>
+<li>
+<p><strong>Handling unmapped identities:</strong> Ranger policies referencing service accounts, OS-level users, or Kerberos principals with no corresponding AWS identity require new IAM roles or Identity Center accounts to be provisioned. These often represent service-to-service access that translates to IAM role trust policies rather than Lake Formation grants.</p>
+</li>
+</ol>
+<p>Extract the full list of users and groups from Ranger's UserSync or the underlying directory. Cross-reference against the set of principals that will exist in AWS post-migration. Any gap — a Ranger identity with no AWS equivalent — must be resolved before policies can be translated.</p>
+<hr />
+<h2 id="hdfs-to-s3">HDFS to S3<a class="headerlink" href="#hdfs-to-s3" title="Permanent link">&para;</a></h2>
+<p>Apache Ranger provides path-level access control for HDFS. Ranger HDFS policies grant or deny read, write, and execute permissions on directory paths (e.g., allow group "etl-team" write access to <code>/data/warehouse/finance/</code>). These policies operate at the storage layer, independent of any catalog or table abstraction.</p>
+<p>AWS Lake Formation does not govern storage-path access. Lake Formation permissions apply only to catalog resources (databases, tables, columns) registered in the Glue Data Catalog. When a workload accesses S3 directly by path rather than through a catalog-aware query engine, Lake Formation is not involved in the authorization decision.</p>
+<p>For organizations that relied on Ranger HDFS policies to control who can read or write specific S3-prefixed paths, <strong>Amazon S3 Access Grants</strong> fills this gap.</p>
+<p>S3 Access Grants provide location-based grants that map S3 prefixes to IAM or Identity Center identities. An S3 Access Grants instance defines locations (S3 prefixes such as <code>s3://my-bucket/finance/</code>) and grants access to those locations for specific principals at a defined permission level (READ, WRITE, or READWRITE).</p>
+<h3 id="comparison">Comparison<a class="headerlink" href="#comparison" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Ranger HDFS policies</th>
+<th>S3 Access Grants</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Target</strong></td>
+<td>HDFS directory paths</td>
+<td>S3 bucket prefixes</td>
+</tr>
+<tr>
+<td><strong>Permissions</strong></td>
+<td>Read, write, execute (with deny/exception support)</td>
+<td>READ, WRITE, READWRITE (grant-only, no deny)</td>
+</tr>
+<tr>
+<td><strong>Identity</strong></td>
+<td>LDAP/AD users and groups</td>
+<td>IAM principals or IAM Identity Center users/groups</td>
+</tr>
+<tr>
+<td><strong>Granularity</strong></td>
+<td>Any path depth in HDFS</td>
+<td>Any prefix depth in S3</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Per-cluster (each cluster has its own Ranger)</td>
+<td>Per S3 Access Grants instance (can span multiple buckets within a region)</td>
+</tr>
+<tr>
+<td><strong>Integration with catalog permissions</strong></td>
+<td>Independent of Hive/Ranger resource policies (complementary layer)</td>
+<td>Independent of Lake Formation catalog grants (complementary layer)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="migration-guidance">Migration guidance<a class="headerlink" href="#migration-guidance" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Inventory Ranger HDFS policies.</strong> Extract all path-based policies and the principals they reference. Identify which HDFS paths correspond to S3 locations in the migrated environment.</p>
+</li>
+<li>
+<p><strong>Map HDFS paths to S3 prefixes.</strong> For each HDFS path governed by a Ranger policy, determine the equivalent S3 prefix in the target architecture. Example: <code>/data/warehouse/finance/</code> becomes <code>s3://datalake-bucket/warehouse/finance/</code>.</p>
+</li>
+<li>
+<p><strong>Create an S3 Access Grants instance.</strong> Register the S3 locations (prefixes) that need path-level access control. Associate the instance with an Identity Center instance if using named-user grants.</p>
+</li>
+<li>
+<p><strong>Translate Ranger HDFS grants to S3 Access Grants.</strong> Each Ranger HDFS allow policy becomes an S3 Access Grant at the corresponding prefix. Since S3 Access Grants has no deny model, the same constraints from the deny/except section apply: restrict access by granting only the permitted subset of principals.</p>
+</li>
+<li>
+<p><strong>Complement Lake Formation with S3 Access Grants.</strong> Use Lake Formation for catalog-level permissions (table/column/row access) and S3 Access Grants for storage-level permissions (direct path access). The two systems are complementary: Lake Formation governs query engines reading through the Glue Data Catalog, while S3 Access Grants governs direct S3 API access to the underlying data files.</p>
+</li>
+</ol>
+<hr />
+<h2 id="how-to-get-help">How to Get Help<a class="headerlink" href="#how-to-get-help" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>AWS Lake Formation documentation</strong> at <a href="https://docs.aws.amazon.com/lake-formation/">docs.aws.amazon.com/lake-formation</a> covers grant management, LF-Tags, data filters, Trusted Identity Propagation, and cross-account sharing.</li>
+<li><strong>AWS Prescriptive Guidance:</strong> Published migration patterns and architecture recommendations for analytics workloads moving to AWS-native services.</li>
+<li><strong>AWS Solutions Architects:</strong> Customers with an AWS account team can engage their Solutions Architect for architecture reviews of their migration plan, particularly for complex deny-policy translation and multi-account design.</li>
+<li><strong>AWS re:Post:</strong> Community Q&amp;A for specific implementation questions related to Lake Formation permissions and Glue Data Catalog configuration.</li>
+<li><strong>AWS Support:</strong> For customers with Business or Enterprise support plans, support cases can be opened for Lake Formation configuration and troubleshooting.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["tabs", "content.code.copy", "content.code.select", "content.code.copy", "content.code.select"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
