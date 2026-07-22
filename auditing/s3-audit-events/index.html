@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../overview/">
+        <link rel="prev" href="../lake-formation-cloudtrail/">
       
       
-        <link rel="next" href="../cross-account-versions/">
+        <link rel="next" href="../querying-audit-data/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>General Best Practices when using Lake Formation Data Sharing - AWS Lake Formation Best Practices Guides</title>
+        <title>S3 Audit Events - AWS Lake Formation Best Practices Guides</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#general-best-practices-when-using-lake-formation-data-sharing" class="md-skip">
+        <a href="#s3-audit-events" class="md-skip">
           Skip to content
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              General Best Practices when using Lake Formation Data Sharing
+              S3 Audit Events
             
           </span>
         </div>
@@ -528,19 +528,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -554,7 +552,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Data Sharing
@@ -568,7 +566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../overview/" class="md-nav__link">
+      <a href="../../data-sharing/overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -586,30 +584,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    General Best Practices when using Lake Formation Data Sharing
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../data-sharing/general-data-sharing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -618,71 +596,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#transitive-sharing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Transitive sharing
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cross-account-sharing-scope-and-aws-ram-shares" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cross account sharing scope and AWS RAM shares
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sharing-data-catalog-databases-versus-tables" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sharing Data Catalog databases versus tables
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resource-links" class="md-nav__link">
-    <span class="md-ellipsis">
-      Resource Links
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recipient-account-considerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Recipient account considerations
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -695,7 +608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cross-account-versions/" class="md-nav__link">
+      <a href="../../data-sharing/cross-account-versions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -716,7 +629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../upgrading-cross-account-versions/" class="md-nav__link">
+      <a href="../../data-sharing/upgrading-cross-account-versions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -737,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cross-account-faq/" class="md-nav__link">
+      <a href="../../data-sharing/cross-account-faq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -951,17 +864,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -975,7 +890,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Auditing
@@ -989,7 +904,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../auditing/overview/" class="md-nav__link">
+      <a href="../overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1010,7 +925,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../auditing/lake-formation-cloudtrail/" class="md-nav__link">
+      <a href="../lake-formation-cloudtrail/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1028,10 +943,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../auditing/s3-audit-events/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    S3 Audit Events
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1040,6 +975,62 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controlling-cloudtrail-data-event-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controlling CloudTrail data event cost
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-s3-auditing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling S3 auditing
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1052,7 +1043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../auditing/querying-audit-data/" class="md-nav__link">
+      <a href="../querying-audit-data/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1100,45 +1091,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#transitive-sharing" class="md-nav__link">
+  <a href="#comparison" class="md-nav__link">
     <span class="md-ellipsis">
-      Transitive sharing
+      Comparison
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#cross-account-sharing-scope-and-aws-ram-shares" class="md-nav__link">
+  <a href="#recommendation" class="md-nav__link">
     <span class="md-ellipsis">
-      Cross account sharing scope and AWS RAM shares
+      Recommendation
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#sharing-data-catalog-databases-versus-tables" class="md-nav__link">
+  <a href="#controlling-cloudtrail-data-event-cost" class="md-nav__link">
     <span class="md-ellipsis">
-      Sharing Data Catalog databases versus tables
+      Controlling CloudTrail data event cost
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#resource-links" class="md-nav__link">
+  <a href="#enabling-s3-auditing" class="md-nav__link">
     <span class="md-ellipsis">
-      Resource Links
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recipient-account-considerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Recipient account considerations
+      Enabling S3 auditing
     </span>
   </a>
   
@@ -1162,47 +1144,77 @@
   
 
 
-<h1 id="general-best-practices-when-using-lake-formation-data-sharing">General best practices when using Lake Formation data sharing<a class="headerlink" href="#general-best-practices-when-using-lake-formation-data-sharing" title="Permanent link">&para;</a></h1>
-<h2 id="transitive-sharing">Transitive sharing<a class="headerlink" href="#transitive-sharing" title="Permanent link">&para;</a></h2>
-<p>Sharing of catalog objects across accounts using Lake Formation is not transitive. For example, if account A shares a database to account B, then account B cannot share it with account C. In this case, account A have to share the database with account B and account C individually. This is designed to maintain secure ownership of the data assets for the producer account. </p>
-<h2 id="cross-account-sharing-scope-and-aws-ram-shares">Cross account sharing scope and AWS RAM shares<a class="headerlink" href="#cross-account-sharing-scope-and-aws-ram-shares" title="Permanent link">&para;</a></h2>
-<p>While sharing a database or table using Lake Formation, we recommend sharing to the AWS Organization units, Account ids and AWS IAM Principals in external account, in that order. Setting up and sharing with AWS Organizations provides an option in the AWS RAM to enable sharing with AWS Organizations. A screenshot is shown below. </p>
-<p><img alt="RAM settings for sharing" src="../images/RAM-setting-for-sharing.png" /></p>
-<p>By checking the box, you enable sharing with AWS Organizations. Now, sharing to an AWS Organization in Lake Formation auto-accepts the RAM invites created by Lake Formation. </p>
+<h1 id="s3-audit-events">S3 Audit Events<a class="headerlink" href="#s3-audit-events" title="Permanent link">&para;</a></h1>
+<p><a href="../lake-formation-cloudtrail/">Lake Formation CloudTrail Events</a> record the <em>authorization</em> side of the story — for example, a <code>GetDataAccess</code> event captures the fact that Lake Formation vended temporary credentials to a principal for a given data location. However, these events do not show which S3 objects were subsequently read or written using those credentials. To close that gap you need S3-level auditing. AWS provides two mechanisms: <strong>CloudTrail S3 Data Events</strong> and <strong>S3 Server Access Logs</strong>. This page helps you choose between them.</p>
+<h2 id="comparison">Comparison<a class="headerlink" href="#comparison" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>CloudTrail S3 Data Events</th>
+<th>S3 Server Access Logs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cost model</strong></td>
+<td>Billed per event delivered; scoping with advanced event selectors reduces volume and cost</td>
+<td>Free to enable; you pay S3 storage for the log files, which can be high-volume</td>
+</tr>
+<tr>
+<td><strong>Delivery latency</strong></td>
+<td>Typically within minutes</td>
+<td>Best-effort; can take hours</td>
+</tr>
+<tr>
+<td><strong>Level of detail</strong></td>
+<td>Rich structured JSON — full IAM identity including the assumed-role session ARN, request parameters, and response elements</td>
+<td>Space-delimited fields including requester, operation, object key, HTTP status code, and bytes transferred</td>
+</tr>
+<tr>
+<td><strong>Completeness</strong></td>
+<td>Delivered on a best-effort basis but generally complete for enabled event selectors</td>
+<td>Best-effort with no delivery guarantee; logs are delivered periodically</td>
+</tr>
+<tr>
+<td><strong>Join to Lake Formation via session name</strong></td>
+<td>The assumed-role session name (e.g., <code>AWSLF-…</code>) appears in the <code>userIdentity</code> ARN, enabling correlation with <code>GetDataAccess</code> events</td>
+<td>The assumed-role session name appears in the Requester field, enabling the same correlation when the request was made under the LF-vended session</td>
+</tr>
+<tr>
+<td><strong>Setup complexity</strong></td>
+<td>Configure a trail with advanced event selectors targeting the relevant buckets or prefixes</td>
+<td>Enable server access logging on the source bucket, directing logs to a separate target bucket</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note on session-name correlation:</strong> The join to Lake Formation events works when S3 access is performed under the credentials vended by Lake Formation. In that case the assumed-role session name begins with <code>AWSLF-</code> and is the key shared between the Lake Formation <code>GetDataAccess</code> event and the S3 audit record.</p>
+</blockquote>
+<h2 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use <strong>CloudTrail S3 Data Events scoped with advanced event selectors</strong> as the primary auditing mechanism. Limiting selectors to the S3 locations registered with Lake Formation, and to the specific operations you need (<code>GetObject</code>, <code>PutObject</code>, <code>DeleteObject</code>), keeps costs manageable while giving you near-real-time, structured, complete records that correlate cleanly with Lake Formation events.</p>
+<p><strong>S3 Server Access Logs</strong> are a suitable lower-cost alternative for very high-volume buckets where per-event CloudTrail charges would be prohibitive. Accept the trade-offs: logs are best-effort, can be delayed by hours, and the space-delimited format requires more parsing work. They are not a substitute for CloudTrail when you need reliable, timely audit trails.</p>
+</div>
+<h2 id="controlling-cloudtrail-data-event-cost">Controlling CloudTrail data event cost<a class="headerlink" href="#controlling-cloudtrail-data-event-cost" title="Permanent link">&para;</a></h2>
+<p>CloudTrail data events are billed by volume, so scoping them carefully is important in data lake environments where S3 activity can be high.</p>
+<p>Use <strong>advanced event selectors</strong> to control what is captured:</p>
 <ul>
-<li>If resources are shared at account level, then the  shared resources are visible to the Lake Formation admin on the consumer account, without having to accept the RAM invites. Using automation, you can create resource links and cascade permissions to additional users in the consumer account.</li>
-<li>If resources are shared directly to a cross account IAM principal, the shared resources are not visible to the Lake Formation admin in the recipient account. The IAM principal in the recipient account would see the shared resources. For the IAM principal level cross account share, the recipient principal should have permissions to create resource links- either create database permissions for creating resource link of a shared database or create table permission inside a database for creating resource link of the shared table. </li>
+<li><strong>Limit to relevant resources</strong> — specify the S3 bucket ARNs (or ARN prefixes) for buckets registered with Lake Formation. There is no reason to capture events for buckets outside your governed data lake.</li>
+<li><strong>Limit to relevant operations</strong> — include <code>GetObject</code> and <code>PutObject</code> for read/write auditing, and <code>DeleteObject</code> if deletion auditing is required. Add <code>ListBucket</code> (via management read events) only if bucket-listing visibility is needed.</li>
+<li><strong>Use <code>readOnly</code> / <code>writeOnly</code> filters</strong> — the <code>readOnly</code> field in an advanced event selector lets you capture only read events or only write events, avoiding double-billing for mixed workloads where you need only one direction.</li>
+<li><strong>Narrow by key prefix</strong> — if your registered data locations use a consistent prefix structure (for example <code>s3://my-data-lake/governed/</code>), scope the <code>resources.ARN</code> condition to that prefix.</li>
 </ul>
-<h2 id="sharing-data-catalog-databases-versus-tables">Sharing Data Catalog databases versus tables<a class="headerlink" href="#sharing-data-catalog-databases-versus-tables" title="Permanent link">&para;</a></h2>
-<p>When you share a database or table through Lake Formation from one account to another, we recommend to share at the Database level instead of individual table level share wherever you can. This is because you will need to create a resource link on the shared resource on the consumer account, if you plan to use Athena or Redshift Spectrum for querying the shared resource. Creating a database resource link is much easier and all tables could be referenced using rl_source_database.source_tablename. This is easier compared to creating resource links for individual shared tables.</p>
-<h2 id="resource-links">Resource Links<a class="headerlink" href="#resource-links" title="Permanent link">&para;</a></h2>
+<p>For the selector syntax, see <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-data-events-with-advanced-event-selectors.html">CloudTrail advanced event selectors</a>.</p>
+<h2 id="enabling-s3-auditing">Enabling S3 auditing<a class="headerlink" href="#enabling-s3-auditing" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Athena and Redshift Spectrum require a resource link to query a cross account shared resource - either a database resource link or a table resource link. This is because Athena SQL query editor and Redshift Query Editor V2 console does not provide options to directly access the shared database or table names, which are not part of the consumer or recipient account catalog. Also, SQL queries cannot refer to the catalog id of the database and table names. On the other hand, a resource link is an object in the recipient account’s catalog  that points to the shared resource. Hence, Athena and Spectrum queries can use a resource link to refer to the shared resource. </li>
+<li><strong>CloudTrail S3 data events</strong> — <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/enable-cloudtrail-logging-for-s3.html">Enable CloudTrail logging for S3</a></li>
+<li><strong>CloudTrail advanced event selectors</strong> (for filtering and cost control) — <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-data-events-with-advanced-event-selectors.html">Logging data events with advanced event selectors</a></li>
+<li><strong>S3 Server Access Logging</strong> — <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerLogs.html">Amazon S3 server access logging</a></li>
 </ul>
-<p>In the below example, rl_database_name refers to a resource link name of the shared database. </p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">column_name1</span><span class="p">,</span><span class="n">column_name2</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">rl_database_name</span><span class="p">.</span><span class="k">table_name</span><span class="p">;</span>
-</span></code></pre></div>
-<ul>
-<li>Spark jobs in Glue ETL and EMR can refer to the shared resource by providing the catalog id of the source account. Hence resource links are not required if your workflow uses only Glue ETL and EMR. </li>
-</ul>
-<p>In the below example, you directly point your query in the recipient account to the shared database name and table by providing the catalog_id of the sharing or source account. </p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">AWSGlueDataCatalog_node1709588807746</span> <span class="o">=</span> <span class="n">glueContext</span><span class="o">.</span><span class="n">create_dynamic_frame_from_catalog</span><span class="p">(</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">database</span><span class="o">=</span><span class="s2">&quot;source_account_dbname&quot;</span><span class="p">,</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;source_account_tablename&quot;</span><span class="p">,</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">transformation_ctx</span><span class="o">=</span><span class="s2">&quot;AWSGlueDataCatalog_node1709588807746&quot;</span><span class="p">,</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">catalog_id</span><span class="o">=</span><span class="mi">123456789012</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">)</span>
-</span></code></pre></div>
-<h2 id="recipient-account-considerations">Recipient account considerations<a class="headerlink" href="#recipient-account-considerations" title="Permanent link">&para;</a></h2>
-<p>Data sharing through Lake Formation requires few actions to be performed on the consumer or recipient account side. These can be automated but cannot be avoided totally. </p>
-<p>The steps for the recipient of a shared resource are as follows:</p>
-<ol>
-<li>Accept the RAM invite(s) if the account is not part of an AWS Organization or the if organization is not configured to automatically accept invites. </li>
-<li>If you plan to have the shared resource accessible by Athena and/or Redshift Spectrum, create a resource link to the database or table that is shared using Lake Formtion administrator permissions. Grant DESCRIBE permission on the resource link to all the principals within the account that need access.</li>
-<li>In addition, grant permissions on the shared resource themselves to principals within the account that need access to the shared resource.</li>
-</ol>
-<p>If the resources are shared with a new account first time, in Lake Formation cross account sharing Version 3 and higher, there will be two RAM invites sent from the owner to the consumer account - one for database level and one for table level. The consumer account has to accept both the RAM invites if AWS Organization is not set up as described earlier. </p>
-<p>Lake Formation users using automation to add and share resources could pass the RAM share ARN created by Lake Formation for each cross account share from producer to consumer. Consumer could verify the passed ARN with the ARN showing up in their AWS RAM under ‘Resources shared with me’ tab and accept the RAM invite. For any additional resources shared between the same producer and consumer, the new databases and tables are automatically added to the already accepted RAM share. No further action is needed from the consumer admin.  </p>
+<hr />
+<p>To correlate these S3 records with Lake Formation authorization events, see <a href="../querying-audit-data/">Querying Audit Data</a>.</p>
 
 
 

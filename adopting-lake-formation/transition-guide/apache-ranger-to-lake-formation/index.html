@@ -1153,6 +1153,132 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Auditing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Auditing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../auditing/overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../auditing/lake-formation-cloudtrail/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lake Formation CloudTrail Events
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../auditing/s3-audit-events/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    S3 Audit Events
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../auditing/querying-audit-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Querying Audit Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1520,7 +1646,6 @@
 <h2 id="hive-metastore-vs-glue-data-catalog">Hive Metastore vs. Glue Data Catalog<a class="headerlink" href="#hive-metastore-vs-glue-data-catalog" title="Permanent link">&para;</a></h2>
 <p>Apache Ranger can enforce policies against resources in either a Hive Metastore or the AWS Glue Data Catalog. Lake Formation operates exclusively against the Glue Data Catalog. Every database, table, and column that Lake Formation governs must exist in GDC.</p>
 <p>This creates a hard dependency in migration sequencing: <strong>catalog migration to GDC must complete before policy translation can begin.</strong> Ranger policies reference catalog resources by name (database, table, column). If those resources do not yet exist in GDC, there is nothing for a Lake Formation grant to bind to.</p>
-<p>For detailed steps on migrating Hive Metastore metadata into the Glue Data Catalog, refer to the <a href="https://aws.highspot.com/items/6a284d07987cca17721d8f59">HMS to Glue Data Catalog migration guide</a>.</p>
 <h3 id="migration-action">Migration action<a class="headerlink" href="#migration-action" title="Permanent link">&para;</a></h3>
 <p>Complete the Hive Metastore to Glue Data Catalog migration before beginning policy translation. Validate that all databases, tables, and partitions referenced by existing Ranger policies are present in GDC. Any resource missing from GDC will be an orphaned policy with no equivalent grant target in Lake Formation.</p>
 <hr />
