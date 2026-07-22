@@ -41,8 +41,6 @@ Apache Ranger can enforce policies against resources in either a Hive Metastore 
 
 This creates a hard dependency in migration sequencing: **catalog migration to GDC must complete before policy translation can begin.** Ranger policies reference catalog resources by name (database, table, column). If those resources do not yet exist in GDC, there is nothing for a Lake Formation grant to bind to.
 
-For detailed steps on migrating Hive Metastore metadata into the Glue Data Catalog, refer to the [HMS to Glue Data Catalog migration guide](https://aws.highspot.com/items/6a284d07987cca17721d8f59).
-
 ### Migration action
 
 Complete the Hive Metastore to Glue Data Catalog migration before beginning policy translation. Validate that all databases, tables, and partitions referenced by existing Ranger policies are present in GDC. Any resource missing from GDC will be an orphaned policy with no equivalent grant target in Lake Formation.

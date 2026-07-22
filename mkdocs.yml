@@ -37,6 +37,11 @@ nav:
     - 'Best Practices': 'lf-tags/best-practices.md'
     - 'Example Usecase': 'lf-tags/example-usecase.md'
     - 'Limitations': 'lf-tags/limitations.md'
+  - 'Auditing':
+    - 'Overview': 'auditing/overview.md'
+    - 'Lake Formation CloudTrail Events': 'auditing/lake-formation-cloudtrail.md'
+    - 'S3 Audit Events': 'auditing/s3-audit-events.md'
+    - 'Querying Audit Data': 'auditing/querying-audit-data.md'
 markdown_extensions:
   - toc:
       permalink: true

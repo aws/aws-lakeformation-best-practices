@@ -7,3 +7,4 @@ This guide is broken down in topics:
 - [Best Practices when adopting Lake Formation](adopting-lake-formation/overview.md)
 - [Best Practices when using Lake Formations data sharing feature](data-sharing/overview.md)
 - [Best Practices when using LF-Tags](lf-tags/overview.md)
+- [Best Practices for auditing data access in Lake Formation](auditing/overview.md)
