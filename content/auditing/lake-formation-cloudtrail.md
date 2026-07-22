@@ -529,4 +529,3 @@ Use this table to identify which engine produced a `GetDataAccess` event from it
 !!! warning "Access-mode limitations on EMR and Glue"
 
     - Table access directly by S3 data location through Lake Formation is **not supported** when FGAC is enabled on EMR or Glue.
-    - EMR and Glue do **not** support Full Table Access mode with Lake Formation for Apache Iceberg tables.
