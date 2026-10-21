@@ -150,7 +150,7 @@ Partial reveal leaks by design, and how much it leaks depends on the data. One c
 
 ### Hashing
 
-The value is replaced with a deterministic digest, such as SHA-256 over the raw bytes. The same input always produces the same output, so joins, `GROUP BY`, and distinct counts over the masked column keep returning correct results even though no reader can recover a name from it. That property is what makes hashing the right choice for `name` in the shared example: the analyst can count customers per country without learning who they are.
+The value is replaced with a deterministic digest, such as HMAC-SHA-256 over the raw bytes. The same input always produces the same output, so joins, `GROUP BY`, and distinct counts over the masked column keep returning correct results even though readers are very unlikely to recover a name from it. That property is what makes hashing the right choice for `name` in the shared example: the analyst can count customers per country without learning who they are.
 
 Hashing a low-cardinality or guessable column provides less protection than it appears to. An unsalted digest of a value drawn from a small set can be reversed by hashing every candidate and comparing, so a hashed `country` column protects nothing. Hashing is appropriate for high-cardinality values, and a salt shared across the pipeline raises the cost of that attack on the rest.
 

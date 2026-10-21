@@ -22,7 +22,7 @@ The view carries the same seven column names as the table, with `name`, `email`,
 Three principals participate, and Lake Formation permissions land on each differently:
 
 - **Lake Formation Admin.** Configures the permissions the rest of this needs: the Definer's grantable `SELECT` on `sales.customers`, and the Invoker's `SELECT` on the view.
-- **Definer.** The IAM role that creates the view. It must hold full, grantable `SELECT` on every table the definition references, because the engine uses the Definer's permissions to read those tables when the view runs. The Definer must be an IAM role, and its trust policy must allow `sts:AssumeRole` for the AWS Glue and Lake Formation service principals.
+- **Definer.** The IAM role that creates the view. It must hold full, grantable `SELECT` on every table the definition references, because the engine uses the Definer's permissions to read those tables when the view runs. The Definer must be an IAM role, and its trust policy must allow `sts:AssumeRole` for the AWS Glue and Lake Formation service principals. It must also have `CREATE_TABLE` permissions for the databases that the definer wants to create views within. 
 - **Invoker.** Any principal granted `SELECT` on the view. `MarketingAnalystRole` is the Invoker here, and it queries `customers_masked` without any grant on `customers`.
 
 !!! warning
@@ -55,7 +55,7 @@ Every keyword in the first two lines is required. `PROTECTED` is mandatory becau
 concat('***-**-', substr(ssn, -4))                  AS ssn,
 ```
 
-Append `SHOW VIEW JSON` to the statement to dry-run it. Athena validates the definition and returns the Glue table JSON it would create, without creating anything.
+Insert `SHOW VIEW JSON` to the statement between `SECURITY DEFINER` and `AS` to dry-run it. Athena validates the definition and returns the Glue table JSON it would create, without creating anything.
 
 The masking expressions here are Trino syntax, because the view is being created from Athena. Trino has no `sha2` function; its `sha256` takes and returns `varbinary`, so the value is encoded with `to_utf8` going in and rendered with `to_hex` coming out. Skipping either is a type error at creation time. Compare the PySpark form on the [precomputed masking](precomputed-masking.md) page, which expresses the identical rule as `sha2(col("name"), 256)`.
 
