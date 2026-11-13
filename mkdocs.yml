@@ -37,6 +37,13 @@ nav:
     - 'Best Practices': 'lf-tags/best-practices.md'
     - 'Example Usecase': 'lf-tags/example-usecase.md'
     - 'Limitations': 'lf-tags/limitations.md'
+  - 'Advanced Access Control Patterns':
+    - 'Overview': 'advanced-access-control-patterns/overview.md'
+    - 'Data Masking':
+      - 'Overview': 'advanced-access-control-patterns/data-masking/overview.md'
+      - 'Precomputed Masking with Glue ETL': 'advanced-access-control-patterns/data-masking/precomputed-masking.md'
+      - 'Masking View': 'advanced-access-control-patterns/data-masking/masking-view.md'
+      - 'Masking View with an Entitlement Table': 'advanced-access-control-patterns/data-masking/glue-views-entitlement-table.md'
   - 'Auditing':
     - 'Overview': 'auditing/overview.md'
     - 'Lake Formation CloudTrail Events': 'auditing/lake-formation-cloudtrail.md'
