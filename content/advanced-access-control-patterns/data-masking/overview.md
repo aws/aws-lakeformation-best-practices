@@ -2,7 +2,7 @@
 
 ## What data masking is
 
-Data masking replaces a sensitive value with a substitute that is safe for a wider audience, while leaving the column itself in place. For example, a social security number could return `NULL`, an email address returns `j***@example.com`, a customer name returns a hash. The column still exists, still has a name and a type, and still appears in the result set. 
+Data masking replaces a sensitive value with a substitute that is safe for a wider audience, while leaving the column itself in place. For example, a social security number could return `NULL`, an email address returns `j***@example.com`, a customer name returns a hash. The column still exists, still has a name and a type, and still appears in the result set.
 
 Teams reach for masking when one dataset has to serve audiences with different rights to it. A marketing analyst needs to segment customers by loyalty tier and country, and needs a `customers` table to do it, but has no business reason to read anyone's social security number. Masking lets that analyst query the same table as the engineer who does have that right, without a curated extract per audience and without the raw value ever reaching the analyst's result set. It also keeps existing queries and dashboards working, because the shape of the data does not change. Deterministic masking goes further: a hashed `name` still joins and groups correctly, so aggregate work continues to produce the right answers over values nobody can read.
 
@@ -60,7 +60,7 @@ Read this table alongside the implementation pages rather than instead of them; 
 | Masking varies per caller | No | No | Yes |
 | Changing who sees what | Re-grant permissions | Redefine the view, or grant a different view | Edit a row in the entitlement table |
 | Column names stable across personas | Same-table variant: no. Separate-table variant: yes | Yes | Yes |
-| Impact on existing consumers | Queries must change: a new column name, or a new table name | Queries must change: a new object in the `FROM` clause | None; both personas keep querying the same object |
+| Impact on existing consumers | Queries must change: a new column name, or a new table name | Queries must change: a new object in the `FROM` clause | Queries must change: a new object in the `FROM` clause, as with Approach 2, but both personas then read that same object |
 | Storage cost | One extra column per masked column, or a full second copy | None | None |
 | Query cost | None beyond the table scan; masked values are materialized | Masking expressions evaluated per query | Masking expressions plus an entitlement join per query |
 | Operational surface | A Glue job, plus LF-Tag or table grants | One view definition per masking scheme, one per dialect if multi-engine | A view definition plus an entitlement table to maintain and protect |
@@ -84,7 +84,7 @@ Measure this against your own workload before committing. Nothing here substitut
 
 **Start with Approach 2, the masking view.** It reaches the masked outcome with no pipeline, no duplicated data, and no staleness window, and it works on every engine that can read a Data Catalog view. The other two earn their place only against a specific requirement it cannot meet.
 
-Use **Approach 3** when the masking has to vary by caller: several principals reading one view with different rights, or entitlements that change often enough that editing a table beats issuing a grant. It is also the only approach that leaves existing consumers untouched, since every persona queries the same object and the masking changes underneath them, which matters when there are more dashboards and saved queries than you can realistically track down. The price is that readers must be on Athena, plus a join on every query and an entitlement table that is itself an access-control policy to protect.
+Use **Approach 3** when the masking has to vary by caller: several principals reading one view with different rights, or entitlements that change often enough that editing a table beats issuing a grant. It is also the only approach where every persona queries the *same* object, so you maintain one query definition instead of one per persona, and changing someone's entitlements changes what they see underneath a query nobody has to edit. Note that this is not zero migration: consumers still have to point at the view the first time, exactly as they would for Approach 2. The price is that readers must be on Athena, plus a join on every query and an entitlement table that is itself an access-control policy to protect.
 
 Use **Approach 1** when precomputing is what you need, in any of these cases:
 
@@ -132,7 +132,7 @@ Each PII column is masked a different way, so that one worked example covers all
 | `email` | Partial reveal | `j***@example.com` |
 | `name` | Hashing | `5e88...`, a hex digest |
 
-The rules are identical on every page; the function names are not. Approaches 1 and 2 run in PySpark, where the hash is `sha2(col("name"), 256)`. Approach 3 runs in Athena SQL, which has no `sha2` and needs `to_hex(sha256(to_utf8(name)))` instead. Each page uses the correct form for its engine.
+The rules are identical on every page; the function names are not. Approach 1 runs in PySpark, where the hash is `sha2(col("name"), 256)`. Approaches 2 and 3 run in Athena SQL, which has no `sha2` and needs `to_hex(sha256(to_utf8(name)))` instead. Each page uses the correct form for its engine.
 
 ## Masking types
 
@@ -150,9 +150,11 @@ Partial reveal leaks by design, and how much it leaks depends on the data. One c
 
 ### Hashing
 
-The value is replaced with a deterministic digest, such as HMAC-SHA-256 over the raw bytes. The same input always produces the same output, so joins, `GROUP BY`, and distinct counts over the masked column keep returning correct results even though readers are very unlikely to recover a name from it. That property is what makes hashing the right choice for `name` in the shared example: the analyst can count customers per country without learning who they are.
+The value is replaced with a deterministic digest, such as SHA-256 over the raw bytes. The same input always produces the same output, so joins, `GROUP BY`, and distinct counts over the masked column keep returning correct results even though readers are very unlikely to recover a name from it. That property is what makes hashing the right choice for `name` in the shared example: the analyst can count customers per country without learning who they are.
 
-Hashing a low-cardinality or guessable column provides less protection than it appears to. An unsalted digest of a value drawn from a small set can be reversed by hashing every candidate and comparing, so a hashed `country` column protects nothing. Hashing is appropriate for high-cardinality values, and a salt shared across the pipeline raises the cost of that attack on the rest.
+Hashing a low-cardinality or guessable column provides less protection than it appears to. An unsalted digest of a value drawn from a small set can be reversed by hashing every candidate and comparing, so a hashed `country` column protects nothing. Hashing is appropriate for high-cardinality values.
+
+The worked examples on the implementation pages are deliberately unsalted plain SHA-256, because `name` in the shared example is high-cardinality enough that enumerating candidates is not practical, and because an unsalted digest keeps the examples readable. If you apply this pattern to a column whose values are guessable or drawn from a small set, an unsalted digest is not sufficient: add a secret salt shared across the pipeline, or use a keyed digest such as HMAC-SHA-256, and store that key where the readers of the masked column cannot reach it. A salt only helps while it stays secret, so it is a key to manage, not a constant to paste into a view definition.
 
 ### Encryption and tokenization are out of scope
 

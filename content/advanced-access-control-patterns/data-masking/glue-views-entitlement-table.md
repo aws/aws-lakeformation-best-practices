@@ -86,7 +86,18 @@ This is Athena SQL, specifically the Trino dialect, so the function names differ
 
 Trino has no `sha2` function. Its `sha256` takes `varbinary` and returns `varbinary`, so the column has to be encoded with `to_utf8` on the way in and rendered with `to_hex` on the way out; skipping either one is a type error at view creation. Trino's `split_part` is also 1-indexed, where PySpark's `getItem` starts at 0.
 
-Before running the `CREATE OR REPLACE` above against a real environment, append `SHOW VIEW JSON` to the same statement to dry-run it: Athena validates the definition and, if it is valid, returns the Glue table JSON that would represent the view, without creating anything.
+Before running the `CREATE OR REPLACE` above against a real environment, dry-run it by adding `SHOW VIEW JSON` between `SECURITY DEFINER` and `AS`. It is a positional clause in the statement grammar, not a suffix, so appending it after the `SELECT` will not parse:
+
+```sql
+CREATE OR REPLACE PROTECTED MULTI DIALECT VIEW sales.customers_masked
+SECURITY DEFINER
+SHOW VIEW JSON
+AS
+SELECT
+    ...
+```
+
+Athena validates the definition and, if it is valid, returns the Glue table JSON that would represent the view, without creating anything.
 
 ## Operational notes
 
@@ -97,11 +108,15 @@ Adding a person is an `INSERT` into that table, not a Lake Formation grant. That
 The documented constraints on Data Catalog views bind this pattern specifically:
 
 - A view definition can reference up to 10 tables, and `pii_entitlements` counts as one of them alongside `customers` and anything else joined in.
+- The view cannot reference a table in another account. Every base table, including `pii_entitlements`, must live in the same account as the view. In a hub-and-spoke catalog this does not rule the pattern out, but it does decide where the pieces live: create the view in the account that owns the data and share the view itself cross-account, rather than trying to build a view in a consumer account over resource links. The consequence to plan for is that `pii_entitlements` then lives in the producer account too, so the data owner maintains entitlement rows on behalf of consumers in other accounts.
 - The view cannot reference other views, database resource links, or table resource links.
+- Athena federated data sources cannot be used in a Data Catalog view, so a base table backed by a federated connector is out of scope for this pattern.
 - Base tables must not carry the `IAMAllowedPrincipals` permission; if one does, the view fails with `Multi Dialect views may only reference tables without IAMAllowedPrincipals permissions`.
 - Every base table's S3 location must be registered as a Lake Formation data lake location, or the view fails with `Multi Dialect views may only reference Lake Formation managed tables`.
 - UDFs are not supported in the view definition, which is why the masking above uses built-in functions (`to_hex`, `sha256`, `to_utf8`, `concat`, `substr`, `split_part`) rather than a custom function.
-- Tables in Amazon S3 table buckets (S3 Tables) are not supported as base tables, so neither `customers` nor `pii_entitlements` can live in one.
+- Athena reports a view as *stale* when a referenced table or database no longer exists, when a schema or metadata change is made to a referenced table, or when a referenced table is dropped and recreated with a different schema or configuration. Both a pipeline that rebuilds `customers` by drop-and-recreate and a routine column addition can therefore stale this view, so treat a schema change to either base table as something the view definition has to be revisited for.
+
+One further restriction is worth testing for rather than relying on: in our testing, tables in Amazon S3 table buckets (S3 Tables) did not work as base tables. That restriction does not appear in either of the limitation lists linked below, so treat it as an observation to verify in your own environment rather than a documented guarantee.
 
 For the current list, see [Data Catalog views considerations and limitations](https://docs.aws.amazon.com/lake-formation/latest/dg/views-notes.html) in the Lake Formation Developer Guide, plus the [Athena-specific limitations](https://docs.aws.amazon.com/athena/latest/ug/views-glue.html#views-glue-limitations).
 
